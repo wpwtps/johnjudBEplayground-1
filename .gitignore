@@ -1,7 +1,7 @@
 #--------------chat backend------------------
 # compiled output
-/chat/bk/backend/dist
-/chat/bk/backend/node_modules
+/johnjudplayground/dist
+/johnjudplayground/node_modules
 
 # Logs
 logs
@@ -15,11 +15,11 @@ lerna-debug.log*
 .DS_Store
 
 # Tests
-/chat/bk/backend/coverage
-/chat/bk/backend/.nyc_output
+/johnjudplayground/coverage
+/johnjudplayground/.nyc_output
 
 # IDEs and editors
-/chat/bk/backend/.idea
+/johnjudplayground/.idea
 .project
 .classpath
 .c9/
