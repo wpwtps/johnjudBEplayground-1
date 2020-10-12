@@ -1,4 +1,3 @@
-import { Double } from "mongodb";
 import { Column, Entity, ObjectIdColumn, PrimaryColumn } from "typeorm";
 
 @Entity()
@@ -43,7 +42,7 @@ export class User{
     LocationLong: string;
 
     @Column()
-    AvgPoint: Double;
+    AvgPoint: Number;
 
     @Column()
     Description: string;
