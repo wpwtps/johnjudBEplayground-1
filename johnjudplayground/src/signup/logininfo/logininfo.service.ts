@@ -23,14 +23,17 @@ export class LoginInfoService {
     async updateUserLoginInfo(UpdateLoginInfoInput: UpdateLoginInfoInput, ConfirmPassword: string): Promise<User|String>{
         const {UserName, Password, FirstName, LastName, ProfilePicURL, Birthday, Gender, PhoneNo, Email, LocationLat, LocationLong, AvgPoint, Description, TimeUpdate} = UpdateLoginInfoInput;
         
-
-        if(Password!==ConfirmPassword){
-            return "Password and Confirm Password don't match";
-        }
+        // if(Password!==ConfirmPassword){
+        //     return "Password and Confirm Password don't match";
+        // }
 
         const targetUser = await this.getUserByEmail(Email);
+        // console.log(targetUser);
+
         targetUser.UserName = UserName;
         targetUser.Password = Password;
+        // console.log(targetUser);
+        
         return targetUser;
         
     }
