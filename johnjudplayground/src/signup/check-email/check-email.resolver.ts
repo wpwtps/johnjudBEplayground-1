@@ -1,4 +1,3 @@
-import { Query } from "@nestjs/common";
 import { Args, Mutation, Resolver } from "@nestjs/graphql";
 import { UserType } from "src/user/user.type";
 import { CheckEmailService } from "./check-email.service";
