@@ -3,11 +3,13 @@ import { IsDate, IsEmail, IsNotEmpty, IsNumber, IsUrl, Length, MaxLength, MinLen
 
 @InputType()
 export class CreateUserInput{
+    @IsNotEmpty()
     @MinLength(8)
     @MaxLength(20)
     @Field()
     UserName: string;
 
+    @IsNotEmpty()
     @MinLength(8)
     @MaxLength(20)
     @Field()
