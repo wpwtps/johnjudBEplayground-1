@@ -3,6 +3,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './user/user.entity';
 import { UserModule } from './user/user.module';
+import { SignupModule } from './signup/signup.module';
 
 @Module({
   imports: [
@@ -18,7 +19,8 @@ import { UserModule } from './user/user.module';
     GraphQLModule.forRoot({
       autoSchemaFile: true,
     }),
-    UserModule
+    UserModule,
+    SignupModule
   ],
   controllers: [],
   providers: [],
