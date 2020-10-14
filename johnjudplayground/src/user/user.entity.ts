@@ -50,4 +50,12 @@ export class User{
     @Column()
     TimeUpdate: Date;
 
+    @Column()
+    VerifyPhone: Boolean;
+
+    @Column()
+    tempOTP: number;
+
+    @Column()
+    VerifyEmail: Boolean;
 }

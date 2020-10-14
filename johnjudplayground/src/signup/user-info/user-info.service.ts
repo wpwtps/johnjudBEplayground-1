@@ -35,6 +35,8 @@ export class UserInfoService {
         user.LocationLat = LocationLat;
         user.LocationLong = LocationLong;
         user.TimeUpdate = TimeUpdate;
+        user.VerifyEmail = false;
+        user.VerifyPhone = false;
 
         return this.UserInfoRepository.save(user);
     }
