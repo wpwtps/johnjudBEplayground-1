@@ -14,6 +14,6 @@ export class LogininfoController {
     LoginInfo(
         @Body() UpdateLoginInfoInput: UpdateLoginInfoInput, ConfirmPassword: string,
     ): Promise<User|String>{
-        return this.loginInfoService.updateUserLoginInfo(UpdateLoginInfoInput, ConfirmPassword);
+        return this.loginInfoService.updateUserLoginInfo(UpdateLoginInfoInput,);
     }
 }

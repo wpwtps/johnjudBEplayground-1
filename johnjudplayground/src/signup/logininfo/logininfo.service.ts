@@ -7,34 +7,37 @@ import { UpdateLoginInfoInput } from './update-logininfo.input';
 @Injectable()
 export class LoginInfoService {
     constructor(
-        @InjectRepository(User) private userRepository: Repository<User>,
+        @InjectRepository(User) private LoginInfoRepository: Repository<User>,
     ){}
 
-    async getUserByEmail(Email: string,): Promise<User>{
-        const found = await this.userRepository.findOne({Email});
+    async getUserByEmail(
+        Email: string
+    ): Promise<User>{
+        const found = await this.LoginInfoRepository.findOne({where:{Email}});
 
         if(!found){
-            throw new NotFoundException(`User with E-MAIL "${Email}" not found`);
+            throw new NotFoundException(`User with EMAIL "${Email}" not found`);
         }
 
-        return found;
+        return found
     }
 
-    async updateUserLoginInfo(UpdateLoginInfoInput: UpdateLoginInfoInput, ConfirmPassword: string): Promise<User|String>{
+    async updateUserLoginInfo(UpdateLoginInfoInput: UpdateLoginInfoInput): Promise<User>{
+        // console.log(Email);
+        // console.log(UserName);
+        // console.log(Password);
+        
         const {UserName, Password, FirstName, LastName, ProfilePicURL, Birthday, Gender, PhoneNo, Email, LocationLat, LocationLong, AvgPoint, Description, TimeUpdate} = UpdateLoginInfoInput;
-        
-        // if(Password!==ConfirmPassword){
-        //     return "Password and Confirm Password don't match";
-        // }
 
-        const targetUser = await this.getUserByEmail(Email);
-        // console.log(targetUser);
+        const user = await this.getUserByEmail(Email);
+        // console.log(user);
+        
+        user.UserName = UserName;
+        user.Password = Password;
 
-        targetUser.UserName = UserName;
-        targetUser.Password = Password;
-        // console.log(targetUser);
+        // console.log(user);
         
-        return targetUser;
-        
+
+        return this.LoginInfoRepository.save(user);
     }
 }

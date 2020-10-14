@@ -1,17 +1,18 @@
 import { Args, Mutation, Resolver } from "@nestjs/graphql";
-import { UserType } from "src/user/user.type";
 import { LoginInfoService } from "./logininfo.service";
+import { LoginInfoType } from "./logininfo.type";
 import { UpdateLoginInfoInput } from "./update-logininfo.input";
 
-@Resolver(of => UserType)
-export class UpdateUserLoginInfoResolver{
-    constructor(private LoginInfoService: LoginInfoService,){}
+@Resolver(of => LoginInfoType)
+export class LoginInfoResolver{
+    constructor(private LoginInfoService: LoginInfoService,)
+    {}
 
-    @Mutation(returns => UserType)
-    async UpdateUserLoginInfo(
+    @Mutation(returns => LoginInfoType)
+    updateUserLoginInfo(
         @Args('UpdateLoginInfoInput') UpdateLoginInfoInput: UpdateLoginInfoInput,
-        @Args('ConfirmPassword') ConfirmPassword: string
     ){
-        return this.LoginInfoService.updateUserLoginInfo(UpdateLoginInfoInput, ConfirmPassword);
+        // const {UserName, Password, Email} = UpdateLoginInfoInput;
+        return this.LoginInfoService.updateUserLoginInfo(UpdateLoginInfoInput);
     }
 }
