@@ -3,11 +3,9 @@ import { IsDate, IsDateString, IsEmail, IsLatitude, IsLongitude, IsNotEmpty, IsN
 
 @InputType()
 export class UpdateUserInfoInput{
+    @IsNotEmpty()
     @Field()
-    UserName: string;
-
-    @Field()
-    Password: string;
+    id: string;
 
     @IsNotEmpty()
     @Field()
@@ -16,11 +14,6 @@ export class UpdateUserInfoInput{
     @IsNotEmpty()
     @Field()
     LastName: string;
-
-    // @IsNotEmpty()
-    // @IsUrl()
-    @Field()
-    ProfilePicURL: string;
 
     @IsNotEmpty()
     // @IsDate()
@@ -52,14 +45,7 @@ export class UpdateUserInfoInput{
     @Field()
     LocationLong: string;
 
-    @Field()
-    AvgPoint: Number;
-    
-    @Field()
-    Description: string;
-
     @IsNotEmpty()
-    // @IsDate()
     @IsDateString()
     @Field()
     TimeUpdate: Date;

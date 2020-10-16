@@ -5,6 +5,10 @@ import { IsNotEmpty, IsNumber, IsNumberString } from "class-validator";
 export class VerifyOTPInput{
     @IsNotEmpty()
     @Field()
+    id: string
+
+    @IsNotEmpty()
+    @Field()
     Email: string
 
     @IsNotEmpty()
