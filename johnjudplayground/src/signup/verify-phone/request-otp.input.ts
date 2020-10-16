@@ -8,11 +8,6 @@ export class RequestOTPInput{
     id: string
 
     @IsNotEmpty()
-    @IsEmail()
-    @Field()
-    Email: string
-
-    @IsNotEmpty()
     @IsPhoneNumber("TH")
     @Field()
     PhoneNo: string;

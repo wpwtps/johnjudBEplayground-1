@@ -8,10 +8,6 @@ export class VerifyOTPInput{
     id: string
 
     @IsNotEmpty()
-    @Field()
-    Email: string
-
-    @IsNotEmpty()
     @IsNumberString()
     @Field()
     FeedbackOTP: number

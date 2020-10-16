@@ -31,11 +31,6 @@ export class UpdateUserInfoInput{
     PhoneNo: string;
 
     @IsNotEmpty()
-    @IsEmail()
-    @Field()
-    Email: string;
-
-    @IsNotEmpty()
     @IsLatitude()
     @Field()
     LocationLat: string;
