@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './user/user.entity';
 import { UserModule } from './user/user.module';
 import { SignupModule } from './signup/signup.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -20,7 +21,8 @@ import { SignupModule } from './signup/signup.module';
       autoSchemaFile: true,
     }),
     UserModule,
-    SignupModule
+    SignupModule,
+    AuthModule
   ],
   controllers: [],
   providers: [],
