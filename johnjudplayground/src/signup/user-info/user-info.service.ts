@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/user/user.entity';
 import { Repository } from 'typeorm';
@@ -24,6 +24,11 @@ export class UserInfoService {
 
     async updateUserInfo(UpdateUserInfoInput: UpdateUserInfoInput): Promise<User>{
         const {UserName, Password, FirstName, LastName, ProfilePicURL, Birthday, Gender, PhoneNo, Email, LocationLat, LocationLong, AvgPoint, Description, TimeUpdate} = UpdateUserInfoInput;
+
+        const found = await this.UserInfoRepository.findOne({where: {PhoneNo}});
+        if(found && found.VerifyPhone){
+            throw new ConflictException('PhoneNO already exisits!!!')
+        }
 
         const user = await this.getUserByEmail(Email);
 
