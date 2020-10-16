@@ -22,15 +22,27 @@ export class UserInfoService {
         return found;
     }
 
-    async updateUserInfo(UpdateUserInfoInput: UpdateUserInfoInput): Promise<User>{
-        const {UserName, Password, FirstName, LastName, ProfilePicURL, Birthday, Gender, PhoneNo, Email, LocationLat, LocationLong, AvgPoint, Description, TimeUpdate} = UpdateUserInfoInput;
+    async getUserByID(id: string): Promise<User>{
+        const found = await this.UserInfoRepository.findOne({where:{id}});
 
-        const found = await this.UserInfoRepository.findOne({where: {PhoneNo}});
-        if(found && found.VerifyPhone){
-            throw new ConflictException('PhoneNO already exisits!!!')
+        if(!found){
+            throw new NotFoundException(`User with ID "${id}" not found`)
         }
 
-        const user = await this.getUserByEmail(Email);
+        return found;
+    }
+
+    async updateUserInfo(UpdateUserInfoInput: UpdateUserInfoInput): Promise<User>{
+        const {id, FirstName, LastName, Birthday, Gender, PhoneNo, Email, LocationLat, LocationLong, TimeUpdate} = UpdateUserInfoInput;
+
+        /* check if PhoneNO don't already exist */
+        const found = await this.UserInfoRepository.findOne({where: {PhoneNo}});
+        if(found && found.VerifyPhone){
+            throw new ConflictException('PhoneNO or Account already exisits!!!')
+        }
+
+        // const user = await this.getUserByEmail(Email);
+        const user = await this.getUserByID(id);
 
         user.FirstName = FirstName;
         user.LastName = LastName;

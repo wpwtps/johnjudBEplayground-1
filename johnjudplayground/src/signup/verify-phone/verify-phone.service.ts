@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/user/user.entity';
 import { Repository } from 'typeorm';
@@ -30,11 +30,29 @@ export class VerifyPhoneService {
         return found;
     }
 
-    async requestOTP(RequestOTPInput: RequestOTPInput): Promise<string>{
-        const {Email} = RequestOTPInput;
-        const OTP = await this.generateOTP();
+    async getUserByID(
+        id: string
+    ): Promise<User>{
+        const found = await this.VerifyPhoneRepository.findOne({where:{id}});
 
-        const user = await this.getUserByEmail(Email);
+        if(!found){
+            throw new NotFoundException(`User with id "${id}" not found`);
+        }
+
+        return found
+    }
+
+    async requestOTP(RequestOTPInput: RequestOTPInput): Promise<string>{
+        const {id, PhoneNo} = RequestOTPInput;
+        const OTP = await this.generateOTP();
+        const user = await this.getUserByID(id);
+
+        /* check if PhoneNO don't already exist */
+        const found = await this.VerifyPhoneRepository.findOne({where: {PhoneNo}});
+        if(found && found.VerifyPhone){
+            throw new ConflictException('PhoneNO or Account already exisits!!!');
+        }
+        
         user.tempOTP = OTP
 
         console.log(`The OTP is "${OTP}"`);       
@@ -45,12 +63,16 @@ export class VerifyPhoneService {
     }
 
     async checkOTP(VerifyOTPInput: VerifyOTPInput): Promise<User|string>{
-        const {Email, FeedbackOTP} = VerifyOTPInput;
-
-        const user = await this.getUserByEmail(Email);
-        // console.log(user);
-        
+        const {id, PhoneNo, FeedbackOTP} = VerifyOTPInput;
+        const user = await this.getUserByID(id);
+        // console.log(user);        
         const OTP = user.tempOTP;
+
+        /* check if PhoneNO don't already exist */
+        const found = await this.VerifyPhoneRepository.findOne({where: {PhoneNo}});
+        if(found && found.VerifyPhone){
+            throw new ConflictException('PhoneNO or Account already exisits!!!');
+        }
 
         if(FeedbackOTP!=OTP){
             return "WRONG OTP!!!"

@@ -22,19 +22,33 @@ export class LoginInfoService {
         return found
     }
 
+    async getUserByID(
+        id: string
+    ): Promise<User>{
+        const found = await this.LoginInfoRepository.findOne({where:{id}});
+
+        if(!found){
+            throw new NotFoundException(`User with id "${id}" not found`);
+        }
+
+        return found
+    }
+
     async updateUserLoginInfo(UpdateLoginInfoInput: UpdateLoginInfoInput): Promise<User>{
         // console.log(Email);
         // console.log(UserName);
         // console.log(Password);
         
-        const {UserName, Password, FirstName, LastName, ProfilePicURL, Birthday, Gender, PhoneNo, Email, LocationLat, LocationLong, AvgPoint, Description, TimeUpdate} = UpdateLoginInfoInput;
+        const {id, UserName, Password,} = UpdateLoginInfoInput;
 
+        /* check if UserName don't already exist */
         const found = await this.LoginInfoRepository.findOne({where: {UserName}});
         if(found && found.VerifyPhone){
-            throw new ConflictException('Username already exists!!!');
+            throw new ConflictException('Username or Account already exists!!!');
         }
 
-        const user = await this.getUserByEmail(Email);
+        // const user = await this.getUserByEmail(Email);
+        const user = await this.getUserByID(id);
         // console.log(user);
         
         user.UserName = UserName;
