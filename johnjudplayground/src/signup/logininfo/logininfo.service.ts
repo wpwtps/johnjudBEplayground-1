@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/user/user.entity';
 import { Repository } from 'typeorm';
 import { UpdateLoginInfoInput } from './update-logininfo.input';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class LoginInfoService {
@@ -34,6 +35,10 @@ export class LoginInfoService {
         return found
     }
 
+    private async hashPassword(password: string, salt: string): Promise<string>{
+        return bcrypt.hash(password, salt);
+    }
+
     async updateUserLoginInfo(UpdateLoginInfoInput: UpdateLoginInfoInput): Promise<User>{
         // console.log(Email);
         // console.log(UserName);
@@ -52,11 +57,13 @@ export class LoginInfoService {
         // console.log(user);
         
         user.UserName = UserName;
-        user.Password = Password;
+        // user.Password = Password;
+        user.salt = await bcrypt.genSalt();
+        user.Password = await this.hashPassword(Password, user.salt);
 
+                
         // console.log(user);
         
-
         return this.LoginInfoRepository.save(user);
     }
 }

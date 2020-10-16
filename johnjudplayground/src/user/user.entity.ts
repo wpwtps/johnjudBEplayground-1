@@ -58,4 +58,7 @@ export class User{
 
     @Column()
     VerifyEmail: Boolean;
+
+    @Column()
+    salt: string;
 }
