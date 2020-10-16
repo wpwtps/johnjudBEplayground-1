@@ -1,4 +1,5 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { AuthInput } from './auth.input';
 import { AuthService } from './auth.service';
 
@@ -13,5 +14,11 @@ export class AuthController {
         @Body() AuthInput: AuthInput,
     ){
         return this.AuthService.SignIn(AuthInput);
+    }
+
+    @Post('/test')
+    @UseGuards(AuthGuard())
+    test(@Req() req){
+        console.log(req);
     }
 }
