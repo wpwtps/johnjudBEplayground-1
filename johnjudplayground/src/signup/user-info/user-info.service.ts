@@ -33,7 +33,7 @@ export class UserInfoService {
     }
 
     async updateUserInfo(UpdateUserInfoInput: UpdateUserInfoInput): Promise<User>{
-        const {id, FirstName, LastName, Birthday, Gender, PhoneNo, LocationLat, LocationLong, TimeUpdate} = UpdateUserInfoInput;
+        const {id, FirstName, LastName, Birthday, Gender, PhoneNo, LocationLat, LocationLong,} = UpdateUserInfoInput;
 
         /* check if PhoneNO don't already exist */
         const found = await this.UserInfoRepository.findOne({where: {PhoneNo}});
@@ -43,6 +43,8 @@ export class UserInfoService {
 
         // const user = await this.getUserByEmail(Email);
         const user = await this.getUserByID(id);
+
+        const TimeUpdate = new Date();
 
         user.FirstName = FirstName;
         user.LastName = LastName;

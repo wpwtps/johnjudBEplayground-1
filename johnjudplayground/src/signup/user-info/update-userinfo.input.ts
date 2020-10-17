@@ -40,8 +40,8 @@ export class UpdateUserInfoInput{
     @Field()
     LocationLong: string;
 
-    @IsNotEmpty()
-    @IsDateString()
-    @Field()
-    TimeUpdate: Date;
+    // @IsNotEmpty()
+    // @IsDateString()
+    // @Field()
+    // TimeUpdate: Date;
 }
