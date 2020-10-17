@@ -19,6 +19,6 @@ export class AuthController {
     @Post('/test')
     @UseGuards(AuthGuard())
     test(@Req() req){
-        console.log(req);
+        console.log(req.user);
     }
 }
