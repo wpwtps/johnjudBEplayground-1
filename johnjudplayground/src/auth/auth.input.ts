@@ -4,10 +4,6 @@ import { IsDate, IsEmail, IsNotEmpty, IsNumber, IsString, IsUrl, Length, Matches
 @InputType()
 export class AuthInput{
     @IsNotEmpty()
-    @Field()
-    id: string;
-
-    @IsNotEmpty()
     @IsString()
     @MinLength(8)
     @MaxLength(20)
