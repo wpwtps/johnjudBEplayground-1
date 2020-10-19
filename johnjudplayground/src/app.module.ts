@@ -2,19 +2,21 @@ import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './user/user.entity';
+import { petinfo } from './petInfo/petInfo.entity'; 
 import { UserModule } from './user/user.module';
 import { SignupModule } from './signup/signup.module';
 import { AuthModule } from './auth/auth.module';
+import { petInfoModule } from './petInfo/petInfo.module'
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'mongodb',
-      url: 'mongodb://localhost/johnjud',
+      url: 'mongodb://localhost/JJdatabase',
       synchronize: true,
       useUnifiedTopology: true,
       entities: [
-        User,
+        User, petinfo
       ]
     }),
     GraphQLModule.forRoot({
@@ -22,7 +24,8 @@ import { AuthModule } from './auth/auth.module';
     }),
     UserModule,
     SignupModule,
-    AuthModule
+    AuthModule,
+    petInfoModule
   ],
   controllers: [],
   providers: [],
