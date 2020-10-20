@@ -11,6 +11,9 @@ export class petinfo{
       throw new Error('Method not implemented.');
     }
     */
+    @ObjectIdColumn()
+    _id: string;
+
     @PrimaryColumn()
     petid: string;
 

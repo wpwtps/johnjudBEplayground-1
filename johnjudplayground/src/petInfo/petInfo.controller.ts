@@ -10,62 +10,32 @@ import { petinfoinput } from './petinfo.input';
 export class petInfoController {
   constructor(private petInfoService: petInfoService) {}
 
+  /*
   @Get('/:petid')
   getPetById(@Param('petid', ParseIntPipe) petid: string): Promise<petinfo>{
     return this.petInfoService.getPetById(petid);
   }
-
-  /*
-  @Delete('/:id')
-  deleteTask(
-    @Param('id', ParseIntPipe) id: number,
-    @GetUser() user: User,
-  ): Promise<void> {
-    return this.tasksService.deleteTask(id, user);
-  }
   */
 
-  
-  @Patch()
-  async updatePetStatus(
-    // @Param('petid', ParseIntPipe) petid: string,
-    @Body() petinfoinput: petinfoinput
-  ): Promise<petinfoinput> {
-    return this.petInfoService.updatePetStatus(petinfoinput);
+  @Get('/:petid')
+  getPetById(@Param('petid') petid: string): Promise<petinfo> {
+    return this.petInfoService.getPetById(petid);
   }
-  
+
   @Get()
   async findAll(): Promise<petinfo[]>{
     return this.petInfoService.findAll();
   }
-  
-  /*
-  @Patch('/:petid/PetStatus')
+
+  @Patch('/:petid')
   updatePetStatus(
-    @Param('petid', ParseIntPipe) petid: number,
-    @Body('PetStatus') PetStatus: string,
-  ): Promise<petinfo> {
-    return this.petInfoService.updatePetStatus(petid, PetStatus);
+    @Param('petid') petid: string,
+    @Body() petinfoinput: petinfoinput
+  ): Promise<petinfoinput> {
+    return this.petInfoService.updatePetStatus(petinfoinput);
   }
-  */
+
+  
 }
 
-  /*
-  @Put(':id') // PUT /albums/123
-  async updatePetStatus(
-    @Param('id') id: ObjectID,
-    @Body() createPetInfoDto: CreatePetInfoDto,
-  ): Promise<petinfo> {
-    const petinfo = await this.petInfoService.findOne(id);
-    petinfo.PetStatus = createPetInfoDto.title;
-    return await this.petInfoService.createOrUpdate(album);
-  }
-  */
-
-  /*
-  @Put()
-  async UpdatePetStatus(){
-    return "test";
-  }
-  */
-    
+  

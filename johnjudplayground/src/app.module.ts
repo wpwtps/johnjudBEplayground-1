@@ -12,12 +12,20 @@ import { petInfoModule } from './petInfo/petInfo.module'
   imports: [
     TypeOrmModule.forRoot({
       type: 'mongodb',
+      host: 'localhost',
+      database: 'JJdatabase',
+      entities: [ User, petinfo],
+      synchronize: true,
+      /*
+      type: 'mongodb',
       url: 'mongodb://localhost/JJdatabase',
       synchronize: true,
       useUnifiedTopology: true,
       entities: [
         User, petinfo
       ]
+      */
+
     }),
     GraphQLModule.forRoot({
       autoSchemaFile: true,
