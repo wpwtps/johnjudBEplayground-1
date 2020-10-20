@@ -27,6 +27,12 @@ export class petInfoService {
     return found;
   }
 
+  /*
+  async nextStatus(): Promise<string>{
+    const PetStatus;
+
+  }
+  */
   
   async updatePetStatus(petinfoinput:petinfoinput): Promise<petinfo> {
     console.log('updatePetStatus Start!!!');
@@ -39,8 +45,16 @@ export class petInfoService {
     // const petinfo = await this.petInfoRepository.findOne({where: {petid:2}});
     //const petinfo = await this.petInfoRepository.findOne({where:{petid}});
     //console.log(petinfo);
-    petinfo.PetStatus = PetStatus;
-    //console.log(petinfo);
+    if (petinfo.PetStatus == 'available') {
+      petinfo.PetStatus = 'pending';
+      console.log(petinfo);
+    }
+
+    else if (petinfo.PetStatus == 'pending') {
+      petinfo.PetStatus = 'done';
+    }
+    //petinfo.PetStatus = PetStatus;
+    console.log(petinfo);
     await this.petInfoRepository.save(petinfo);
 
     return petinfo;
