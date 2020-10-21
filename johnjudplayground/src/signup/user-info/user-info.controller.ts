@@ -13,7 +13,7 @@ export class UserInfoController {
     @UsePipes(ValidationPipe)
     UserInfo(
         @Body() UpdateUserInfoInput: UpdateUserInfoInput,
-    ): Promise<User>{
+    ): Promise<object>{
         return this.userInfoService.updateUserInfo(UpdateUserInfoInput);
     }
 }

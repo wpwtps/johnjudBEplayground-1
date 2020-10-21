@@ -11,7 +11,7 @@ export class CheckEmailService {
         @InjectRepository(User) private userRepository: Repository<User>,
     ){}
 
-    async CreateEmailUser(CreateEmailUserInput: CreateEmailUserInput): Promise<User>{
+    async CreateEmailUser(CreateEmailUserInput: CreateEmailUserInput): Promise<object>{
         const {UserName, Password, FirstName, LastName, ProfilePicURL, Birthday, Gender, PhoneNo, Email, LocationLat, LocationLong, AvgPoint, Description, TimeUpdate} = CreateEmailUserInput;
 
         const found = await this.userRepository.findOne({where: {Email}});
@@ -29,6 +29,10 @@ export class CheckEmailService {
             Email,
         });
 
-        return this.userRepository.save(user);
+        await this.userRepository.save(user);
+
+        const id = user.id
+
+        return {"success":true, id};
     }
 }

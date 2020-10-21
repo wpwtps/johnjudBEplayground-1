@@ -13,7 +13,7 @@ export class CheckEmailController {
     @UsePipes(ValidationPipe)
     CreateEmailUser(
         @Body() CreateEmailUserInput: CreateEmailUserInput,
-    ): Promise<User>{
+    ): Promise<object>{
         return this.checkEmailService.CreateEmailUser(CreateEmailUserInput);
     }
 }

@@ -62,7 +62,7 @@ export class VerifyPhoneService {
         return "request SUCCESS";
     }
 
-    async checkOTP(VerifyOTPInput: VerifyOTPInput): Promise<User|string>{
+    async checkOTP(VerifyOTPInput: VerifyOTPInput): Promise<string>{
         const {id, PhoneNo, FeedbackOTP} = VerifyOTPInput;
         const user = await this.getUserByID(id);
         // console.log(user);        
@@ -80,7 +80,9 @@ export class VerifyPhoneService {
 
         user.VerifyPhone = true;
 
-        return this.VerifyPhoneRepository.save(user);
+        await this.VerifyPhoneRepository.save(user);
+
+        return "success";
     }
 
 
