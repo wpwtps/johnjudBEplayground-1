@@ -39,7 +39,7 @@ export class LoginInfoService {
         return bcrypt.hash(password, salt);
     }
 
-    async updateUserLoginInfo(UpdateLoginInfoInput: UpdateLoginInfoInput): Promise<User>{
+    async updateUserLoginInfo(UpdateLoginInfoInput: UpdateLoginInfoInput): Promise<object>{
         // console.log(Email);
         // console.log(UserName);
         // console.log(Password);
@@ -63,7 +63,9 @@ export class LoginInfoService {
 
                 
         // console.log(user);
-        
-        return this.LoginInfoRepository.save(user);
+
+        await this.LoginInfoRepository.save(user)
+
+        return {"success":true, id};
     }
 }

@@ -19,7 +19,7 @@ export class AuthService {
         const user = await this.userRepository.findOne({UserName, VerifyPhone:true})
 
         if(!user){
-            throw new UnauthorizedException('Invalid credentials 100');
+            throw new UnauthorizedException('Invalid credentials');
         }else if(user && await user.validatePassword(Password)){
             return user.UserName;
         }else{
@@ -33,7 +33,7 @@ export class AuthService {
         const UserName = await this.validateUserPassword(AuthInput);
 
         if(!UserName){
-            throw new UnauthorizedException('Invalid credentials 200');
+            throw new UnauthorizedException('Invalid credentials');
         }
 
         const payload: JwtPayload = {UserName};

@@ -22,7 +22,7 @@ export class VerifyPhoneController {
     @UsePipes(ValidationPipe)
     CheckOTP(
         @Body() VerifyOTPInput: VerifyOTPInput,
-    ): Promise<User|string>{
+    ): Promise<string>{
         return this.verifyPhoneService.checkOTP(VerifyOTPInput);
     }
 

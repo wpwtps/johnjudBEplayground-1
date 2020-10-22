@@ -13,7 +13,7 @@ export class LogininfoController {
     @UsePipes(ValidationPipe)
     LoginInfo(
         @Body() UpdateLoginInfoInput: UpdateLoginInfoInput, ConfirmPassword: string,
-    ): Promise<User|String>{
+    ): Promise<object|String>{
         return this.loginInfoService.updateUserLoginInfo(UpdateLoginInfoInput,);
     }
 }

@@ -32,7 +32,7 @@ export class UserInfoService {
         return found;
     }
 
-    async updateUserInfo(UpdateUserInfoInput: UpdateUserInfoInput): Promise<User>{
+    async updateUserInfo(UpdateUserInfoInput: UpdateUserInfoInput): Promise<object>{
         const {id, FirstName, LastName, Birthday, Gender, PhoneNo, LocationLat, LocationLong,} = UpdateUserInfoInput;
 
         /* check if PhoneNO don't already exist */
@@ -57,6 +57,8 @@ export class UserInfoService {
         user.VerifyEmail = false;
         user.VerifyPhone = false;
 
-        return this.UserInfoRepository.save(user);
+        await this.UserInfoRepository.save(user);
+
+        return {"success":true , id, PhoneNo};
     }
 }
