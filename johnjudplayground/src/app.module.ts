@@ -11,20 +11,22 @@ import { petInfoModule } from './petInfo/petInfo.module'
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-      type: 'mongodb',
+      /*
+      type: 'mongodb',  
       host: 'localhost',
       database: 'JJdatabase',
-      entities: [ User, petinfo],
+      entities: [ user, petinfo],
       synchronize: true,
-      /*
-      type: 'mongodb',
-      url: 'mongodb://localhost/JJdatabase',
-      synchronize: true,
-      useUnifiedTopology: true,
-      entities: [
-        User, petinfo
-      ]
       */
+      
+      type: 'mongodb',
+      url: 'mongodb+srv://worker:LpHNPZwDA4a36EH@cluster0.4yw9h.azure.mongodb.net/aom?retryWrites=true&w=majority',
+      // database: 'aom',
+      useNewUrlParser: true,
+      synchronize: true,
+      logging: true,
+      entities: [User, petinfo]
+      
 
     }),
     GraphQLModule.forRoot({

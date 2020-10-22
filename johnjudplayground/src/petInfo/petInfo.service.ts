@@ -14,7 +14,10 @@ export class petInfoService {
     ){}
 
   async findAll(): Promise<petinfo[]> {
-    return this.petInfoRepository.find();
+    const res = await this.petInfoRepository.find();
+    console.log(res);
+    
+    return res;
       }
 
   async getPetById(petid: string): Promise<petinfo> {

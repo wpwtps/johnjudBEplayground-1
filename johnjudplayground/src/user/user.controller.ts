@@ -3,7 +3,7 @@ import { CreateUserInput } from './create-user.input';
 import { User } from './user.entity';
 import { UserService } from './user.service';
 
-@Controller('user')
+@Controller('User')
 export class UserController {
     constructor(private userService: UserService){}
 
