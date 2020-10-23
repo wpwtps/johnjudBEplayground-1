@@ -20,8 +20,7 @@ import { petInfoModule } from './petInfo/petInfo.module'
       */
       
       type: 'mongodb',
-      url: 'mongodb+srv://worker:LpHNPZwDA4a36EH@cluster0.4yw9h.azure.mongodb.net/aom?retryWrites=true&w=majority',
-      // database: 'aom',
+      url: 'mongodb+srv://worker:LpHNPZwDA4a36EH@cluster0.4yw9h.azure.mongodb.net/play?retryWrites=true&w=majority',
       useNewUrlParser: true,
       synchronize: true,
       logging: true,
