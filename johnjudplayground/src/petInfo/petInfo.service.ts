@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { ObjectID, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import {petinfo} from 'src/petinfo/petInfo.entity';
+import {petinfo} from 'src/petInfo/petInfo.entity';
 import { petinfoinput } from './petinfo.input';
 
 @Injectable()
