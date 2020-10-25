@@ -1,9 +1,12 @@
 
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Query, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Query, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 //import { ObjectID } from 'mongodb';
 import { petinfo } from './petInfo.entity';
 import { petInfoService } from './petInfo.service';
 import { petinfoinput } from './petinfo.input';
+import { User } from 'src/user/user.entity';
+import { GetUser } from 'src/auth/get-user.decorator';
+import { AuthGuard } from '@nestjs/passport';
 
 
 @Controller('petInfo')
@@ -43,11 +46,13 @@ export class petInfoController {
   }
 
   @Post()
+  @UseGuards(AuthGuard())
     @UsePipes(ValidationPipe)
-    CreateEmailUser(
+    CreatePetInfo(
         @Body() petinfoinput:petinfoinput,
+        @GetUser() User: User
     ): Promise<object>{
-        return this.petInfoService.createPetInfo(petinfoinput);
+        return this.petInfoService.createPetInfo(petinfoinput, User);
     }
   
 }

@@ -16,21 +16,22 @@ import { notiModule } from './notification/notification.module'
   imports: [
     TypeOrmModule.forRoot({
       
+      /*
       type: 'mongodb',  
       host: 'localhost',
       database: 'JJdatabase',
       entities: [ User, petinfo, noti],
       synchronize: true,
+      */
       
       
-      /*
       type: 'mongodb',
       url: 'mongodb+srv://worker:LpHNPZwDA4a36EH@cluster0.4yw9h.azure.mongodb.net/play?retryWrites=true&w=majority',
       useNewUrlParser: true,
       synchronize: true,
       logging: true,
       entities: [User, petinfo, noti]
-      */
+      
 
     }),
     GraphQLModule.forRoot({

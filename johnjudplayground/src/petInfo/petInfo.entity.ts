@@ -1,5 +1,6 @@
-import { Entity, Column, ObjectIdColumn, PrimaryGeneratedColumn, BaseEntity, PrimaryColumn } from 'typeorm'; 
+import { Entity, Column, ObjectIdColumn, PrimaryGeneratedColumn, BaseEntity, PrimaryColumn, OneToOne } from 'typeorm'; 
 import { Double, ObjectID } from 'mongodb';
+import {User} from 'src/user/user.entity';
 
 @Entity()
 export class petinfo{
@@ -11,8 +12,8 @@ export class petinfo{
       throw new Error('Method not implemented.');
     }
     */
-   @ObjectIdColumn()
-   _id: string;
+    @ObjectIdColumn()
+    _id: string;
 
     @PrimaryColumn()
     petid: string;
@@ -52,6 +53,9 @@ export class petinfo{
 
     @Column()
     AdopUserId: string;
+
+    //@OneToOne(type => User, User=>User.pets, {eager: false})
+    //User: User;
 }
 
 

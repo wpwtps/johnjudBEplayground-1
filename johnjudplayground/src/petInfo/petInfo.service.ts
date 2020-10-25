@@ -15,7 +15,10 @@ export class petInfoService {
   constructor(
     @InjectRepository(petinfo)
     private petInfoRepository: Repository<petinfo>
+    //private userRepository: Repository<User>
     ){}
+
+
 
   //all pet, PetStatus = [ava, pend, done]
   async findAll(): Promise<petinfo[]> {
@@ -49,14 +52,17 @@ export class petInfoService {
     return found;
   }
 
-  async createPetInfo(petinfoinput:petinfoinput): Promise<object>{
+  async createPetInfo(petinfoinput:petinfoinput, User: User): Promise<object>{
+    //console.log(User);
     const { petid,PetName,PetBreed,PetGender,Type,PetPicURL,PetStatus,PetLength,PetHeight, PetCerURL,TimeStampUpdate, UserId,AdopUserId} = petinfoinput;
+    //const {id, FirstName, LastName, Birthday, Gender, PhoneNo, LocationLat, LocationLong,} = User;
+    //const User = this.petInfoRepository.getId()
     const newPet = this.petInfoRepository.create({
       petid: uuid(),
     });
-
+    
     const TimeUpdate = new Date();
-
+    //console.log(User.id);
     newPet.PetName = PetName;
     newPet.PetBreed = PetBreed;
     newPet.PetGender = PetGender;
@@ -69,7 +75,9 @@ export class petInfoService {
     newPet.TimeStampUpdate = TimeUpdate;
 
     //edit after as User Entity
-    newPet.UserId = UserId;
+    const Userid = User.id; 
+    newPet.UserId = Userid;
+    //console.log(User.id);
 
     newPet.AdopUserId = '';
     await this.petInfoRepository.save(newPet);
