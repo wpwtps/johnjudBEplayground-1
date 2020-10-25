@@ -11,8 +11,8 @@ export class petinfo{
       throw new Error('Method not implemented.');
     }
     */
-    @ObjectIdColumn()
-    _id: string;
+   @ObjectIdColumn()
+   _id: string;
 
     @PrimaryColumn()
     petid: string;
@@ -27,16 +27,31 @@ export class petinfo{
     PetGender: string;
 
     @Column()
+    Type: string;
+
+    @Column()
     PetPicURL: string;
 
     @Column()
     PetStatus: string;
 
     @Column()
-    PetWeight: Double;
+    PetLength: number;
+
+    @Column()
+    PetHeight: number;
 
     @Column()
     PetCerURL: string;
+
+    @Column()
+    TimeStampUpdate: Date;
+
+    @Column()
+    UserId: string;
+
+    @Column()
+    AdopUserId: string;
 }
 
 

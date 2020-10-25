@@ -10,14 +10,7 @@ import { petinfoinput } from './petinfo.input';
 export class petInfoController {
   constructor(private petInfoService: petInfoService) {}
 
-  /*
-  @Get('/:petid')
-  getPetById(@Param('petid', ParseIntPipe) petid: string): Promise<petinfo>{
-    return this.petInfoService.getPetById(petid);
-  }
-  */
-
-  @Get('/:petid')
+  @Get('/:petid/findpet')
   getPetById(@Param('petid') petid: string): Promise<petinfo> {
     return this.petInfoService.getPetById(petid);
   }
@@ -27,14 +20,35 @@ export class petInfoController {
     return this.petInfoService.findAll();
   }
 
-  @Patch('/:petid')
+  @Get('/genpet')
+  async findPetInWeb(): Promise<petinfo[]>{
+    return this.petInfoService.findPetInWeb();
+  }
+
+  @Patch('/:petid/updateStatus')
   updatePetStatus(
     @Param('petid') petid: string,
     @Body() petinfoinput: petinfoinput
   ): Promise<petinfoinput> {
     return this.petInfoService.updatePetStatus(petinfoinput);
   }
+  
+  //delete pet info 
+  @Patch('/:petid/delete')
+  removePet(
+    //@Param('petid') petid: string
+    @Body() petinfoinput: petinfoinput
+   ): Promise<petinfoinput>  {
+    return this.petInfoService.removePet(petinfoinput);
+  }
 
+  @Post()
+    @UsePipes(ValidationPipe)
+    CreateEmailUser(
+        @Body() petinfoinput:petinfoinput,
+    ): Promise<object>{
+        return this.petInfoService.createPetInfo(petinfoinput);
+    }
   
 }
 
