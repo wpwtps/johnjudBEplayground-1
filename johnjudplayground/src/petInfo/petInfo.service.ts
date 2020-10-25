@@ -2,13 +2,9 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { ObjectID, Repository, Not, IsNull, ObjectType} from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
-<<<<<<< HEAD
 import {petinfo} from './petInfo.entity';
 import {User} from 'src/user/user.entity';
 
-=======
-import {petinfo} from 'src/petInfo/petInfo.entity';
->>>>>>> eb6925b33b0c2fef25b9cf60d64d34243ca09e3a
 import { petinfoinput } from './petinfo.input';
 import { v4 as uuid } from 'uuid';
 //import { noti } from 'src/notification/notification.entity';
