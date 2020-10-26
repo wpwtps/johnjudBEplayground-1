@@ -59,7 +59,7 @@ export class ChangePhoneService {
     async checkOTP(
         VerifyOTPInput: VerifyOTPInput,
         user: User,        
-    ): Promise<string|object>{
+    ): Promise<object>{
         const {PhoneNo, FeedbackOTP} = VerifyOTPInput;
         const OTP = user.tempOTP;
 
@@ -69,11 +69,11 @@ export class ChangePhoneService {
         }
 
         if(FeedbackOTP!=OTP){
-            return "WRONG OTP!!!"
+            return {"success": false, "msg": "WRONG OTP!!!"};
         }
 
         await this.ChnagePhoneRepository.save(user);
 
-        return {"success": true}
+        return {"success": true};
     }
 }
