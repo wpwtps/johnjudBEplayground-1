@@ -5,7 +5,7 @@ import { User } from 'src/user/user.entity';
 import { ChangePasswordInput } from './change-password.input';
 import { ChangePasswordService } from './change-password.service';
 
-@Controller('change-password')
+@Controller('/user/edit-user/change-password')
 export class ChangePasswordController {
     constructor(
         private ChangePasswordService: ChangePasswordService
