@@ -26,7 +26,7 @@ export class ChangePhoneService {
         user.tempPhone = PhoneNo;
         await this.ChnagePhoneRepository.save(user);
 
-        return {"success": true, "PhoneNo": PhoneNo};
+        return {"success": true};
     }
 
     async generateOTP(): Promise<number>{
@@ -37,10 +37,11 @@ export class ChangePhoneService {
     }
 
     async requestOTP(
-        RequestOTPInput:RequestOTPInput,
+        // RequestOTPInput:RequestOTPInput,
         user: User,
     ): Promise<object>{
-        const {PhoneNo} = RequestOTPInput;
+        // const {PhoneNo} = RequestOTPInput;
+        const PhoneNo = user.tempPhone;
         const OTP = await this.generateOTP();
 
         const found = await this.ChnagePhoneRepository.findOne({where: {PhoneNo}});
@@ -60,7 +61,8 @@ export class ChangePhoneService {
         VerifyOTPInput: VerifyOTPInput,
         user: User,        
     ): Promise<object>{
-        const {PhoneNo, FeedbackOTP} = VerifyOTPInput;
+        const PhoneNo = user.tempPhone;
+        const {FeedbackOTP} = VerifyOTPInput;
         const OTP = user.tempOTP;
 
         const found = await this.ChnagePhoneRepository.findOne({where: {PhoneNo}});
@@ -71,6 +73,8 @@ export class ChangePhoneService {
         if(FeedbackOTP!=OTP){
             return {"success": false, "msg": "WRONG OTP!!!"};
         }
+
+        user.PhoneNo = user.tempPhone;
 
         await this.ChnagePhoneRepository.save(user);
 

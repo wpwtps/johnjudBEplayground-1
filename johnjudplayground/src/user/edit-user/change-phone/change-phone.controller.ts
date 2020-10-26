@@ -27,10 +27,10 @@ export class ChangePhoneController {
     @UseGuards(AuthGuard())
     @UsePipes(ValidationPipe)
     RequestOTP(
-        @Body() RequestOTPInput: RequestOTPInput,
+        // @Body() RequestOTPInput: RequestOTPInput,
         @GetUser() user: User,
     ): Promise<object>{
-        return this.ChangePhoneService.requestOTP(RequestOTPInput, user);
+        return this.ChangePhoneService.requestOTP(user);
     }
 
     @Patch('/verify-phone')
