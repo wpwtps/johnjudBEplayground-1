@@ -63,6 +63,9 @@ export class User{
     @Column()
     salt: string;
 
+    @Column()
+    tempPhone: string
+
     async validatePassword(Password: string): Promise<boolean>{
         const hash = await bcrypt.hash(Password, this.salt);
         return hash === this.Password;
