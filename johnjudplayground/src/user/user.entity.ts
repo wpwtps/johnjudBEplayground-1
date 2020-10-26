@@ -1,5 +1,6 @@
-import { Column, Entity, ObjectIdColumn, PrimaryColumn } from "typeorm";
+import { Column, Entity, ObjectIdColumn, OneToMany, PrimaryColumn } from "typeorm";
 import * as bcrypt from 'bcrypt';
+import {petinfo} from 'src/petInfo/petInfo.entity';
 
 @Entity()
 export class User{

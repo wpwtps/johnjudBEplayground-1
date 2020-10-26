@@ -1,5 +1,6 @@
-import { Entity, Column, ObjectIdColumn, PrimaryGeneratedColumn, BaseEntity, PrimaryColumn } from 'typeorm'; 
+import { Entity, Column, ObjectIdColumn, PrimaryGeneratedColumn, BaseEntity, PrimaryColumn, OneToOne } from 'typeorm'; 
 import { Double, ObjectID } from 'mongodb';
+import {User} from 'src/user/user.entity';
 
 @Entity()
 export class petinfo{
@@ -27,16 +28,34 @@ export class petinfo{
     PetGender: string;
 
     @Column()
+    Type: string;
+
+    @Column()
     PetPicURL: string;
 
     @Column()
     PetStatus: string;
 
     @Column()
-    PetWeight: Double;
+    PetLength: number;
+
+    @Column()
+    PetHeight: number;
 
     @Column()
     PetCerURL: string;
+
+    @Column()
+    TimeStampUpdate: Date;
+
+    @Column()
+    UserId: string;
+
+    @Column()
+    AdopUserId: string;
+
+    //@OneToOne(type => User, User=>User.pets, {eager: false})
+    //User: User;
 }
 
 
