@@ -4,6 +4,7 @@ import { User } from 'src/user/user.entity';
 import { Repository } from 'typeorm';
 import { ChangePhoneInput } from './change-phone.input';
 import { RequestOTPInput } from './request-otp.input';
+import { VerifyOTPInput } from './verify-otp.input';
 
 @Injectable()
 export class ChangePhoneService {
@@ -53,5 +54,26 @@ export class ChangePhoneService {
         await this.ChnagePhoneRepository.save(user);
 
         return {"success": true};        
+    }
+
+    async checkOTP(
+        VerifyOTPInput: VerifyOTPInput,
+        user: User,        
+    ): Promise<string|object>{
+        const {PhoneNo, FeedbackOTP} = VerifyOTPInput;
+        const OTP = user.tempOTP;
+
+        const found = await this.ChnagePhoneRepository.findOne({where: {PhoneNo}});
+        if(found && found.VerifyPhone){
+            throw new ConflictException('PhoneNO or Account already exisits!!!');
+        }
+
+        if(FeedbackOTP!=OTP){
+            return "WRONG OTP!!!"
+        }
+
+        await this.ChnagePhoneRepository.save(user);
+
+        return {"success": true}
     }
 }
