@@ -4,7 +4,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import {petinfo} from './petInfo.entity';
 import {User} from 'src/user/user.entity';
-
 import { petinfoinput } from './petinfo.input';
 import { v4 as uuid } from 'uuid';
 //import { noti } from 'src/notification/notification.entity';
@@ -14,8 +13,13 @@ export class petInfoService {
 
   constructor(
     @InjectRepository(petinfo)
-    private petInfoRepository: Repository<petinfo>
+    private petInfoRepository: Repository<petinfo>,
     //private userRepository: Repository<User>
+    /*
+    @InjectRepository(User)
+    private UserRepository: Repository<User>
+    */
+
     ){}
 
 
@@ -52,7 +56,15 @@ export class petInfoService {
     return found;
   }
 
-  async createPetInfo(petinfoinput:petinfoinput, User: User): Promise<object>{
+  /*
+  async myPetReg(UserId: string, User:User): Promise<petinfo[]>{
+    const userid = User.id;
+    const found = await this.petInfoRepository.find({where:{UserId:userid}});
+    return found;
+  }
+  */
+
+  async createPetInfo(petinfoinput:petinfoinput, User:User): Promise<object>{
     //console.log(User);
     const { petid,PetName,PetBreed,PetGender,Type,PetPicURL,PetStatus,PetLength,PetHeight, PetCerURL,TimeStampUpdate, UserId,AdopUserId} = petinfoinput;
     //const {id, FirstName, LastName, Birthday, Gender, PhoneNo, LocationLat, LocationLong,} = User;
@@ -85,10 +97,16 @@ export class petInfoService {
   }
  
   
-  async updatePetStatus(petinfoinput:petinfoinput): Promise<petinfo> {
+  async updatePetStatus(petinfoinput:petinfoinput, User:User): Promise<petinfo> {
     
     const {petid,PetName,PetBreed,PetGender,Type,PetPicURL,PetStatus,PetLength,PetHeight, PetCerURL,TimeStampUpdate, UserId,AdopUserId} = petinfoinput;
     const petinfo = await this.petInfoRepository.findOne({where:{petid}});
+    
+    const userid = User.id;
+    if (petinfo.UserId !== userid){
+      console.log('error');
+      return null ;
+    }
   
     if (petinfo.PetStatus == 'ava') {
       petinfo.PetStatus = 'pend';
@@ -103,14 +121,20 @@ export class petInfoService {
     return petinfo;
   }
 
-  async removePet(petinfoinput:petinfoinput): Promise<petinfo> {
+  async removePet(petinfoinput:petinfoinput, User:User): Promise<petinfo> {
     const { petid,PetName,PetBreed,PetGender,Type,PetPicURL,PetStatus,PetLength,PetHeight, PetCerURL,TimeStampUpdate, UserId,AdopUserId} = petinfoinput;
     const petinfo = await this.petInfoRepository.findOne({where:{petid}});
+    const userid = User.id;
+    if (petinfo.UserId !== userid){
+      console.log('error');
+      return null;
+    }
     petinfo.PetStatus = null;
     await this.petInfoRepository.save(petinfo);
     return petinfo;
   }
 
+  
   
 }
   
