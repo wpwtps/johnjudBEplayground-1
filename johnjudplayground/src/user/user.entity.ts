@@ -44,6 +44,9 @@ export class User{
     LocationLong: string;
 
     @Column()
+    Address: string;
+
+    @Column()
     AvgPoint: Number;
 
     @Column()

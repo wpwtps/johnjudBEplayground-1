@@ -1,5 +1,5 @@
 import { Field, InputType } from "@nestjs/graphql";
-import { IsDate, IsDateString, IsEmail, IsLatitude, IsLongitude, IsNotEmpty, IsNumber, IsPhoneNumber, IsUrl, Length, MaxLength, MinLength } from "class-validator";
+import { IsDate, IsDateString, IsEmail, IsLatitude, IsLongitude, IsNotEmpty, IsNumber, IsPhoneNumber, IsString, IsUrl, Length, MaxLength, MinLength } from "class-validator";
 
 @InputType()
 export class UpdateUserInfoInput{
@@ -30,15 +30,20 @@ export class UpdateUserInfoInput{
     @Field()
     PhoneNo: string;
 
-    @IsNotEmpty()
-    @IsLatitude()
-    @Field()
-    LocationLat: string;
+    // @IsNotEmpty()
+    // @IsLatitude()
+    // @Field()
+    // LocationLat: string;
+
+    // @IsNotEmpty()
+    // @IsLongitude()
+    // @Field()
+    // LocationLong: string;
 
     @IsNotEmpty()
-    @IsLongitude()
+    @IsString()
     @Field()
-    LocationLong: string;
+    Address: string;
 
     // @IsNotEmpty()
     // @IsDateString()
