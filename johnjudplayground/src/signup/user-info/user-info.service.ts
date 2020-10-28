@@ -60,6 +60,6 @@ export class UserInfoService {
 
         await this.UserInfoRepository.save(user);
 
-        return {"success":true , id, PhoneNo};
+        return {"success":true , id};
     }
 }
