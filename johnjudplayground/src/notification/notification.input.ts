@@ -6,24 +6,29 @@ import { Double, ObjectID } from "mongodb";
 export class notiinput{
 
     @Field()
-    _id: ObjectID;
+    notiid: string;
 
     @Field()
-    UserID: string;
+    DonUserID: string;
 
-    @IsDate()
     @Field()
-    TimeStamp: Date;
+    TimeStampUpdate: Date;
 
     @Field()
     Content: string;
 
     @Field()
-    Type: string;
+    RequestPet: string;
 
-    @IsNumber()
     @Field()
-    ReadNoti: Number;
+    RecUserID: string;
+
+    @Field()
+    petid: string;
+
+    //@IsNumber()
+    //@Field()
+    //ReadNoti: Number;
     
    // @Field()
    // NotiUnreadCount: number;
