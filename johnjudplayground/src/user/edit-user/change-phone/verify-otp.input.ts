@@ -4,11 +4,12 @@ import { IsNotEmpty, IsNumber, IsNumberString, IsPhoneNumber } from "class-valid
 @InputType()
 export class VerifyOTPInput{
     @IsNotEmpty()
-    @Field()
-    id: string
-
-    @IsNotEmpty()
     @IsNumberString()
     @Field()
     FeedbackOTP: number
+
+    @IsNotEmpty()
+    @IsPhoneNumber("TH")
+    @Field()
+    PhoneNo: string;
 }

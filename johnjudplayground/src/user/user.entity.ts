@@ -44,6 +44,9 @@ export class User{
     LocationLong: string;
 
     @Column()
+    Address: string;
+
+    @Column()
     AvgPoint: Number;
 
     @Column()
@@ -64,8 +67,8 @@ export class User{
     @Column()
     salt: string;
 
-    //@OneToMany(type => petinfo, petinfo => petinfo.UserId, {eager: true})
-    //pets: petinfo[];
+    @Column()
+    tempPhone: string
 
     async validatePassword(Password: string): Promise<boolean>{
         const hash = await bcrypt.hash(Password, this.salt);
