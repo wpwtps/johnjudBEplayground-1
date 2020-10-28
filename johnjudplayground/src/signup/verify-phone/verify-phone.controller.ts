@@ -14,7 +14,7 @@ export class VerifyPhoneController {
     @UsePipes(ValidationPipe)
     RequestOTP(
         @Body() RequestOTPInput: RequestOTPInput,
-    ): Promise<string>{
+    ): Promise<object>{
         return this.verifyPhoneService.requestOTP(RequestOTPInput);
     }
 
@@ -22,7 +22,7 @@ export class VerifyPhoneController {
     @UsePipes(ValidationPipe)
     CheckOTP(
         @Body() VerifyOTPInput: VerifyOTPInput,
-    ): Promise<string>{
+    ): Promise<object>{
         return this.verifyPhoneService.checkOTP(VerifyOTPInput);
     }
 
