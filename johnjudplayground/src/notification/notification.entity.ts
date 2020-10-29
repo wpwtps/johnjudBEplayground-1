@@ -15,8 +15,8 @@ export class noti {
   @Column()
   TimeStampUpdate: Date;
 
-  @Column()
-  Content: string;
+  //@Column()
+  //Content: string;
 
   @Column()
   RequestPet: string;

@@ -18,24 +18,45 @@ export class petInfoController {
     return this.petInfoService.findPetInWeb();
   }
 
+  /*
+  @Get('/mypetreg')
+  myPetReg(
+    //@Body() UserId: string,
+    @GetUser() User: User
+  ): Promise<petinfo[]> {
+    return this.petInfoService.myPetReg(User);
+  }
+  */
+
   @Get('/:petid')
   getPetById(@Param('petid') petid: string): Promise<petinfo> {
     return this.petInfoService.getPetById(petid);
   }
-
-    /*
-  @Get('/mypetreg')
-  myPetReg(
-    @Body() UserId: string,
-    @GetUser() User: User
-  ): Promise<petinfo[]> {
-    return this.petInfoService.myPetReg(UserId, User);
-  }
-  */
+  
 
   @Get()
   async findAll(): Promise<petinfo[]>{
     return this.petInfoService.findAll();
+  }
+
+  /*
+  @Patch('/sendCodePet')
+  @UseGuards(AuthGuard())
+  sendCodePet(
+    @Body() petinfoinput:petinfoinput,
+    @GetUser() User:User
+  ):Promise<petinfoinput>{
+    return this.petInfoService.sendCodePet(petinfoinput,User);
+  }
+  */
+
+  @Patch('/checkCode')
+  @UseGuards(AuthGuard())
+  checkCode(
+    @Body() petinfoinput:petinfoinput,
+    @GetUser() User:User
+  ):Promise<petinfoinput>{
+    return this.petInfoService.checkCode(petinfoinput, User);
   }
 
 
