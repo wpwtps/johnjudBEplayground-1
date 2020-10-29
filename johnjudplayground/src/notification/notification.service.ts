@@ -49,7 +49,7 @@ export class notiService {
   }
 
   async createNoti(notiinput:notiinput, User:User):Promise<object>{
-    const {notiid,DonUserID,TimeStampUpdate,Content,RequestPet,RecUserID,petid} = notiinput;
+    const {notiid,DonUserID,TimeStampUpdate,RequestPet,RecUserID,petid} = notiinput;
     const newNoti = this.notiRepository.create({
       notiid: uuid(),
     });
@@ -57,9 +57,8 @@ export class notiService {
     const TimeUpdate = new Date();
     console.log("create");
     const Userid = User.id; 
-    newNoti.DonUserID = Userid;
+    newNoti.DonUserID = Userid; 
     newNoti.TimeStampUpdate = TimeUpdate;
-    newNoti.Content = 'accept?';
     newNoti.RequestPet = '';
     newNoti.RecUserID = RecUserID;
     newNoti.petid = petid;
@@ -75,47 +74,9 @@ export class notiService {
   }
   
 
-  async acceptNoti(notiinput:notiinput, User:User): Promise<noti>{
+  
 
-    const {notiid,DonUserID,TimeStampUpdate,Content,RequestPet,RecUserID,petid} = notiinput;
-    const noti = await this.notiRepository.findOne({where:{notiid}});
-    //const UserPF = await this.UserRepository.findOne({where:{UserName: RecUserID}});
-    const Petinfo = await this.petinfoRepository.findOne({where:{petid:petid}});
-
-    const userid = User.id;
-    //console.log(userid);
-    //console.log(noti.RecUserID);
-    if (noti.RecUserID !== userid){
-      console.log('error');
-      return null;
-    }
-
-    //if (noti.RecUserID === userid && noti.petid)
-    noti.RequestPet = 'yes';
-    console.log(noti.petid);
-    console.log(noti.RecUserID);
-    //console.log(Petinfo.AdopUserId);
-    //Petinfo.AdopUserId = noti.RecUserID;
-    //await this.petinfoRepository.save(Petinfo);
-    await this.notiRepository.save(noti);
-    return noti;
-  }
-
-  async cancelNoti(notiinput:notiinput, User:User): Promise<noti>{
-
-    const {notiid,DonUserID,TimeStampUpdate,Content,RequestPet,RecUserID,petid} = notiinput;
-    const noti = await this.notiRepository.findOne({where:{notiid}});
-
-    const userid = User.id;
-    if (noti.RecUserID !== userid){
-      console.log('error');
-      return null;
-    }
-    noti.RequestPet = 'no';
-
-    await this.notiRepository.save(noti);
-    return noti;
-  }
+  
   
  
   

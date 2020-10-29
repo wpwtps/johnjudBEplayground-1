@@ -14,8 +14,8 @@ export class notiinput{
     @Field()
     TimeStampUpdate: Date;
 
-    @Field()
-    Content: string;
+    //@Field()
+    //Content: string;
 
     @Field()
     RequestPet: string;

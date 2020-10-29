@@ -45,4 +45,10 @@ export class petinfoinput{
     @Field()
     AdopUserId: string;
 
+    @Field()
+    CodePet: string;
+
+    @Field()
+    CheckCode: boolean;
+
 }

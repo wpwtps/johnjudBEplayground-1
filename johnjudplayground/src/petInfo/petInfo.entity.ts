@@ -54,6 +54,12 @@ export class petinfo{
     @Column()
     AdopUserId: string;
 
+    @Column()
+    CodePet: string;
+
+    @Column()
+    CheckCode: boolean;
+
     //@OneToOne(type => User, User=>User.pets, {eager: false})
     //User: User;
 }

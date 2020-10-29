@@ -40,7 +40,7 @@ export class notiController {
         return this.notiService.createNoti(notiinput, User);
     }
   
-    
+  /*
   @Patch('/:notiid/accept')
   @UseGuards(AuthGuard())
   acceptNoti(
@@ -50,6 +50,7 @@ export class notiController {
   ): Promise<noti>{
     return this.notiService.acceptNoti(notiinput,User);
   }
+  */
 
 
 
