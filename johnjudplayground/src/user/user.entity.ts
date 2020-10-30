@@ -1,6 +1,6 @@
-import { Column, Entity, ObjectIdColumn, OneToMany, PrimaryColumn } from "typeorm";
+import { Column, Entity, ObjectIdColumn, PrimaryColumn } from "typeorm";
 import * as bcrypt from 'bcrypt';
-import {petinfo} from 'src/petInfo/petInfo.entity';
+import { petinfo } from 'src/petInfo/petInfo.entity';
 
 @Entity()
 export class User{
@@ -44,6 +44,9 @@ export class User{
     LocationLong: string;
 
     @Column()
+    Facebook: string;
+
+    @Column()
     Address: string;
 
     @Column()
@@ -68,10 +71,13 @@ export class User{
     salt: string;
 
     @Column()
-    tempPhone: string
+    tempPhone: string;
 
     async validatePassword(Password: string): Promise<boolean>{
         const hash = await bcrypt.hash(Password, this.salt);
         return hash === this.Password;
     }
+
+   // @OneToMany(type => petinfo, petinfo => petinfo.UserId, {eager: true})
+    //pets: petinfo[];
 }

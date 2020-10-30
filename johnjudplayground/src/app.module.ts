@@ -11,7 +11,7 @@ import { SignupModule } from './signup/signup.module';
 import { AuthModule } from './auth/auth.module';
 import { petInfoModule } from './petInfo/petInfo.module'
 import { notiModule } from './notification/notification.module'
-import { UtilitiesModule } from './utilities/utilities.module';
+import {filterModule} from './filter/filter.module'
 
 @Module({
   imports: [
@@ -43,7 +43,7 @@ import { UtilitiesModule } from './utilities/utilities.module';
     AuthModule,
     petInfoModule,
     notiModule,
-    UtilitiesModule
+    filterModule
   ],
   controllers: [],
   providers: [],
