@@ -58,10 +58,15 @@ export class UserService {
         return found;
     }
 
-    
+
     async findUserByUsername(UserName:string): Promise<User>{
-        return this.userRepository.findOne({where:{UserName:UserName}});
+        const found = await this.userRepository.findOne({where:{ UserName }});
+        if (!found) {
+            throw new NotFoundException(`Task with ID ${UserName} not found`);
+        }
+        return found;
     }
+    
 
     async findUserByEmail(Email:string):Promise<User>{
         return this.userRepository.findOne({where:{Email:Email}});
@@ -71,24 +76,24 @@ export class UserService {
         return this.userRepository.save(user);
     }
 
-    async UpdateUserPhoneNO(id:string, PhoneNO: string): Promise<User>{
-        const userinfo = await this.findUserId(id)
+    async UpdateUserPhoneNO(UserName:string, PhoneNO: string): Promise<User>{
+        const userinfo = await this.findUserByUsername(UserName);
         userinfo.PhoneNo = PhoneNO;
         await this.userRepository.save(userinfo);
 
         return userinfo;
     }
 
-    async UpdateUserEmail(id: string,Email: string): Promise<User>{
-        const userinfo = await this.findUserId(id)
+    async UpdateUserEmail(UserName: string,Email: string): Promise<User>{
+        const userinfo = await this.findUserByUsername(UserName);
         userinfo.Email = Email;
         await this.userRepository.save(userinfo);
 
         return userinfo;
     }
 
-    async UpdateUserInfo(id: string,FirstName:string,LastName:string,Birthday:Date,Gender:string,Facebook: string,Address:string): Promise<User>{              
-        const userinfo = await this.findUserId(id);
+    async UpdateUserInfo(UserName: string,FirstName:string,LastName:string,Birthday:Date,Gender:string,Facebook: string,Address:string): Promise<User>{              
+        const userinfo = await this.findUserByUsername(UserName);
         userinfo.FirstName = FirstName;
         userinfo.LastName = LastName;
         userinfo.Birthday = Birthday;
@@ -99,28 +104,11 @@ export class UserService {
         return userinfo;
     }
 
-    async UpdateUserDescription(id: string,Description: string): Promise<User>{
-        const userinfo = await this.findUserId(id);
+    async UpdateUserDescription(UserName: string,Description: string): Promise<User>{
+        const userinfo = await this.findUserByUsername(UserName);
         userinfo.Description = Description;
         await this.userRepository.save(userinfo);
 
         return userinfo;
     }
-/*
-    async findAllPetRegister(id:string): Promise<petinfo[]>{
-        return this.petInfoRepository.find({where:{UserId:id, regPetStatus:"register"}});
-    }
-
-    async findAllPetAdoption(id:string): Promise<petinfo[]>{
-        return this.petInfoRepository.find({where:{ AdopUserId: id ,adopPetStatus:"adoption"}});
-    }
-
-    async findAllPetDonation(id:string): Promise<petinfo[]>{
-        return this.petInfoRepository.find({where:{ UserId: id , regPetStatus:"donation"}});
-    }
-
-    async deleteUserId(id:string): Promise<void>{
-        await this.userRepository.delete(id);
-    }
-    */
 }
