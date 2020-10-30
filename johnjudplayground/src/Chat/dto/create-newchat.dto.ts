@@ -1,17 +1,15 @@
 import { IsDate, isNotEmpty, IsNotEmpty } from "class-validator";
 import { ObjectID } from "mongodb";
+import { StringifyOptions } from "querystring";
 
 export class CreateNewChatDto{
-    @IsNotEmpty()
-    ownerId: ObjectID;
+    
+    ownerId: string;
 
-    @IsNotEmpty()
-    roomId: ObjectID;
+    roomId: string;
 
     @IsNotEmpty()
     message: string;
 
-    @IsDate()
-    @IsNotEmpty()
     createAt: Date;
 }

@@ -2,21 +2,21 @@ import {Entity,Column,ObjectIdColumn}  from 'typeorm';
 import { ObjectID} from 'mongodb';
 
 @Entity()
-export class Bookmark{
+export class Chat{
     @ObjectIdColumn()
-    id?: ObjectID;
-    
-    @Column()
-    PetId: ObjectID;
+    id?: string;
 
     @Column()
-    PetName: string;
+    message: string;
 
     @Column()
-    petPicUrl: string;
+    ownerId: string;
 
     @Column()
-    UserIdBookmark: ObjectID;
+    roomId: string;
+
+    @Column()
+    createAt: Date;
 }
 
-export default Bookmark;
+export default Chat;
