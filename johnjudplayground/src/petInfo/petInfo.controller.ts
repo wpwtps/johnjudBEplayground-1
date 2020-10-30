@@ -13,36 +13,72 @@ import { AuthGuard } from '@nestjs/passport';
 export class petInfoController {
   constructor(private petInfoService: petInfoService) {}
 
-  @Get('/:petid/findpet')
+  @Get('/genpet')
+  async findPetInWeb(): Promise<petinfo[]>{
+    return this.petInfoService.findPetInWeb();
+  }
+
+  /*
+  @Get('/mypetreg')
+  myPetReg(
+    //@Body() UserId: string,
+    @GetUser() User: User
+  ): Promise<petinfo[]> {
+    return this.petInfoService.myPetReg(User);
+  }
+  */
+
+  @Get('/:petid')
   getPetById(@Param('petid') petid: string): Promise<petinfo> {
     return this.petInfoService.getPetById(petid);
   }
+  
 
   @Get()
   async findAll(): Promise<petinfo[]>{
     return this.petInfoService.findAll();
   }
 
-  @Get('/genpet')
-  async findPetInWeb(): Promise<petinfo[]>{
-    return this.petInfoService.findPetInWeb();
+  /*
+  @Patch('/sendCodePet')
+  @UseGuards(AuthGuard())
+  sendCodePet(
+    @Body() petinfoinput:petinfoinput,
+    @GetUser() User:User
+  ):Promise<petinfoinput>{
+    return this.petInfoService.sendCodePet(petinfoinput,User);
+  }
+  */
+
+  @Patch('/checkCode')
+  @UseGuards(AuthGuard())
+  checkCode(
+    @Body() petinfoinput:petinfoinput,
+    @GetUser() User:User
+  ):Promise<petinfoinput>{
+    return this.petInfoService.checkCode(petinfoinput, User);
   }
 
-  @Patch('/:petid/updateStatus')
+
+  @Patch('/updateStatus')
+  @UseGuards(AuthGuard())
   updatePetStatus(
     @Param('petid') petid: string,
-    @Body() petinfoinput: petinfoinput
+    @Body() petinfoinput: petinfoinput,
+    @GetUser() User: User
   ): Promise<petinfoinput> {
-    return this.petInfoService.updatePetStatus(petinfoinput);
+    return this.petInfoService.updatePetStatus(petinfoinput, User);
   }
   
   //delete pet info 
-  @Patch('/:petid/delete')
+  @Patch('/delete')
+  @UseGuards(AuthGuard())
   removePet(
     //@Param('petid') petid: string
-    @Body() petinfoinput: petinfoinput
+    @Body() petinfoinput: petinfoinput,
+    @GetUser() User: User
    ): Promise<petinfoinput>  {
-    return this.petInfoService.removePet(petinfoinput);
+    return this.petInfoService.removePet(petinfoinput,User);
   }
 
   @Post()

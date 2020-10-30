@@ -1,25 +1,34 @@
-import { Entity, Column, ObjectIdColumn } from 'typeorm'; 
-import { Binary, ObjectID } from 'mongodb';
+import { Entity, Column, ObjectIdColumn, PrimaryColumn } from 'typeorm'; 
+//import { Binary, ObjectID } from 'mongodb';
 
 @Entity()
 export class noti {
   @ObjectIdColumn()
-  _id: ObjectID | string;
+  _id: string;
+
+  @PrimaryColumn()
+  notiid: string;
 
   @Column()
-  UserID: ObjectID;
+  DonUserID: string;
 
   @Column()
-  TimeStamp: Date;
+  TimeStampUpdate: Date;
+
+  //@Column()
+  //Content: string;
 
   @Column()
-  Content: string;
+  RequestPet: string;
 
   @Column()
-  Type: string;
+  RecUserID: string;
 
   @Column()
-  ReadNoti: Binary;
+  petid: string;
+
+  //@Column()
+  //ReadNoti: Binary;
   
   //@Column()
   //NotiUnreadCount: number;
