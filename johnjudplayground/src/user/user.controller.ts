@@ -14,80 +14,44 @@ export class UserController {
     async findAll(): Promise<User[]>{
         return this.userService.findAll();
     }
-/*
-    @Get(':id/petregister')
-    @UseGuards(AuthGuard())
-    async findAllPetRegister(
-        @Param('id') id: string,
-        @GetUser() User: User
-        ): Promise<petinfo[]>{
-        return this.userService.findAllPetRegister(id);
-    }
 
-    @Get(':id/petdonation')
-    @UseGuards(AuthGuard())
-    async findAllPetDonation(
-        @Param('id') id: string,
-        @GetUser() User: User
-        ): Promise<petinfo[]>{
-        return this.userService.findAllPetDonation(id);
-    }
-
-    @Get(':id/petadoption')
-    @UseGuards(AuthGuard())
-    async findAllPetAdoption(
-        @Param('id') id: string,
-        @GetUser() User: User
-        ): Promise<petinfo[]>{
-        return this.userService.findAllPetAdoption(id);
-    }
-    */
-
-    @Get('/:id')
-    @UseGuards(AuthGuard())
-    async findUserId(
-        @Param('id') id: string,
-        @GetUser() User: User
+    @Get('/:UserName')
+    async findUserByUsername(
+        @Param('UserName') UserName: string,
     ): Promise<User>{
-        return this.userService.findUserId(id);
+        return this.userService.findUserByUsername(UserName);
     }
-
     
-    //@Delete(':id/setting/delete')
-    //deleteUserId(@Param('id') id: string): Promise<void>{
-        //return this.userService.deleteUserId(id);
-    //}
-    
-    @Patch(':id/setting/phone')
+    @Patch(':UserName/setting/phone')
     @UseGuards(AuthGuard())
-    async UpdateUserPhone(@Param('id') id: string,
+    async UpdateUserPhone(@Param('UserName') UserName: string,
                           @Body('PhoneNO') PhoneNO: string,
                           @GetUser() User: User
                           ): Promise<User>{
-        return this.userService.UpdateUserPhoneNO(id,PhoneNO);  
+        return this.userService.UpdateUserPhoneNO(UserName,PhoneNO);  
     }
 
-    @Patch(':id/setting/email')
+    @Patch(':UserName/setting/email')
     @UseGuards(AuthGuard())
-    async UpdateUserEmail(@Param('id') id: string,
+    async UpdateUserEmail(@Param('UserName') UserName: string,
                           @Body('Email') Email: string,
                           @GetUser() User: User
                           ): Promise<User>{
-        return this.userService.UpdateUserEmail(id,Email);
+        return this.userService.UpdateUserEmail(UserName,Email);
     }
 
-    @Patch(':id/setting/description')
+    @Patch(':UserName/setting/description')
     @UseGuards(AuthGuard())
-    async UpdateUserDes(@Param('id') id: string,
+    async UpdateUserDes(@Param('UserName') UserName: string,
                         @Body('Description') Description: string,
                         @GetUser() User: User
                         ): Promise<User>{
-        return this.userService.UpdateUserDescription(id,Description);
+        return this.userService.UpdateUserDescription(UserName,Description);
     }
 
-    @Patch(':id/setting/infosetting')
+    @Patch(':UserName/setting/infosetting')
     @UseGuards(AuthGuard())
-    async UpdateUserInfo(@Param('id') id: string,
+    async UpdateUserInfo(@Param('UserName') UserName: string,
                          @Body('FirstName') FirstName: string,
                          @Body('LastName') LastName: string,
                          @Body('Birthday') Birthday: Date,
@@ -101,7 +65,7 @@ export class UserController {
         && (Birthday!=null)
         && (Address!='')
         && (Gender!='')){
-            return this.userService.UpdateUserInfo(id,FirstName,LastName,Birthday,Gender,Facebook,Address);
+            return this.userService.UpdateUserInfo(UserName,FirstName,LastName,Birthday,Gender,Facebook,Address);
         }
         else{
             throw new HttpException('Bad request', HttpStatus.BAD_REQUEST)
