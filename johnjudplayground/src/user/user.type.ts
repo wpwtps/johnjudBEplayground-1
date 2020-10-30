@@ -39,6 +39,12 @@ export class UserType{
     LocationLong: string;
 
     @Field()
+    Facebook: string;
+
+    @Field()
+    Address: string;
+
+    @Field()
     AvgPoint: number;
 
     @Field()
