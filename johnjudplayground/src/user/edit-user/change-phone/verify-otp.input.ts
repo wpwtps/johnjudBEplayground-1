@@ -1,11 +1,12 @@
 import { Field, InputType } from "@nestjs/graphql";
-import { IsEmail, IsNotEmpty, IsPhoneNumber } from "class-validator";
+import { IsNotEmpty, IsNumber, IsNumberString, IsPhoneNumber } from "class-validator";
 
 @InputType()
-export class RequestOTPInput{
+export class VerifyOTPInput{
     @IsNotEmpty()
+    @IsNumberString()
     @Field()
-    id: string
+    FeedbackOTP: number
 
     @IsNotEmpty()
     @IsPhoneNumber("TH")

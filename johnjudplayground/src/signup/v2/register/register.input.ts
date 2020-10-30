@@ -1,17 +1,23 @@
 import { Field, InputType } from "@nestjs/graphql";
-import { IsDate, IsDateString, IsEmail, IsNotEmpty, IsNumber, IsUrl, Length, MaxLength, MinLength } from "class-validator";
+import { IsDate, IsDateString, IsEmail, IsNotEmpty, IsNumber, IsPhoneNumber, IsString, IsUrl, Length, Matches, MaxLength, MinLength } from "class-validator";
 
 @InputType()
-export class CreateUserInput{
+export class RegisterInput{
     @IsNotEmpty()
+    @IsString()
     @MinLength(8)
     @MaxLength(20)
     @Field()
     UserName: string;
 
     @IsNotEmpty()
+    @IsString()
     @MinLength(8)
     @MaxLength(20)
+    @Matches(
+        /((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/,
+        { message: 'password too weak' },
+    )
     @Field()
     Password: string;
 
@@ -23,50 +29,27 @@ export class CreateUserInput{
     @Field()
     LastName: string;
 
-    @IsUrl()
-    @Field()
-    ProfilePicURL: string;
-
+    @IsNotEmpty()
     @IsDateString()
     @Field()
-    Birthday: string;
+    Birthday: Date;
 
     @IsNotEmpty()
     @Field()
     Gender: string;
 
-    @Length(10)
+    @IsNotEmpty()
+    @IsPhoneNumber("TH")
     @Field()
     PhoneNo: string;
 
+    @IsNotEmpty()
     @IsEmail()
     @Field()
     Email: string;
 
     @IsNotEmpty()
-    @Field()
-    LocationLat: string;
-
-    @IsNotEmpty()
-    @Field()
-    LocationLong: string;
-
-    @IsNotEmpty()
-    @Field()
-    Facebook: string;
-
-    @IsNotEmpty()
+    @IsString()
     @Field()
     Address: string;
-
-    @IsNumber()
-    @Field()
-    AvgPoint: Number;
-    
-    @Field()
-    Description: string;
-
-    @IsDateString()
-    @Field()
-    TimeUpdate: string;
 }

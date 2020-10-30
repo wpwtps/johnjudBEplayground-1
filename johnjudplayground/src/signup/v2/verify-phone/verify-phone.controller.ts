@@ -1,10 +1,9 @@
-import { Body, Controller, Get, Patch, UsePipes, ValidationPipe } from '@nestjs/common';
-import { User } from 'src/user/user.entity';
+import { Body, Controller, Patch, UsePipes, ValidationPipe } from '@nestjs/common';
 import { RequestOTPInput } from './request-otp.input';
 import { VerifyOTPInput } from './verify-otp.input';
 import { VerifyPhoneService } from './verify-phone.service';
 
-@Controller('/signup')
+@Controller('/signup/v2')
 export class VerifyPhoneController {
     constructor(
         private verifyPhoneService: VerifyPhoneService
@@ -14,7 +13,7 @@ export class VerifyPhoneController {
     @UsePipes(ValidationPipe)
     RequestOTP(
         @Body() RequestOTPInput: RequestOTPInput,
-    ): Promise<string>{
+    ): Promise<object>{
         return this.verifyPhoneService.requestOTP(RequestOTPInput);
     }
 
@@ -22,8 +21,7 @@ export class VerifyPhoneController {
     @UsePipes(ValidationPipe)
     CheckOTP(
         @Body() VerifyOTPInput: VerifyOTPInput,
-    ): Promise<string>{
+    ): Promise<object>{
         return this.verifyPhoneService.checkOTP(VerifyOTPInput);
     }
-
 }

@@ -42,10 +42,11 @@ export class VerifyPhoneService {
         return found
     }
 
-    async requestOTP(RequestOTPInput: RequestOTPInput): Promise<string>{
-        const {id, PhoneNo} = RequestOTPInput;
+    async requestOTP(RequestOTPInput: RequestOTPInput): Promise<object>{
+        const {id} = RequestOTPInput;
         const OTP = await this.generateOTP();
         const user = await this.getUserByID(id);
+        const PhoneNo = user.PhoneNo;
 
         /* check if PhoneNO don't already exist */
         const found = await this.VerifyPhoneRepository.findOne({where: {PhoneNo}});
@@ -59,14 +60,15 @@ export class VerifyPhoneService {
         
         this.VerifyPhoneRepository.save(user);
 
-        return "request SUCCESS";
+        return {"success": true};
     }
 
-    async checkOTP(VerifyOTPInput: VerifyOTPInput): Promise<string>{
-        const {id, PhoneNo, FeedbackOTP} = VerifyOTPInput;
+    async checkOTP(VerifyOTPInput: VerifyOTPInput): Promise<object>{
+        const {id, FeedbackOTP} = VerifyOTPInput;
         const user = await this.getUserByID(id);
         // console.log(user);        
         const OTP = user.tempOTP;
+        const PhoneNo = user.PhoneNo;
 
         /* check if PhoneNO don't already exist */
         const found = await this.VerifyPhoneRepository.findOne({where: {PhoneNo}});
@@ -75,14 +77,14 @@ export class VerifyPhoneService {
         }
 
         if(FeedbackOTP!=OTP){
-            return "WRONG OTP!!!"
+            return {"success": false, "msg":"WRONG OTP!!!"};
         }
 
         user.VerifyPhone = true;
 
         await this.VerifyPhoneRepository.save(user);
 
-        return "success";
+        return {"success": true};
     }
 
 
