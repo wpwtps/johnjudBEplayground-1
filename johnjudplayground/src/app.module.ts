@@ -12,6 +12,10 @@ import { AuthModule } from './auth/auth.module';
 import { petInfoModule } from './petInfo/petInfo.module'
 import { notiModule } from './notification/notification.module'
 import {filterModule} from './filter/filter.module'
+import Chatroom from './Chat/Room/chatroom.entity';
+import Chat from './Chat/Message/chat.entity';
+import { ChatModule } from './Chat/Message/chat.module';
+import { ChatroomModule } from './Chat/Room/chatroom.module';
 
 @Module({
   imports: [
@@ -31,7 +35,7 @@ import {filterModule} from './filter/filter.module'
       useNewUrlParser: true,
       synchronize: true,
       logging: true,
-      entities: [User, petinfo, noti]
+      entities: [User, petinfo, noti, Chatroom, Chat]
       
 
     }),
@@ -43,7 +47,9 @@ import {filterModule} from './filter/filter.module'
     AuthModule,
     petInfoModule,
     notiModule,
-    filterModule
+    filterModule,
+    ChatModule,
+    ChatroomModule
   ],
   controllers: [],
   providers: [],
