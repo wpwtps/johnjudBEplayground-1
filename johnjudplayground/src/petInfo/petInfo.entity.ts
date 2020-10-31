@@ -34,6 +34,9 @@ export class petinfo{
     PetPicURL: string;
 
     @Column()
+    DelPicURL: string;
+
+    @Column()
     PetStatus: string;
 
     @Column()

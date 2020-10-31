@@ -88,7 +88,7 @@ export class petInfoService {
 
   async createPetInfo(petinfoinput:petinfoinput, User:User): Promise<object>{
     //console.log(User);
-    const { petid,PetName,PetBreed,PetGender,Type,PetPicURL,PetStatus,PetLength,PetHeight, PetCerURL,TimeStampUpdate, UserId,AdopUserId,CodePet, CheckCode,TimeUpdate,Describe,PetAddress} = petinfoinput;
+    const { petid,PetName,PetBreed,PetGender,Type,PetPicURL,DelPicURL,PetStatus,PetLength,PetHeight, PetCerURL,TimeStampUpdate, UserId,AdopUserId,CodePet, CheckCode,TimeUpdate,Describe,PetAddress} = petinfoinput;
     const newPet = this.petInfoRepository.create({
       petid: uuid()
     });
@@ -100,6 +100,7 @@ export class petInfoService {
     newPet.PetGender = PetGender;
     newPet.Type = Type;
     newPet.PetPicURL = PetPicURL;
+    newPet.DelPicURL = DelPicURL;
     newPet.PetStatus = 'ava'
     newPet.PetLength = PetLength;
     newPet.PetHeight = PetHeight;
@@ -181,7 +182,7 @@ export class petInfoService {
     
   async editPet(petinfoinput:petinfoinput, User:User): Promise<petinfo> {
     console.log('edit start');
-    const { petid,PetName,PetBreed,PetGender,Type,PetPicURL,PetStatus,PetLength,PetHeight, PetCerURL,TimeStampUpdate, UserId,AdopUserId, CheckCode,TimeUpdate,Describe, PetAddress} = petinfoinput;
+    const { petid,PetName,PetBreed,PetGender,Type,PetPicURL,DelPicURL,PetStatus,PetLength,PetHeight, PetCerURL,TimeStampUpdate, UserId,AdopUserId, CheckCode,TimeUpdate,Describe, PetAddress} = petinfoinput;
     const petinfo = await this.petInfoRepository.findOne({where:{petid}});
     console.log(petinfo);
     const userid = User.id;
@@ -203,6 +204,7 @@ export class petInfoService {
     petinfo.PetGender = PetGender;
     petinfo.Type = Type;
     petinfo.PetPicURL = PetPicURL;
+    petinfo.DelPicURL = DelPicURL;
     petinfo.PetLength = PetLength;
     petinfo.PetHeight = PetHeight;
     petinfo.PetCerURL = PetCerURL;
