@@ -15,6 +15,7 @@ export class ChangePhoneService {
     async saveTempPhone(
         ChangePhoneInput: ChangePhoneInput,
         user: User,
+        accessToken: string,
     ): Promise<object>{
         const {PhoneNo} = ChangePhoneInput;
 
@@ -25,6 +26,27 @@ export class ChangePhoneService {
 
         user.tempPhone = PhoneNo;
         await this.ChnagePhoneRepository.save(user);
+
+
+        //Request OTP
+        var axios = require('axios');
+
+        var config = {
+        method: 'patch',
+        url: 'localhost:2000/user/edit-user/change-phone/request-OTP',
+        headers: {
+            'Authorization': `Bearer ${accessToken}`
+        }
+        };
+
+        axios(config)
+        .then(function (response) {
+        console.log(JSON.stringify(response.data));
+        })
+        .catch(function (error) {
+        console.log(error);
+        });
+
 
         return {"success": true};
     }
