@@ -18,24 +18,22 @@ export class petInfoController {
     return this.petInfoService.findPetHP();
   }
 
-  /*
-  @Get('/mypetreg')
-  myPetReg(
-    //@Body() UserId: string,
-    @GetUser() User: User
-  ): Promise<petinfo[]> {
-    return this.petInfoService.myPetReg(User);
-  }
-  */
-
- @Get('/:userid/homepage/receiver')
- async findPetHPrec(@Param('userid') userid: string): Promise<petinfo[]>{
-   return this.petInfoService.findPetHPrec(userid);
+ @Get('/homepage/receiver')
+ @UseGuards(AuthGuard())
+ async findPetHPrec(
+   @Param('userid') userid: string,
+   @GetUser() User:User
+   ): Promise<petinfo[]>{
+   return this.petInfoService.findPetHPrec(User.id);
  }
 
- @Get('/:userid/homepage/donator')
- async findPetHPdon(@Param('userid') userid: string): Promise<petinfo[]>{
-   return this.petInfoService.findPetHPdon(userid);
+ @Get('/homepage/donator')
+ @UseGuards(AuthGuard())
+ async findPetHPdon(
+   //@Param('userid') userid: string,
+   @GetUser() User:User
+  ): Promise<petinfo[]>{
+   return this.petInfoService.findPetHPdon(User.id);
  }
 
   @Get('/:petid')
@@ -90,6 +88,16 @@ export class petInfoController {
     @GetUser() User: User
    ): Promise<petinfoinput>  {
     return this.petInfoService.removePet(petinfoinput,User);
+  }
+
+  @Patch('/editPetInfo')
+  @UseGuards(AuthGuard())
+  editPetInfo(
+    //@Param('petid') petid: string,
+    @Body() petinfoinput: petinfoinput,
+    @GetUser() User: User
+  ): Promise<petinfoinput> {
+    return this.petInfoService.editPet(petinfoinput, User);
   }
 
   @Post()
