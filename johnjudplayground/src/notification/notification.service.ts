@@ -63,6 +63,7 @@ export class notiService {
       notiid: uuid(),
     });
     const Userid = User.id; 
+    console.log(Userid);
     if(petinfo.CheckCode===false){
       console.log('code error');
       throw new ConflictException('wrong code, please try again');
