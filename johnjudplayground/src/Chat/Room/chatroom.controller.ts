@@ -1,8 +1,11 @@
-import { Body, Controller, Get, Param, Patch, Post } from "@nestjs/common";
+import { Body, Controller, Get, Param, Patch, Post, UseGuards } from "@nestjs/common";
 import Newroom from "./chatroom.entity";
 import { CreateNewRoomDto} from '../dto/create-newroom.dto'
 import { UserService } from "src/user/user.service";
 import { ChatRoomService } from "./chatroom.service";
+import { AuthGuard } from "@nestjs/passport";
+import { User } from "src/user/user.entity";
+import { GetUser } from "src/auth/get-user.decorator";
 
 @Controller('room')
 export class RoomController{
@@ -10,8 +13,10 @@ export class RoomController{
                 private UserService: UserService){}
 
     @Post('createroom/:user1/:user2')
+    @UseGuards(AuthGuard())
     async createnewroom(@Param('user1') user1: string,
                         @Param('user2') user2: string,
+                        @GetUser() User: User,
                         @Body() CreateNewRoomDto: CreateNewRoomDto){
         const username1 = await this.UserService.findUserId(user1)
         const username2 = await this.UserService.findUserId(user2)
@@ -20,7 +25,6 @@ export class RoomController{
         CreateNewRoomDto.userid2 = user2
         CreateNewRoomDto.username1 = username1.UserName
         CreateNewRoomDto.username2 = username2.UserName
-        CreateNewRoomDto.readAt = null
         
         return this.ChatRoomService.createNewRoom(CreateNewRoomDto);
     }

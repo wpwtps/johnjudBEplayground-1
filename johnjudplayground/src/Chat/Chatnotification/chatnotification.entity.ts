@@ -2,21 +2,24 @@ import {Entity,Column,ObjectIdColumn}  from 'typeorm';
 import { ObjectID} from 'mongodb';
 
 @Entity()
-export class Chatroom{
+export class Chatnoti{
     @ObjectIdColumn()
     id?: string;
 
     @Column()
-    userid1 : string;
+    User: string;
 
     @Column()
-    userid2 : string;
+    senderid: string;
 
     @Column()
-    username1 : string;
+    sender: string;
 
     @Column()
-    username2 : string;
+    NotiDate: Date;
+
+    @Column()
+    isread : boolean;
 }
 
-export default Chatroom;
+export default Chatnoti;
