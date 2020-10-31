@@ -51,4 +51,7 @@ export class petinfoinput{
     @Field()
     CheckCode: boolean;
 
+    @Field()
+    TimeUpdate: Date;
+
 }

@@ -8,6 +8,7 @@ import { User } from 'src/user/user.entity';
 import { GetUser } from 'src/auth/get-user.decorator';
 import { AuthGuard } from '@nestjs/passport';
 import { petinfo } from 'src/petInfo/petInfo.entity';
+import { petinfoinput } from 'src/petInfo/petinfo.input';
 
 @Controller('noti')
 export class notiController {
@@ -30,17 +31,17 @@ export class notiController {
     return this.notiService.findAll();
   }
   
-  /*
+  
   @Post()
   @UseGuards(AuthGuard())
     @UsePipes(ValidationPipe)
     CreateNoti(
-        @Body() notiinput:notiinput,
+        @Body() petinfoinput:petinfoinput,
         @GetUser() User: User
     ): Promise<object>{
-        return this.notiService.createNoti(notiinput.petid,notiinput.RecUserID, User);
-    }
-  */
+        return this.notiService.createNoti(petinfoinput, User);
+  }
+  
   /*
   @Patch('/:notiid/accept')
   @UseGuards(AuthGuard())
