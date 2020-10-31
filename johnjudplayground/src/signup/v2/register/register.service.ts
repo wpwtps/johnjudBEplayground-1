@@ -39,6 +39,7 @@ export class RegisterService {
 
         //create new user
         const salt = await bcrypt.genSalt();
+        const TimeUpdate = new Date();
         const user = this.registerRepository.create({
             id: uuid(),
             UserName: UserName,
@@ -52,6 +53,7 @@ export class RegisterService {
             Email: Email,
             Address: Address,
             VerifyPhone: false,
+            TimeUpdate: TimeUpdate,
         })
 
         await this.registerRepository.save(user);
