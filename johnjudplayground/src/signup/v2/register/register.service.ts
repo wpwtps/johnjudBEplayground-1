@@ -42,7 +42,7 @@ export class RegisterService {
         const user = this.registerRepository.create({
             id: uuid(),
             UserName: UserName,
-            salt : await bcrypt.genSalt(),
+            salt : salt,
             Password: await this.hashPassword(Password, salt),
             FirstName: FirstName,
             LastName: LastName,
