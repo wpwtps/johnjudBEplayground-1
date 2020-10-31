@@ -66,7 +66,7 @@ export class ChangePhoneService {
         const PhoneNo = user.tempPhone;
         const OTP = await this.generateOTP();
 
-        const found = await this.ChnagePhoneRepository.findOne({where: {PhoneNo}});
+        const found = await this.ChnagePhoneRepository.findOne({where: {PhoneNo, VerifyPhone: true}});
         if(found && found.VerifyPhone){
             throw new ConflictException('PhoneNO or Account already exisits!!!');
         }
@@ -87,7 +87,7 @@ export class ChangePhoneService {
         const {FeedbackOTP} = VerifyOTPInput;
         const OTP = user.tempOTP;
 
-        const found = await this.ChnagePhoneRepository.findOne({where: {PhoneNo}});
+        const found = await this.ChnagePhoneRepository.findOne({where: {PhoneNo, VerifyPhone: true}});
         if(found && found.VerifyPhone){
             throw new ConflictException('PhoneNO or Account already exisits!!!');
         }
