@@ -60,6 +60,8 @@ export class petinfo{
     @Column()
     CheckCode: boolean;
 
+    @Column()
+    TimeUpdate: Date;
     //@OneToOne(type => User, User=>User.pets, {eager: false})
     //User: User;
 }

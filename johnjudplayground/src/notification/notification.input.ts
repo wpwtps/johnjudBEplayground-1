@@ -17,8 +17,8 @@ export class notiinput{
     //@Field()
     //Content: string;
 
-    @Field()
-    RequestPet: string;
+    //@Field()
+    //RequestPet: string;
 
     @Field()
     RecUserID: string;

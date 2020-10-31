@@ -18,8 +18,8 @@ export class noti {
   //@Column()
   //Content: string;
 
-  @Column()
-  RequestPet: string;
+  //@Column()
+  //RequestPet: string;
 
   @Column()
   RecUserID: string;

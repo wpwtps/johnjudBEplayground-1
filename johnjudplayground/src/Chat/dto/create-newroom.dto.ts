@@ -8,6 +8,4 @@ export class CreateNewRoomDto{
     username1: string; 
 
     username2: string;
-
-    readAt: Date;
 }
