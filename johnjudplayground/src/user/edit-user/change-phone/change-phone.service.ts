@@ -15,6 +15,7 @@ export class ChangePhoneService {
     async saveTempPhone(
         ChangePhoneInput: ChangePhoneInput,
         user: User,
+        Headers: string,
     ): Promise<object>{
         const {PhoneNo} = ChangePhoneInput;
 
@@ -25,6 +26,27 @@ export class ChangePhoneService {
 
         user.tempPhone = PhoneNo;
         await this.ChnagePhoneRepository.save(user);
+
+
+        //Request OTP
+        var axios = require('axios');
+
+        var config = {
+        method: 'patch',
+        url: 'http://localhost:2000/user/edit-user/change-phone/request-OTP',
+        headers: {
+            'Authorization': Object.values(Headers)[0]
+        }
+        };
+
+        axios(config)
+        .then(function (response) {
+        console.log(JSON.stringify(response.data));
+        })
+        .catch(function (error) {
+        console.log(error);
+        });
+
 
         return {"success": true};
     }
@@ -44,7 +66,7 @@ export class ChangePhoneService {
         const PhoneNo = user.tempPhone;
         const OTP = await this.generateOTP();
 
-        const found = await this.ChnagePhoneRepository.findOne({where: {PhoneNo}});
+        const found = await this.ChnagePhoneRepository.findOne({where: {PhoneNo, VerifyPhone: true}});
         if(found && found.VerifyPhone){
             throw new ConflictException('PhoneNO or Account already exisits!!!');
         }
@@ -65,7 +87,7 @@ export class ChangePhoneService {
         const {FeedbackOTP} = VerifyOTPInput;
         const OTP = user.tempOTP;
 
-        const found = await this.ChnagePhoneRepository.findOne({where: {PhoneNo}});
+        const found = await this.ChnagePhoneRepository.findOne({where: {PhoneNo, VerifyPhone: true}});
         if(found && found.VerifyPhone){
             throw new ConflictException('PhoneNO or Account already exisits!!!');
         }

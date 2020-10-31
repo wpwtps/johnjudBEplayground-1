@@ -51,9 +51,36 @@ export class RegisterService {
             PhoneNo: PhoneNo,
             Email: Email,
             Address: Address,
+            VerifyPhone: false,
         })
 
         await this.registerRepository.save(user);
+
+
+        //Request OTP
+        var axios = require('axios');
+        var qs = require('qs');
+        var data = qs.stringify({
+        'id': `${user.id}` 
+        });
+
+        var config = {
+        method: 'patch',
+        url: 'http://localhost:2000/signup/v2/request-OTP',
+        headers: { 
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        data : data
+        };
+
+        axios(config)
+        .then(function (response) {
+        console.log(JSON.stringify(response.data));
+        })
+        .catch(function (error) {
+        console.log(error);
+        });
+
 
         const id = user.id;
 

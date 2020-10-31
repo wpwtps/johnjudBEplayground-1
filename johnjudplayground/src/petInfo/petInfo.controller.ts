@@ -13,9 +13,9 @@ import { AuthGuard } from '@nestjs/passport';
 export class petInfoController {
   constructor(private petInfoService: petInfoService) {}
 
-  @Get('/genpet')
-  async findPetInWeb(): Promise<petinfo[]>{
-    return this.petInfoService.findPetInWeb();
+  @Get('/homepage')
+  async findPetHP(): Promise<petinfo[]>{
+    return this.petInfoService.findPetHP();
   }
 
   /*
@@ -27,6 +27,16 @@ export class petInfoController {
     return this.petInfoService.myPetReg(User);
   }
   */
+
+ @Get('/:userid/homepage/receiver')
+ async findPetHPrec(@Param('userid') userid: string): Promise<petinfo[]>{
+   return this.petInfoService.findPetHPrec(userid);
+ }
+
+ @Get('/:userid/homepage/donator')
+ async findPetHPdon(@Param('userid') userid: string): Promise<petinfo[]>{
+   return this.petInfoService.findPetHPdon(userid);
+ }
 
   @Get('/:petid')
   getPetById(@Param('petid') petid: string): Promise<petinfo> {
@@ -56,6 +66,7 @@ export class petInfoController {
     @Body() petinfoinput:petinfoinput,
     @GetUser() User:User
   ):Promise<petinfoinput>{
+    
     return this.petInfoService.checkCode(petinfoinput, User);
   }
 

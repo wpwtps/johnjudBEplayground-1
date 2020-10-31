@@ -30,6 +30,7 @@ export class notiController {
     return this.notiService.findAll();
   }
   
+  /*
   @Post()
   @UseGuards(AuthGuard())
     @UsePipes(ValidationPipe)
@@ -37,9 +38,9 @@ export class notiController {
         @Body() notiinput:notiinput,
         @GetUser() User: User
     ): Promise<object>{
-        return this.notiService.createNoti(notiinput, User);
+        return this.notiService.createNoti(notiinput.petid,notiinput.RecUserID, User);
     }
-  
+  */
   /*
   @Patch('/:notiid/accept')
   @UseGuards(AuthGuard())

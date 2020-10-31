@@ -1,7 +1,9 @@
-import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { User } from 'src/user/user.entity';
 import { AuthInput } from './auth.input';
 import { AuthService } from './auth.service';
+import { GetUser } from './get-user.decorator';
 
 @Controller('/signin')
 export class AuthController {
@@ -20,5 +22,16 @@ export class AuthController {
     @UseGuards(AuthGuard())
     test(@Req() req){
         console.log(req);
+    }
+
+    @Get('/get-basic')
+    @UseGuards(AuthGuard())
+    GetBasic(
+        @GetUser() user: User,
+    ){
+        const res = this.AuthService.getBasicInfo(user);
+        // console.log(res);
+        return res;
+        
     }
 }
