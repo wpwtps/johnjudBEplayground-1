@@ -15,6 +15,9 @@ import { v4 as uuid } from 'uuid';
 
 @Injectable()
 export class notiService {
+  static createNoti() {
+    throw new Error('Method not implemented.');
+  }
   constructor(
     @InjectRepository(noti)
     private notiRepository: Repository<noti>,
@@ -48,7 +51,11 @@ export class notiService {
     return found;
   }
 
-  async createNoti(notiinput:notiinput, User:User):Promise<object>{
+  //ขึ้นโนติที่ผู้ให้ว่า rec ยืนยันการรับสัตว์แล้ว petinfo.CheckCode = true;
+  //ต้องมีการเช็คว่าถ้าเกิด petinfo.CheckCode = true; ถึงจะเข้ามาคำสั่งนี้
+  
+  /*
+  async createNoti(notiinput:notiinput , User:User):Promise<object>{
     const {notiid,DonUserID,TimeStampUpdate,RequestPet,RecUserID,petid} = notiinput;
     const newNoti = this.notiRepository.create({
       notiid: uuid(),
@@ -65,6 +72,17 @@ export class notiService {
     await this.notiRepository.save(newNoti);
     return newNoti;
   }
+  */
+ /*
+ async createNoti(notiinput:notiinput, User:User): Promise<object>{
+  const {notiid,DonUserID,TimeStampUpdate,RequestPet,RecUserID,petid} = notiinput;
+  const newNoti = this.notiRepository.create({
+    notiid: uuid(),
+  });
+  const TimeUpdate = new Date();
+
+ }
+ */
 
   
   async findUSerID(UserName:string): Promise<User>{
