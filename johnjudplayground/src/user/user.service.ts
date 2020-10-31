@@ -114,9 +114,31 @@ export class UserService {
 
     async SaveImgURL(
         user: User,
-        imgURL: string,
-        delImgURL: string,
+        source: string,
     ): Promise<object>{
+        //upload image to cloud
+        var axios = require('axios');
+        var FormData = require('form-data');
+        var fs = require('fs');
+        var data = new FormData();
+        data.append('image', fs.createReadStream(source));
+
+        var config = {
+        method: 'post',
+        url: 'https://api.imgbb.com/1/upload?key=1949bda7eab7e16a8e613b0c302c4782',
+        headers: { 
+            ...data.getHeaders()
+        },
+        data : data
+        };
+        
+
+        const res = await axios(config);
+        
+        const imgURL = res.data.data.image.url;
+        const delImgURL = res.data.data.delete_url;
+        
+
         user.ImgURL = imgURL;
         user.DelImgURL = delImgURL;
 
