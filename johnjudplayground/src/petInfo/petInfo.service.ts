@@ -88,7 +88,7 @@ export class petInfoService {
 
   async createPetInfo(petinfoinput:petinfoinput, User:User): Promise<object>{
     //console.log(User);
-    const { petid,PetName,PetBreed,PetGender,Type,PetPicURL,DelPicURL,PetStatus,PetLength,PetHeight, PetCerURL,TimeStampUpdate, UserId,AdopUserId,CodePet, CheckCode,TimeUpdate} = petinfoinput;
+    const { petid,PetName,PetBreed,PetGender,Type,PetPicURL,DelPicURL,PetStatus,PetLength,PetHeight, PetCerURL,TimeStampUpdate, UserId,AdopUserId,CodePet, CheckCode,TimeUpdate,Describe,PetAddress} = petinfoinput;
     const newPet = this.petInfoRepository.create({
       petid: uuid()
     });
@@ -116,13 +116,15 @@ export class petInfoService {
     newPet.CodePet = '';
     newPet.CheckCode = false;
     newPet.TimeUpdate = TimePost;
+    newPet.Describe = Describe;
+    newPet.PetAddress = PetAddress;
     await this.petInfoRepository.save(newPet);
     return newPet;
   }
  
 
   async checkCode(petinfoinput:petinfoinput, User:User): Promise<petinfo>{
-    const {petid,PetName,PetBreed,PetGender,Type,PetPicURL,PetStatus,PetLength,PetHeight, PetCerURL,TimeStampUpdate, UserId,AdopUserId, CodePet, CheckCode,TimeUpdate} = petinfoinput;
+    const {petid,PetName,PetBreed,PetGender,Type,PetPicURL,DelPicURL,PetStatus,PetLength,PetHeight, PetCerURL,TimeStampUpdate, UserId,AdopUserId, CodePet, CheckCode,TimeUpdate,Describe,PetAddress} = petinfoinput;
     const petinfo = await this.petInfoRepository.findOne({where:{petid}});
     
     if(petinfo.AdopUserId===petinfo.UserId){
@@ -144,7 +146,7 @@ export class petInfoService {
   //update pend to done
   async updatePetStatus(petinfoinput:petinfoinput, User:User): Promise<petinfo> {
     
-    const {petid,PetName,PetBreed,PetGender,Type,PetPicURL,PetStatus,PetLength,PetHeight, PetCerURL,TimeStampUpdate, UserId,AdopUserId,CodePet, CheckCode,TimeUpdate} = petinfoinput;
+    const {petid,PetName,PetBreed,PetGender,Type,PetPicURL,DelPicURL,PetStatus,PetLength,PetHeight, PetCerURL,TimeStampUpdate, UserId,AdopUserId,CodePet, CheckCode,TimeUpdate,Describe,PetAddress} = petinfoinput;
     const petinfo = await this.petInfoRepository.findOne({where:{petid}});
     const userid = User.id;
 
@@ -165,7 +167,7 @@ export class petInfoService {
   }
 
   async removePet(petinfoinput:petinfoinput, User:User): Promise<petinfo> {
-    const { petid,PetName,PetBreed,PetGender,Type,PetPicURL,PetStatus,PetLength,PetHeight, PetCerURL,TimeStampUpdate, UserId,AdopUserId, CheckCode,TimeUpdate} = petinfoinput;
+    const { petid,PetName,PetBreed,PetGender,Type,PetPicURL,DelPicURL,PetStatus,PetLength,PetHeight, PetCerURL,TimeStampUpdate, UserId,AdopUserId, CheckCode,TimeUpdate,Describe,PetAddress} = petinfoinput;
     const petinfo = await this.petInfoRepository.findOne({where:{petid}});
     const userid = User.id;
     if (petinfo.UserId !== userid){
@@ -180,7 +182,7 @@ export class petInfoService {
     
   async editPet(petinfoinput:petinfoinput, User:User): Promise<petinfo> {
     console.log('edit start');
-    const { petid,PetName,PetBreed,PetGender,Type,PetPicURL,DelPicURL,PetStatus,PetLength,PetHeight, PetCerURL,TimeStampUpdate, UserId,AdopUserId, CheckCode,TimeUpdate} = petinfoinput;
+    const { petid,PetName,PetBreed,PetGender,Type,PetPicURL,DelPicURL,PetStatus,PetLength,PetHeight, PetCerURL,TimeStampUpdate, UserId,AdopUserId, CheckCode,TimeUpdate,Describe, PetAddress} = petinfoinput;
     const petinfo = await this.petInfoRepository.findOne({where:{petid}});
     console.log(petinfo);
     const userid = User.id;
@@ -207,6 +209,8 @@ export class petInfoService {
     petinfo.PetHeight = PetHeight;
     petinfo.PetCerURL = PetCerURL;
     petinfo.TimeUpdate = today;
+    petinfo.Describe = Describe;
+    petinfo.PetAddress = PetAddress;
 
     await this.petInfoRepository.save(petinfo);
     console.log(petinfo);

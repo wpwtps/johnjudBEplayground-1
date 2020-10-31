@@ -17,7 +17,7 @@ import Chat from './Chat/Message/chat.entity';
 import { ChatModule } from './Chat/Message/chat.module';
 import { ChatroomModule } from './Chat/Room/chatroom.module';
 import Chatnoti from './Chat/Chatnotification/chatnotification.entity';
-import Bookmark from './Bookmark/Bookmark.entity';
+import {bookmark} from './Bookmark/Bookmark.entity';
 import { BookmarkModule } from './Bookmark/Bookmark.module';
 
 @Module({
@@ -38,7 +38,7 @@ import { BookmarkModule } from './Bookmark/Bookmark.module';
       useNewUrlParser: true,
       synchronize: true,
       logging: true,
-      entities: [User, petinfo, noti, Chatroom, Chat ,Chatnoti,Bookmark]
+      entities: [User, petinfo, noti, Chatroom, Chat ,Chatnoti,bookmark]
       
 
     }),

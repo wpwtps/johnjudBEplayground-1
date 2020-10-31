@@ -9,7 +9,7 @@ import Chatroom from "./chatroom.entity";
 import { ChatRoomService } from "./chatroom.service";
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Chatroom,User,petinfo]), AuthModule],
+    imports: [TypeOrmModule.forFeature([Chatroom,User,petinfo]),AuthModule],
     controllers: [RoomController],
     providers: [ChatRoomService,UserService]
 })
