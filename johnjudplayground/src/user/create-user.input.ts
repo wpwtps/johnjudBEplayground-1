@@ -25,7 +25,7 @@ export class CreateUserInput{
 
     @IsUrl()
     @Field()
-    ProfilePicURL: string;
+    ImgURL: string;
 
     @IsDateString()
     @Field()

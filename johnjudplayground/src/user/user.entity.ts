@@ -23,7 +23,10 @@ export class User{
     LastName: string;
 
     @Column()
-    ProfilePicURL: string;
+    ImgURL: string;
+
+    @Column()
+    DelImgURL: string;
 
     @Column()
     Birthday: Date;
