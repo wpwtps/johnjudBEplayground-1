@@ -54,4 +54,10 @@ export class petinfoinput{
     @Field()
     TimeUpdate: Date;
 
+    @Field()
+    Describe: string;
+
+    @Field()
+    PetAddress: string;
+
 }
