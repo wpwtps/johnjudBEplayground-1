@@ -62,9 +62,10 @@ export class RegisterService {
         var data = qs.stringify({
         'id': `${user.id}` 
         });
+
         var config = {
         method: 'patch',
-        url: 'localhost:2000/v2/signup/request-OTP',
+        url: 'http://localhost:2000/signup/v2/request-OTP',
         headers: { 
             'Content-Type': 'application/x-www-form-urlencoded'
         },
