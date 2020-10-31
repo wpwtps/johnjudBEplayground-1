@@ -9,6 +9,8 @@ import Chatroom from "../Room/chatroom.entity";
 import { ChatController } from "./chat.controller";
 import Chat from "./chat.entity";
 import { ChatService } from "./chat.service";
+//import { AuthModule } from "src/auth/auth.module";
+//import { AuthGuard } from "@nestjs/passport";
 
 
 @Module({

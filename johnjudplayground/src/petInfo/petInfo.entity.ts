@@ -65,8 +65,12 @@ export class petinfo{
 
     @Column()
     TimeUpdate: Date;
-    //@OneToOne(type => User, User=>User.pets, {eager: false})
-    //User: User;
+    
+    @Column()
+    Describe: string;
+
+    @Column()
+    PetAddress: string;
 }
 
 
