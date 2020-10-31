@@ -15,7 +15,7 @@ export class ChangePhoneService {
     async saveTempPhone(
         ChangePhoneInput: ChangePhoneInput,
         user: User,
-        accessTokenHeader: string,
+        Headers: string,
     ): Promise<object>{
         const {PhoneNo} = ChangePhoneInput;
 
@@ -35,7 +35,7 @@ export class ChangePhoneService {
         method: 'patch',
         url: 'http://localhost:2000/user/edit-user/change-phone/request-OTP',
         headers: {
-            'Authorization': accessTokenHeader
+            'Authorization': Object.values(Headers)[0]
         }
         };
 

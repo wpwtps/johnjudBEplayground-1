@@ -17,11 +17,11 @@ export class ChangePhoneController {
     @UseGuards(AuthGuard())
     @UsePipes(ValidationPipe)
     ChangePhone(
-        @Headers() Authorization: string,
+        @Headers() Headers: string,
         @Body() ChangePhoneInput: ChangePhoneInput,
         @GetUser() user: User,
     ): Promise<object>{
-        return this.ChangePhoneService.saveTempPhone(ChangePhoneInput, user, Authorization);
+        return this.ChangePhoneService.saveTempPhone(ChangePhoneInput, user, Headers);
     }
 
     @Patch('/request-OTP')
