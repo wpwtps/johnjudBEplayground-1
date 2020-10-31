@@ -51,6 +51,7 @@ export class RegisterService {
             PhoneNo: PhoneNo,
             Email: Email,
             Address: Address,
+            VerifyPhone: false,
         })
 
         await this.registerRepository.save(user);
