@@ -1,4 +1,4 @@
-import { Body, Controller, Patch, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Header, Headers, Patch, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from 'src/auth/get-user.decorator';
 import { User } from 'src/user/user.entity';
@@ -17,10 +17,11 @@ export class ChangePhoneController {
     @UseGuards(AuthGuard())
     @UsePipes(ValidationPipe)
     ChangePhone(
+        @Headers() Headers: string,
         @Body() ChangePhoneInput: ChangePhoneInput,
         @GetUser() user: User,
     ): Promise<object>{
-        return this.ChangePhoneService.saveTempPhone(ChangePhoneInput, user);
+        return this.ChangePhoneService.saveTempPhone(ChangePhoneInput, user, Headers);
     }
 
     @Patch('/request-OTP')

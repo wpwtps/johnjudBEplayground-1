@@ -30,7 +30,7 @@ export class RegisterInput{
     LastName: string;
 
     @IsNotEmpty()
-    @IsDateString()
+    // @IsDateString()
     @Field()
     Birthday: Date;
 

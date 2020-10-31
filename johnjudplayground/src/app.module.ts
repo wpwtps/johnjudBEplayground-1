@@ -16,6 +16,9 @@ import Chatroom from './Chat/Room/chatroom.entity';
 import Chat from './Chat/Message/chat.entity';
 import { ChatModule } from './Chat/Message/chat.module';
 import { ChatroomModule } from './Chat/Room/chatroom.module';
+import Chatnoti from './Chat/Chatnotification/chatnotification.entity';
+import Bookmark from './Bookmark/Bookmark.entity';
+import { BookmarkModule } from './Bookmark/Bookmark.module';
 
 @Module({
   imports: [
@@ -35,7 +38,7 @@ import { ChatroomModule } from './Chat/Room/chatroom.module';
       useNewUrlParser: true,
       synchronize: true,
       logging: true,
-      entities: [User, petinfo, noti, Chatroom, Chat]
+      entities: [User, petinfo, noti, Chatroom, Chat ,Chatnoti,Bookmark]
       
 
     }),
@@ -49,7 +52,8 @@ import { ChatroomModule } from './Chat/Room/chatroom.module';
     notiModule,
     filterModule,
     ChatModule,
-    ChatroomModule
+    ChatroomModule,
+    BookmarkModule
   ],
   controllers: [],
   providers: [],

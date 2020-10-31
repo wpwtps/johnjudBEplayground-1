@@ -48,7 +48,7 @@ export class VerifyPhoneService {
         
         this.VerifyPhoneRepository.save(user);
 
-        return {"success": true};
+        return {"request OTP success": true};
     }
 
     async checkOTP(VerifyOTPInput: VerifyOTPInput): Promise<object>{
