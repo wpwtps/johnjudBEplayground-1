@@ -1,5 +1,5 @@
 import { Field, InputType } from "@nestjs/graphql";
-import { IsDate, IsEmail, IsNotEmpty, IsNumber, IsUrl, Length, MaxLength, MinLength } from "class-validator";
+import { IsDate, IsDateString, IsEmail, IsNotEmpty, IsNumber, IsUrl, Length, MaxLength, MinLength } from "class-validator";
 
 @InputType()
 export class CreateUserInput{
@@ -27,9 +27,9 @@ export class CreateUserInput{
     @Field()
     ProfilePicURL: string;
 
-    @IsDate()
+    @IsDateString()
     @Field()
-    Birthday: Date;
+    Birthday: string;
 
     @IsNotEmpty()
     @Field()
@@ -51,6 +51,14 @@ export class CreateUserInput{
     @Field()
     LocationLong: string;
 
+    @IsNotEmpty()
+    @Field()
+    Facebook: string;
+
+    @IsNotEmpty()
+    @Field()
+    Address: string;
+
     @IsNumber()
     @Field()
     AvgPoint: Number;
@@ -58,7 +66,7 @@ export class CreateUserInput{
     @Field()
     Description: string;
 
-    @IsDate()
+    @IsDateString()
     @Field()
-    TimeUpdate: Date;
+    TimeUpdate: string;
 }

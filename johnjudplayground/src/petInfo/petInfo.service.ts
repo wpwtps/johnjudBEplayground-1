@@ -5,7 +5,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import {petinfo} from './petInfo.entity';
 import {User} from 'src/user/user.entity';
 import { petinfoinput } from './petinfo.input';
+import { notiinput } from 'src/notification/notification.input';
 import { v4 as uuid } from 'uuid';
+
+import { notiService } from 'src/notification/notification.service';
+
 //import { noti } from 'src/notification/notification.entity';
 
 @Injectable()
@@ -27,7 +31,6 @@ export class petInfoService {
   //all pet, PetStatus = [ava, pend, done]
   async findAll(): Promise<petinfo[]> {
     const res = await this.petInfoRepository.find();
-    //console.log(res);
     
     return res;
   }
@@ -38,10 +41,37 @@ export class petInfoService {
     //const res = await this.petInfoRepository.find({where:{ PetStatus: Not("delete") }});
     const res = await this.petInfoRepository.find({
         where:{$or:[{PetStatus: 'ava'},{PetStatus:'pend'},{PetStatus:'done'}]}
-        //where:{$not:{PetStatus: null}}
-          
       });
     console.log(res);
+    
+    return res;
+  }
+
+  async findPetHP(): Promise<petinfo[]> {
+    const res = await this.petInfoRepository.find({
+        where:{PetStatus: 'ava'}
+      });
+    
+    return res;
+  }
+
+  async findPetHPrec(userid:string): Promise<petinfo[]> {
+    const res = await this.petInfoRepository.find({
+        where:{
+          $and:[{PetStatus: 'ava'}, {UserId:{$not:{$eq:userid}}}]
+        }
+      });
+    
+    return res;
+  }
+
+  async findPetHPdon(userid:string): Promise<petinfo[]> {
+    const res = await this.petInfoRepository.find({
+        where:{
+          $and:[{PetStatus: 'ava'}, {UserId:{$eq:userid}}]
+        }
+          
+      });
     
     return res;
   }
@@ -70,8 +100,6 @@ export class petInfoService {
   async createPetInfo(petinfoinput:petinfoinput, User:User): Promise<object>{
     //console.log(User);
     const { petid,PetName,PetBreed,PetGender,Type,PetPicURL,PetStatus,PetLength,PetHeight, PetCerURL,TimeStampUpdate, UserId,AdopUserId,CodePet, CheckCode} = petinfoinput;
-    //const {id, FirstName, LastName, Birthday, Gender, PhoneNo, LocationLat, LocationLong,} = User;
-    //const User = this.petInfoRepository.getId()
     const newPet = this.petInfoRepository.create({
       petid: uuid()
     });
@@ -101,21 +129,11 @@ export class petInfoService {
     return newPet;
   }
  
-  /*
-  async sendCodePet(petinfoinput:petinfoinput,User:User):Promise<petinfo>{
-    const {petid,PetName,PetBreed,PetGender,Type,PetPicURL,PetStatus,PetLength,PetHeight, PetCerURL,TimeStampUpdate, UserId,AdopUserId, CodePet, CheckCode} = petinfoinput;
-    const petinfo = await this.petInfoRepository.findOne({where:{petid}});
-    petinfo.CodePet = CodePet;
-    await this.petInfoRepository.save(petinfo);
-    console.log(petinfo);
-    return petinfo;  
-  }
-  */
 
   async checkCode(petinfoinput:petinfoinput, User:User): Promise<petinfo>{
     const {petid,PetName,PetBreed,PetGender,Type,PetPicURL,PetStatus,PetLength,PetHeight, PetCerURL,TimeStampUpdate, UserId,AdopUserId, CodePet, CheckCode} = petinfoinput;
     const petinfo = await this.petInfoRepository.findOne({where:{petid}});
-   
+    
     if(petinfo.AdopUserId==petinfo.UserId){
       throw new ConflictException('Can not get your own pet')
     }
@@ -124,8 +142,8 @@ export class petInfoService {
       petinfo.CheckCode = true;
       petinfo.AdopUserId = User.id;
       petinfo.PetStatus = 'pend';
+      //await this.notiSer
     }
-
     await this.petInfoRepository.save(petinfo);
     console.log(petinfo);
     return petinfo;
@@ -144,11 +162,12 @@ export class petInfoService {
       return null ;
     }
   
+    /*
     if (petinfo.PetStatus == 'ava') {
       petinfo.PetStatus = 'pend';
     }
-
-    else if (petinfo.PetStatus == 'pend') {
+    */
+    if (petinfo.PetStatus == 'pend') {
       petinfo.PetStatus = 'done';
     }
 
@@ -170,6 +189,34 @@ export class petInfoService {
     return petinfo;
   }
 
+    /*
+  async editPet(petinfoinput:petinfoinput, User:User): Promise<petinfo> {
+    const { petid,PetName,PetBreed,PetGender,Type,PetPicURL,PetStatus,PetLength,PetHeight, PetCerURL,TimeStampUpdate, UserId,AdopUserId} = petinfoinput;
+    const petinfo = await this.petInfoRepository.findOne({where:{petid}});
+    const userid = User.id;
+    if (petinfo.UserId !== userid){
+      console.log('error');
+      return null;
+    }
+    const today = new Date();
+    const postday = petinfo.TimeStampUpdate;
+    if (postday-today <= 2){
+
+    }
+    petinfo.PetName = PetName;
+    petinfo.PetBreed = PetBreed;
+    petinfo.PetGender = PetGender;
+    petinfo.Type = Type;
+    petinfo.PetPicURL = PetPicURL;
+    petinfo.PetLength = PetLength;
+    petinfo.PetHeight = PetHeight;
+    petinfo.PetCerURL = PetCerURL;
+    petinfo.TimeStampUpdate = today;
+
+    await this.petInfoRepository.save(petinfo);
+    return petinfo;
+  }
+  */
 
 
   
