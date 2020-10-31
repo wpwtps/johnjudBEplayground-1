@@ -25,6 +25,9 @@ export class petinfoinput{
     PetPicURL: string;
 
     @Field()
+    DelPicURL: string;
+
+    @Field()
     PetStatus: string;
 
     @Field()
