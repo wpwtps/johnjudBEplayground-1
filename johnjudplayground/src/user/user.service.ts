@@ -15,7 +15,7 @@ export class UserService {
     ){}
 
     async CreateUser(CreateUserInput: CreateUserInput): Promise<User>{
-        const {UserName, Password, FirstName, LastName, ProfilePicURL, Birthday, Gender, PhoneNo, Email, LocationLat, LocationLong,Facebook,Address, AvgPoint, Description, TimeUpdate} = CreateUserInput;
+        const {UserName, Password, FirstName, LastName, ImgURL, Birthday, Gender, PhoneNo, Email, LocationLat, LocationLong,Facebook,Address, AvgPoint, Description, TimeUpdate} = CreateUserInput;
         
         const user = this.userRepository.create({
             id: uuid(),
@@ -23,7 +23,7 @@ export class UserService {
             Password,
             FirstName,
             LastName,
-            ProfilePicURL,
+            ImgURL,
             Birthday,
             Gender,
             PhoneNo,
@@ -110,5 +110,17 @@ export class UserService {
         await this.userRepository.save(userinfo);
 
         return userinfo;
+    }
+
+    async SaveImgURL(
+        user: User,
+        imgURL: string,
+        delImgURL: string,
+    ): Promise<object>{
+        user.ImgURL = imgURL;
+        user.DelImgURL = delImgURL;
+
+        await this.userRepository.save(user);
+        return {"success": true}
     }
 }

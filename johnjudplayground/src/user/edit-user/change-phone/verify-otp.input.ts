@@ -7,9 +7,4 @@ export class VerifyOTPInput{
     @IsNumberString()
     @Field()
     FeedbackOTP: number
-
-    @IsNotEmpty()
-    @IsPhoneNumber("TH")
-    @Field()
-    PhoneNo: string;
 }
