@@ -124,7 +124,7 @@ export class petInfoService {
     const {petid,PetName,PetBreed,PetGender,Type,PetPicURL,PetStatus,PetLength,PetHeight, PetCerURL,TimeStampUpdate, UserId,AdopUserId, CodePet, CheckCode,TimeUpdate} = petinfoinput;
     const petinfo = await this.petInfoRepository.findOne({where:{petid}});
     
-    if(petinfo.AdopUserId==petinfo.UserId){
+    if(petinfo.AdopUserId===petinfo.UserId){
       throw new ConflictException('Can not get your own pet')
     }
     if (CodePet===petid){
