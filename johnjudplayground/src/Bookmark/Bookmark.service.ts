@@ -28,8 +28,9 @@ export class BookmarkService{
         return this.BookmarkRepository.find({where:{UserIdBookmark:UserId}});
     }
 
-    async createBookmark(bookmarkinput: bookmarkinput,User:User):Promise<object>{
-        const {bmid, petid, petPicUrl, UserIdBookmark} = bookmarkinput;
+    async createBookmark(createBookmarkInput):Promise<object>{
+        //const {bmid, petid, petPicUrl, UserIdBookmark} = bookmarkinput;
+        const {UserId, petid}=createBookmarkInput; 
         const newBookmark = this.BookmarkRepository.create({
                 bmid: uuid()
               }
@@ -39,7 +40,7 @@ export class BookmarkService{
         
         console.log(found);
         newBookmark.petPicUrl = found.PetPicURL;
-        newBookmark.UserIdBookmark = User.id;
+        newBookmark.UserIdBookmark = UserId;
         await this.BookmarkRepository.save(newBookmark);
         
         const id = newBookmark.bmid;

@@ -5,7 +5,7 @@ import { Double } from "mongodb";
 //import {User} from 'src/user/user.entity';
 
 @InputType()
-export class deleteinput{
+export class createBookmarkInput{
 
     @Field()
     UserId: string;

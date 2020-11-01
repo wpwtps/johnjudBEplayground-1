@@ -8,6 +8,7 @@ import { UserService } from "src/user/user.service";
 import { petInfoService } from 'src/petInfo/petInfo.service';
 import { bookmarkinput} from './bookmark.input';
 import { GetUser } from 'src/auth/get-user.decorator';
+import {createBookmarkInput} from './createBookmarkInput';
 
 @Controller('bookmark')
 export class BookmarkController{
@@ -19,19 +20,22 @@ export class BookmarkController{
     }
 
     @Get('/:UserId')
-    @UseGuards(AuthGuard())
+    //@UseGuards(AuthGuard())
     async findBookmark(@Param('UserId') UserId: string): Promise<bookmark[]>{
         return this.BookmarkService.findBookmark(UserId);
     }
 
-    @Post('/:UserId/addfav')
+    @Post('/:UserId/:petid/addfav')
     @UseGuards(AuthGuard())
     createBookmark(
         @Param('UserId') UserId: string,
-        @Body() bookmarkinput: bookmarkinput,
+        @Param('petid') petid: string,
+        @Body() createBookmarkInput:createBookmarkInput,
         @GetUser() User: User,
         ): Promise<object>{
-        return this.BookmarkService.createBookmark(bookmarkinput,User);
+        createBookmarkInput.UserId = UserId;
+        createBookmarkInput.petid = petid;
+        return this.BookmarkService.createBookmark(createBookmarkInput);
     }
 
     @Delete(':id')
