@@ -15,12 +15,13 @@ export class ChatController{
                 private UserService: UserService){}
 
     @Post(':UserId/:roomId/addmessage')
-    @UseGuards(AuthGuard())
+    // @UseGuards(AuthGuard())
     async addMessage(@Param('UserId') UserId: string,
                      @Param('roomId') roomId : string,
                      @GetUser() User: User,
                      @Body() CreateNewChatDto: CreateNewChatDto){
         const UserName = await this.UserService.findUserId(UserId)
+        CreateNewChatDto.picUser = UserName.ImgURL
         CreateNewChatDto.ownerName = UserName.UserName
         CreateNewChatDto.createAt = new Date();
         CreateNewChatDto.ownerId = UserId;
@@ -61,5 +62,10 @@ export class ChatController{
     @Delete(':notiId/delete')
     deleteNoti(@Param('notiId') notiId: string): Promise<void>{
         return this.ChatService.deletenoti(notiId);
+    }
+
+    @Get(':UserId/getAllnoti')
+    async getAllnoti(@Param('UserId') UserId: string):Promise<Chatnoti[]>{
+        return this.ChatService.getAllnoti(UserId)
     }
 }
