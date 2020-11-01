@@ -127,7 +127,7 @@ export class petInfoService {
     const {petid,PetName,PetBreed,PetGender,Type,PetPicURL,DelPicURL,PetStatus,PetLength,PetHeight, PetCerURL,TimeStampUpdate, UserId,AdopUserId, CodePet, CheckCode,TimeUpdate,Describe,PetAddress} = petinfoinput;
     const petinfo = await this.petInfoRepository.findOne({where:{petid}});
     
-    if(petinfo.AdopUserId===petinfo.UserId){
+    if(User.id===petinfo.UserId){
       throw new ConflictException('Can not get your own pet')
     }
     if (CodePet===petid){
@@ -150,9 +150,16 @@ export class petInfoService {
     const petinfo = await this.petInfoRepository.findOne({where:{petid}});
     const userid = User.id;
 
-    if (petinfo.UserId !== userid){
-      console.log('error');
-      return null ;
+    if(User.id!==petinfo.UserId){
+      throw new ConflictException('not your pet')
+    }
+
+    if(petinfo.PetStatus==='ava'){
+      throw new ConflictException('this pet has not get the right code')
+    }
+
+    if(petinfo.PetStatus==='done'){
+      throw new ConflictException('this pet was adopted alredy')
     }
     /*
     if (petinfo.PetStatus == 'ava') {
