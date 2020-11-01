@@ -71,5 +71,13 @@ export class UserController {
             throw new HttpException('Bad request', HttpStatus.BAD_REQUEST)
         }
     }
-  
+
+    @Patch(':UserName/setting/uploadIMG')
+    @UseGuards(AuthGuard())
+    async UploadImg(
+        @Body('source') source: string,
+        @GetUser() user: User,
+    ): Promise<object>{
+        return this.userService.SaveImgURL(user, source);
+    }
 }

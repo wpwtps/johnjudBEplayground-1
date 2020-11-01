@@ -1,16 +1,14 @@
 import {Entity,Column,ObjectIdColumn}  from 'typeorm';
 import { ObjectID} from 'mongodb';
 
+
 @Entity()
-export class Bookmark{
+export class bookmark{
     @ObjectIdColumn()
     id?: string;
     
     @Column()
-    PetId: string;
-
-    @Column()
-    PetName: string;
+    petid: string;
 
     @Column()
     petPicUrl: string;
@@ -18,5 +16,3 @@ export class Bookmark{
     @Column()
     UserIdBookmark: string;
 }
-
-export default Bookmark;

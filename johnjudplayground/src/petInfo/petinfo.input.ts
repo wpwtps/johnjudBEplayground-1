@@ -25,6 +25,9 @@ export class petinfoinput{
     PetPicURL: string;
 
     @Field()
+    DelPicURL: string;
+
+    @Field()
     PetStatus: string;
 
     @Field()
@@ -50,5 +53,14 @@ export class petinfoinput{
 
     @Field()
     CheckCode: boolean;
+
+    @Field()
+    TimeUpdate: Date;
+
+    @Field()
+    Describe: string;
+
+    @Field()
+    PetAddress: string;
 
 }

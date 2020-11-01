@@ -15,7 +15,7 @@ export class UserService {
     ){}
 
     async CreateUser(CreateUserInput: CreateUserInput): Promise<User>{
-        const {UserName, Password, FirstName, LastName, ProfilePicURL, Birthday, Gender, PhoneNo, Email, LocationLat, LocationLong,Facebook,Address, AvgPoint, Description, TimeUpdate} = CreateUserInput;
+        const {UserName, Password, FirstName, LastName, ImgURL, Birthday, Gender, PhoneNo, Email, LocationLat, LocationLong,Facebook,Address, AvgPoint, Description, TimeUpdate} = CreateUserInput;
         
         const user = this.userRepository.create({
             id: uuid(),
@@ -23,7 +23,7 @@ export class UserService {
             Password,
             FirstName,
             LastName,
-            ProfilePicURL,
+            ImgURL,
             Birthday,
             Gender,
             PhoneNo,
@@ -110,5 +110,39 @@ export class UserService {
         await this.userRepository.save(userinfo);
 
         return userinfo;
+    }
+
+    async SaveImgURL(
+        user: User,
+        source: string,
+    ): Promise<object>{
+        //upload image to cloud
+        var axios = require('axios');
+        var FormData = require('form-data');
+        var fs = require('fs');
+        var data = new FormData();
+        data.append('image', fs.createReadStream(source));
+
+        var config = {
+        method: 'post',
+        url: 'https://api.imgbb.com/1/upload?key=1949bda7eab7e16a8e613b0c302c4782',
+        headers: { 
+            ...data.getHeaders()
+        },
+        data : data
+        };
+        
+
+        const res = await axios(config);
+        
+        const imgURL = res.data.data.image.url;
+        const delImgURL = res.data.data.delete_url;
+        
+
+        user.ImgURL = imgURL;
+        user.DelImgURL = delImgURL;
+
+        await this.userRepository.save(user);
+        return {"success": true}
     }
 }

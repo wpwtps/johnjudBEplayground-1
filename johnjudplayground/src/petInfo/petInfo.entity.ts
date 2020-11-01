@@ -34,6 +34,9 @@ export class petinfo{
     PetPicURL: string;
 
     @Column()
+    DelPicURL: string;
+
+    @Column()
     PetStatus: string;
 
     @Column()
@@ -60,8 +63,14 @@ export class petinfo{
     @Column()
     CheckCode: boolean;
 
-    //@OneToOne(type => User, User=>User.pets, {eager: false})
-    //User: User;
+    @Column()
+    TimeUpdate: Date;
+    
+    @Column()
+    Describe: string;
+
+    @Column()
+    PetAddress: string;
 }
 
 
