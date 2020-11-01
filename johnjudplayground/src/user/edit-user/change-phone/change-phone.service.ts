@@ -15,9 +15,8 @@ export class ChangePhoneService {
     async saveTempPhone(
         ChangePhoneInput: ChangePhoneInput,
         user: User,
-        Headers: string,
     ): Promise<object>{
-        const {PhoneNo} = ChangePhoneInput;
+        const {PhoneNo, accessToken} = ChangePhoneInput;
 
         const found = await this.ChnagePhoneRepository.findOne({where: {PhoneNo}});
         if(found && found.VerifyPhone){
@@ -27,11 +26,6 @@ export class ChangePhoneService {
         user.tempPhone = PhoneNo;
         await this.ChnagePhoneRepository.save(user);
 
-        // console.log(Object.values(Headers).toString().indexOf('Bearer'));
-        const index = Object.values(Headers).toString().indexOf('Bearer');
-        
-
-
         // Request OTP
         var axios = require('axios');
 
@@ -39,7 +33,7 @@ export class ChangePhoneService {
         method: 'patch',
         url: 'http://localhost:2000/user/edit-user/change-phone/request-OTP',
         headers: {
-            'Authorization': Object.values(Headers).toString().substr(index, 167)
+            'Authorization': `Bearer ${accessToken}`
         }
         };
 
@@ -50,7 +44,6 @@ export class ChangePhoneService {
         .catch(function (error) {
         console.log(error);
         });
-
 
         return {"success": true};
     }
