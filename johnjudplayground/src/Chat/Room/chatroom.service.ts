@@ -17,7 +17,7 @@ export class ChatRoomService{
     async createNewRoom(createNewRoomDto: CreateNewRoomDto){
         const roomexist = await this.getRoomByUserid(createNewRoomDto.userid1,createNewRoomDto.userid2)
         if(roomexist){
-            throw new HttpException('Bad request',HttpStatus.BAD_REQUEST)
+            return "exist";
         }
         else{
             return this.NewRoomRepository.save(createNewRoomDto);
