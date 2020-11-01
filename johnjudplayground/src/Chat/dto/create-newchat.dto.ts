@@ -10,6 +10,8 @@ export class CreateNewChatDto{
 
     roomId: string;
 
+    picUser: string;
+
     @IsNotEmpty()
     message: string;
 
