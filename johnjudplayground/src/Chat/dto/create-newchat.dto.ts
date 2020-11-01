@@ -6,6 +6,8 @@ export class CreateNewChatDto{
     
     ownerId: string;
 
+    ownerName: string;
+
     roomId: string;
 
     @IsNotEmpty()
