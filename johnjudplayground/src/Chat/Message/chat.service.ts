@@ -34,13 +34,13 @@ export class ChatService{
         return this.ChatNotiRepository.findOne({where:{User:User,roomid:roomId}})
     }
 
-    async notichat(chatnotiDto: chatnotiDto): Promise<Chatnoti>{
+    async notichat(chatnotiDto: chatnotiDto){
         const exist = await this.getNotibyRoomidAndUser(chatnotiDto.User,chatnotiDto.roomid)
         if(!exist){
             return this.ChatNotiRepository.save(chatnotiDto)
         }
         else{
-            throw new HttpException('Bad request',HttpStatus.BAD_REQUEST)
+            return "exist";
         }
     }
 
