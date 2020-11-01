@@ -10,16 +10,10 @@ export class Chatnoti{
     User: string;
 
     @Column()
-    senderid: string;
-
-    @Column()
-    sender: string;
+    roomid: string;
 
     @Column()
     NotiDate: Date;
-
-    @Column()
-    isread : boolean;
 }
 
 export default Chatnoti;

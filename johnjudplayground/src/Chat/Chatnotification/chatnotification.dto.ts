@@ -1,13 +1,8 @@
-import { ObjectID } from "mongodb";
-
 export class chatnotiDto{
+
     User: string;
 
-    senderid: string;
-
-    sender: string;
+    roomid: string;
 
     NotiDate: Date;
-
-    isread: boolean;
 }
