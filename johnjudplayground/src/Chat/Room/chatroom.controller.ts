@@ -13,7 +13,7 @@ export class RoomController{
                 private UserService: UserService){}
 
     @Post('createroom/:user1/:user2')
-    // @UseGuards(AuthGuard())
+    @UseGuards(AuthGuard())
     async createnewroom(@Param('user1') user1: string,
                         @Param('user2') user2: string,
                         @GetUser() User: User,

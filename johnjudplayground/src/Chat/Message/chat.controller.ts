@@ -15,7 +15,7 @@ export class ChatController{
                 private UserService: UserService){}
 
     @Post(':UserId/:roomId/addmessage')
-    // @UseGuards(AuthGuard())
+    @UseGuards(AuthGuard())
     async addMessage(@Param('UserId') UserId: string,
                      @Param('roomId') roomId : string,
                      @GetUser() User: User,
