@@ -84,7 +84,6 @@ export class RegisterService {
         console.log(error);
         });
 
-
         const id = user.id;
 
         return {"success": true, id};

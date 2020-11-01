@@ -119,7 +119,8 @@ export class petInfoService {
     newPet.Describe = Describe;
     newPet.PetAddress = PetAddress;
     await this.petInfoRepository.save(newPet);
-    return newPet;
+    const pet = newPet.petid;
+    return {"success": true, pet};
   }
  
 
