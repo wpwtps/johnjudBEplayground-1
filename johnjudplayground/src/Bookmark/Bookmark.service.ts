@@ -6,13 +6,17 @@ import {ObjectID, ObjectId} from 'mongodb';
 import { bookmark } from './Bookmark.entity';
 import { petinfo } from 'src/petInfo/petInfo.entity';
 import { bookmarkinput} from './bookmark.input';
+import { User } from 'src/user/user.entity';
 
 
 @Injectable()
 export class BookmarkService{
     constructor(
         @InjectRepository(bookmark)
-        private BookmarkRepository: Repository<bookmark>
+        private BookmarkRepository: Repository<bookmark>,
+
+        @InjectRepository(petinfo)
+        private petInfoRepository: Repository<petinfo>
     ) {}
 
     async findAll(): Promise<bookmark[]>{
@@ -23,12 +27,15 @@ export class BookmarkService{
         return this.BookmarkRepository.find({where:{UserIdBookmark:UserId}});
     }
 
-    async createBookmark(bookmarkinput: bookmarkinput):Promise<object>{
+    async createBookmark(bookmarkinput: bookmarkinput,User:User):Promise<object>{
         const {petid, petPicUrl, UserIdBookmark} = bookmarkinput;
         const newBookmark = this.BookmarkRepository.create();
+        const found = await this.petInfoRepository.findOne({where:{petid}});
         newBookmark.petid = petid;
-        newBookmark.petPicUrl = petPicUrl;
-        newBookmark.UserIdBookmark = UserIdBookmark;
+        
+        console.log(found);
+        newBookmark.petPicUrl = found.PetPicURL;
+        newBookmark.UserIdBookmark = User.id;
         await this.BookmarkRepository.save(bookmarkinput);
         return newBookmark;
     }

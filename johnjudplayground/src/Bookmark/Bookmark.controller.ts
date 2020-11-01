@@ -31,7 +31,7 @@ export class BookmarkController{
         @Body() bookmarkinput: bookmarkinput,
         @GetUser() User: User,
         ): Promise<object>{
-        return this.BookmarkService.createBookmark(bookmarkinput);
+        return this.BookmarkService.createBookmark(bookmarkinput,User);
     }
 
     @Delete(':id')
