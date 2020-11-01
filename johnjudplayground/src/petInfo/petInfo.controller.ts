@@ -121,6 +121,32 @@ export class petInfoController {
     ): Promise<object>{
         return this.petInfoService.createPetInfo(petinfoinput, User);
     }
+
+  @Patch('/img')
+  @UseGuards(AuthGuard())
+  @UsePipes(ValidationPipe)
+  updateImg(
+    @Body('display') display: string, 
+    @Body('del') del: string, 
+    @Body('petId') petId: string,
+    @Body('token') token: string,
+    @GetUser() user: User
+  ){
+    return this.petInfoService.updateImg(display, del, petId, token, user);
+  }
+
+  @Patch('/cer')
+  @UseGuards(AuthGuard())
+  @UsePipes(ValidationPipe)
+  updateCer(
+    @Body('display') display: string, 
+    @Body('del') del: string, 
+    @Body('petId') petId: string,
+    @Body('token') token: string,
+    @GetUser() user: User
+  ){
+    return this.petInfoService.updateCer(display, del, petId, token, user);
+  }
   
 }
 
