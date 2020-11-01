@@ -54,6 +54,7 @@ export class RegisterService {
             Address: Address,
             VerifyPhone: false,
             TimeUpdate: TimeUpdate,
+            ImgURL: "https://i.ibb.co/6NgzPxg/blank-profile-picture-973460-1280.jpg",
         })
 
         await this.registerRepository.save(user);

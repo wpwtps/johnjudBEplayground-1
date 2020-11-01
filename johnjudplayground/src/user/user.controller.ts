@@ -75,10 +75,9 @@ export class UserController {
     @Patch(':UserName/setting/uploadIMG')
     @UseGuards(AuthGuard())
     async UploadImg(
-        @Body('ImgURL') ImgURL: string,
-        @Body('ImgURL') DelImgURL: string,
+        @Body('source') source: string,
         @GetUser() user: User,
     ): Promise<object>{
-        return this.userService.SaveImgURL(user, ImgURL, DelImgURL);
+        return this.userService.SaveImgURL(user, source);
     }
 }
