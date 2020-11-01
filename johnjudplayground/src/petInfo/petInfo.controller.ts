@@ -18,22 +18,22 @@ export class petInfoController {
     return this.petInfoService.findPetHP();
   }
 
- @Get('/homepage/receiver')
- @UseGuards(AuthGuard())
+ @Get('/:userid/homepage/receiver')
+ //@UseGuards(AuthGuard())
  async findPetHPrec(
    @Param('userid') userid: string,
    @GetUser() User:User
    ): Promise<petinfo[]>{
-   return this.petInfoService.findPetHPrec(User.id);
+   return this.petInfoService.findPetHPrec(userid);
  }
 
- @Get('/homepage/donator')
- @UseGuards(AuthGuard())
+ @Get('/:userid/homepage/donator')
+ //@UseGuards(AuthGuard())
  async findPetHPdon(
-   //@Param('userid') userid: string,
+   @Param('userid') userid: string,
    @GetUser() User:User
   ): Promise<petinfo[]>{
-   return this.petInfoService.findPetHPdon(User.id);
+   return this.petInfoService.findPetHPdon(userid);
  }
 
   @Get('/:petid')
