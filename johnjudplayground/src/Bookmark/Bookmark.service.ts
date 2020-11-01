@@ -7,6 +7,7 @@ import { bookmark } from './Bookmark.entity';
 import { petinfo } from 'src/petInfo/petInfo.entity';
 import { bookmarkinput} from './bookmark.input';
 import { User } from 'src/user/user.entity';
+import { v4 as uuid } from 'uuid';
 
 
 @Injectable()
@@ -28,19 +29,26 @@ export class BookmarkService{
     }
 
     async createBookmark(bookmarkinput: bookmarkinput,User:User):Promise<object>{
-        const {petid, petPicUrl, UserIdBookmark} = bookmarkinput;
-        const newBookmark = this.BookmarkRepository.create();
+        const {bmid, petid, petPicUrl, UserIdBookmark} = bookmarkinput;
+        const newBookmark = this.BookmarkRepository.create({
+                bmid: uuid()
+              }
+        );
         const found = await this.petInfoRepository.findOne({where:{petid}});
         newBookmark.petid = petid;
         
         console.log(found);
         newBookmark.petPicUrl = found.PetPicURL;
         newBookmark.UserIdBookmark = User.id;
-        await this.BookmarkRepository.save(bookmarkinput);
-        return newBookmark;
+        await this.BookmarkRepository.save(newBookmark);
+        
+        const id = newBookmark.bmid;
+        //return newBookmark;
+        return {"success": true, id};
     }
 
-    async remove(id: string): Promise<void> {
+    async remove(id: string): Promise<object> {
         await this.BookmarkRepository.delete(id);
+        return {"success": true, id};
       }
 }

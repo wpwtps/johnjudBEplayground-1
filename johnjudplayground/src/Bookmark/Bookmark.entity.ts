@@ -8,6 +8,9 @@ export class bookmark{
     id?: string;
     
     @Column()
+    bmid: string;
+
+    @Column()
     petid: string;
 
     @Column()

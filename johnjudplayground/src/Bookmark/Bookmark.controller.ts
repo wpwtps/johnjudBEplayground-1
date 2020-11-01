@@ -35,7 +35,7 @@ export class BookmarkController{
     }
 
     @Delete(':id')
-    remove(@Param('id') id: string): Promise<void> {
+    remove(@Param('id') id: string): Promise<object> {
     return this.BookmarkService.remove(id);
   }
 }
