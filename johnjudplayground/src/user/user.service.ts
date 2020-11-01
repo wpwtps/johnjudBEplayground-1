@@ -145,17 +145,55 @@ export class UserService {
         await this.userRepository.save(user);
         return {"success": true}
     }
-/*
-    async findAllPetRegister(id:string): Promise<petinfo[]>{
-        return this.petInfoRepository.find({where:{UserId:id, regPetStatus:"register"}});
+
+    async getPetRegCount(
+        id: string,
+    ){
+        const all = await this.petInfoRepository.count({where: {UserId: id}});
+        const deleted = await this.petInfoRepository.count({where: {UserId: id, PetStatus: "null"}});
+        const res = all-deleted;
+
+        return {res};
     }
 
-    async findAllPetAdoption(id:string): Promise<petinfo[]>{
-        return this.petInfoRepository.find({where:{ AdopUserId: id ,adopPetStatus:"adoption"}});
+    async getPetRegDetail(
+        id: string,
+    ){
+        const ava = await this.petInfoRepository.find({where: {UserId: id, PetStatus: "ava"}});
+        const pend = await this.petInfoRepository.find({where: {UserId: id, PetStatus: "pend"}});
+        const done = await this.petInfoRepository.find({where: {UserId: id, PetStatus: "done"}});
+
+        return {ava, pend, done};
     }
 
-    async findAllPetDonation(id:string): Promise<petinfo[]>{
-        return this.petInfoRepository.find({where:{ UserId: id , regPetStatus:"donation"}});
+    async getPetAdoptCount(
+        id: string,
+    ){
+        const all = await this.petInfoRepository.count({where: {AdopUserId: id}});
+        const deleted = await this.petInfoRepository.count({where: {AdopUserId: id, PetStatus: "null"}});
+        const res = all-deleted;
+
+        return {res};
     }
-    */
+
+    async getPetAdoptDetail(
+        id: string,
+    ){
+        const pend = await this.petInfoRepository.find({where: {AdopUserId: id, PetStatus: "pend"}});
+        const done = await this.petInfoRepository.find({where: {AdopUserId: id, PetStatus: "done"}});
+
+        return {pend, done};
+    }
+
+    async getPetDonatedCount(
+        id: string,
+    ){
+        return await this.petInfoRepository.count({where: {UserId: id, PetStatus: "done"}});
+    }
+
+    async getPetDonatedDetail(
+        id: string,
+    ){
+        return await this.petInfoRepository.find({where: {UserId: id, PetStatus: "done"}});
+    }
 }
