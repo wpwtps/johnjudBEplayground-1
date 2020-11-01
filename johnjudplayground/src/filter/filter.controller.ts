@@ -3,6 +3,7 @@ import { filterService } from './filter.service';
 import { ObjectID } from 'mongodb';
 import { petinfo } from 'src/petInfo/petInfo.entity';
 import { Filterinput } from './filter.input';
+import { MinLength } from 'class-validator';
 
 @Controller('filter')
 export class filterController{
@@ -32,9 +33,11 @@ export class filterController{
 
     @Get('/Height')
     async findByHeight(
-        @Body('Height') Height:Filterinput
+        @Body('MinHeight') MinHeigth:Filterinput,
+        @Body('MaxHeight') MaxHeigth:Filterinput
     ): Promise<petinfo[]>{
-        return this.filterService.findByHeight(Height);
+        return this.filterService.findByHeight(MinHeigth,MaxHeigth);
     }
+    
 
 }

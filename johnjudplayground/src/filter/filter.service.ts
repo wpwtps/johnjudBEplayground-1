@@ -6,7 +6,7 @@ import {LessThan} from "typeorm";
 import {MoreThan} from "typeorm";
 import { petinfo } from 'src/petInfo/petInfo.entity';
 import {Equal} from "typeorm";
-
+import {Between} from "typeorm";
 import { Filterinput } from './filter.input';
 
 
@@ -33,8 +33,14 @@ export class filterService{
         return this.petInfoRepository.find({where:{Type:type}});
     }
 
-    async findByHeight(Height:Filterinput): Promise<petinfo[]>{
-        return this.petInfoRepository.find({where:{PetHeight:Height}});
+    async findByHeight(MinHeight:Filterinput,MaxHeight:Filterinput): Promise<petinfo[]>{
+        //const {MaxHeight, MinHeight} = Filterinput;
+        return this.petInfoRepository.find({
+            where:{
+                PetHeight: Between(MinHeight,MaxHeight)
+            }
+        })
     }
+    
 
 }

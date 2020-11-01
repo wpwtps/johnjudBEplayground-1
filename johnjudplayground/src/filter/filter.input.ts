@@ -7,5 +7,8 @@ export class Filterinput{
     type: string;
 
     @Field()
-    Height: number;
+    MaxHeight: number;
+
+    @Field()
+    MinHeight: number;
 }
