@@ -225,7 +225,34 @@ export class petInfoService {
     return petinfo;
   }
   
+  async updateImg(
+    display: string, 
+    del: string, 
+    petId: string, 
+    token: string,
+    user: User
+  ){
+    const found = await this.getPetById(petId);
 
+    found.PetPicURL = display;
+    found.DelPicURL = del;
+
+    await this.petInfoRepository.save(found);
+  }
+
+  async updateCer(
+    display: string, 
+    del: string, 
+    petId: string, 
+    token: string,
+    user: User
+  ){
+    const found = await this.getPetById(petId);
+
+    found.PetCerURL = display;
+
+    await this.petInfoRepository.save(found);
+  }
 
   
   
