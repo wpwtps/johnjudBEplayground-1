@@ -31,11 +31,11 @@ export class BookmarkController{
         @Body() bookmarkinput: bookmarkinput,
         @GetUser() User: User,
         ): Promise<object>{
-        return this.BookmarkService.createBookmark(bookmarkinput);
+        return this.BookmarkService.createBookmark(bookmarkinput,User);
     }
 
     @Delete(':id')
-    remove(@Param('id') id: string): Promise<void> {
+    remove(@Param('id') id: string): Promise<object> {
     return this.BookmarkService.remove(id);
   }
 }

@@ -7,6 +7,9 @@ import { IsDate, IsEmail, IsNotEmpty, IsNumber, IsUrl, Length, MaxLength, MinLen
 export class bookmarkinput{
 
     @Field()
+    bmid: string;
+
+    @Field()
     petid: string;
 
     @Field()
