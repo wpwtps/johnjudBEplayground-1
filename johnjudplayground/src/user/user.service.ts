@@ -76,24 +76,24 @@ export class UserService {
         return this.userRepository.save(user);
     }
 
-    async UpdateUserPhoneNO(UserName:string, PhoneNO: string): Promise<User>{
-        const userinfo = await this.findUserByUsername(UserName);
+    async UpdateUserPhoneNO(id:string, PhoneNO: string): Promise<User>{
+        const userinfo = await this.findUserId(id);
         userinfo.PhoneNo = PhoneNO;
         await this.userRepository.save(userinfo);
 
         return userinfo;
     }
 
-    async UpdateUserEmail(UserName: string,Email: string): Promise<User>{
-        const userinfo = await this.findUserByUsername(UserName);
+    async UpdateUserEmail(id: string,Email: string): Promise<User>{
+        const userinfo = await this.findUserId(id);
         userinfo.Email = Email;
         await this.userRepository.save(userinfo);
 
         return userinfo;
     }
 
-    async UpdateUserInfo(UserName: string,FirstName:string,LastName:string,Birthday:Date,Gender:string,Facebook: string,Address:string): Promise<User>{              
-        const userinfo = await this.findUserByUsername(UserName);
+    async UpdateUserInfo(id: string,FirstName:string,LastName:string,Birthday:Date,Gender:string,Facebook: string,Address:string): Promise<User>{              
+        const userinfo = await this.findUserId(id);
         userinfo.FirstName = FirstName;
         userinfo.LastName = LastName;
         userinfo.Birthday = Birthday;
@@ -104,8 +104,8 @@ export class UserService {
         return userinfo;
     }
 
-    async UpdateUserDescription(UserName: string,Description: string): Promise<User>{
-        const userinfo = await this.findUserByUsername(UserName);
+    async UpdateUserDescription(id: string,Description: string): Promise<User>{
+        const userinfo = await this.findUserId(id);
         userinfo.Description = Description;
         await this.userRepository.save(userinfo);
 
@@ -114,35 +114,58 @@ export class UserService {
 
     async SaveImgURL(
         user: User,
-        source: string,
+        display_url: string,
+        delete_url: string,
     ): Promise<object>{
-        //upload image to cloud
-        var axios = require('axios');
-        var FormData = require('form-data');
-        var fs = require('fs');
-        var data = new FormData();
-        data.append('image', fs.createReadStream(source));
 
-        var config = {
-        method: 'post',
-        url: 'https://api.imgbb.com/1/upload?key=1949bda7eab7e16a8e613b0c302c4782',
-        headers: { 
-            ...data.getHeaders()
-        },
-        data : data
-        };
-        
-
-        const res = await axios(config);
-        
-        const imgURL = res.data.data.image.url;
-        const delImgURL = res.data.data.delete_url;
-        
-
-        user.ImgURL = imgURL;
-        user.DelImgURL = delImgURL;
+        user.ImgURL = display_url;
+        user.DelImgURL = delete_url;
 
         await this.userRepository.save(user);
         return {"success": true}
+    }
+
+    async getPetRegCount(
+        id: string,
+    ){
+        return await this.petInfoRepository.findAndCount({where: {UserId: id, PetStatus: "ava"}});
+    }
+
+    async getPetRegDetail(
+        id: string,
+    ){
+        return await this.petInfoRepository.find({where: {UserId: id, PetStatus: "ava"}});
+    }
+
+    async getPetAdoptCount(
+        id: string,
+    ){
+        // const all = await this.petInfoRepository.count({where: {AdopUserId: id}});
+        // const deleted = await this.petInfoRepository.count({where: {AdopUserId: id, PetStatus: "null"}});
+        // const res = all-deleted;
+
+        return await this.petInfoRepository.count({where: {AdopUserId: id, PetStatus: "done"}});
+    }
+
+    async getPetAdoptDetail(
+        id: string,
+    ){
+        // const pend = await this.petInfoRepository.find({where: {AdopUserId: id, PetStatus: "pend"}});
+        // const done = await this.petInfoRepository.find({where: {AdopUserId: id, PetStatus: "done"}});
+
+        // return {"done": done};
+        return await this.petInfoRepository.find({where: {AdopUserId: id, PetStatus: "done"}});
+    }
+
+    async getPetDonatedCount(
+        id: string,
+    ){
+        return await this.petInfoRepository.count({where: {UserId: id, PetStatus: "done"}});
+    }
+
+    async getPetDonatedDetail(
+        id: string,
+    ){
+        return await this.petInfoRepository.find({where: {UserId: id, PetStatus: "done"}});
     }
 }
