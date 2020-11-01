@@ -15,43 +15,43 @@ export class UserController {
         return this.userService.findAll();
     }
 
-    @Get('/:UserName')
-    async findUserByUsername(
-        @Param('UserName') UserName: string,
+    @Get('/:id')
+    async findUserId(
+        @Param('id') id: string,
     ): Promise<User>{
-        return this.userService.findUserByUsername(UserName);
+        return this.userService.findUserId(id);
     }
     
-    @Patch(':UserName/setting/phone')
+    @Patch(':id/setting/phone')
     @UseGuards(AuthGuard())
-    async UpdateUserPhone(@Param('UserName') UserName: string,
+    async UpdateUserPhone(@Param('id') id: string,
                           @Body('PhoneNO') PhoneNO: string,
                           @GetUser() User: User
                           ): Promise<User>{
-        return this.userService.UpdateUserPhoneNO(UserName,PhoneNO);  
+        return this.userService.UpdateUserPhoneNO(id,PhoneNO);  
     }
 
-    @Patch(':UserName/setting/email')
+    @Patch(':id/setting/email')
     @UseGuards(AuthGuard())
-    async UpdateUserEmail(@Param('UserName') UserName: string,
+    async UpdateUserEmail(@Param('id') id: string,
                           @Body('Email') Email: string,
                           @GetUser() User: User
                           ): Promise<User>{
-        return this.userService.UpdateUserEmail(UserName,Email);
+        return this.userService.UpdateUserEmail(id,Email);
     }
 
-    @Patch(':UserName/setting/description')
+    @Patch(':id/setting/description')
     @UseGuards(AuthGuard())
-    async UpdateUserDes(@Param('UserName') UserName: string,
+    async UpdateUserDes(@Param('id') id: string,
                         @Body('Description') Description: string,
                         @GetUser() User: User
                         ): Promise<User>{
-        return this.userService.UpdateUserDescription(UserName,Description);
+        return this.userService.UpdateUserDescription(id,Description);
     }
 
-    @Patch(':UserName/setting/infosetting')
+    @Patch(':id/setting/infosetting')
     @UseGuards(AuthGuard())
-    async UpdateUserInfo(@Param('UserName') UserName: string,
+    async UpdateUserInfo(@Param('id') id: string,
                          @Body('FirstName') FirstName: string,
                          @Body('LastName') LastName: string,
                          @Body('Birthday') Birthday: Date,
@@ -65,7 +65,7 @@ export class UserController {
         && (Birthday!=null)
         && (Address!='')
         && (Gender!='')){
-            return this.userService.UpdateUserInfo(UserName,FirstName,LastName,Birthday,Gender,Facebook,Address);
+            return this.userService.UpdateUserInfo(id,FirstName,LastName,Birthday,Gender,Facebook,Address);
         }
         else{
             throw new HttpException('Bad request', HttpStatus.BAD_REQUEST)
@@ -80,5 +80,49 @@ export class UserController {
         @GetUser() user: User,
     ): Promise<object>{
         return this.userService.SaveImgURL(user, display_url, delete_url);
+    }
+    
+    @Get('/:id/getpetregcount')
+    @UsePipes(ValidationPipe)
+    GetPetRegCount(
+        @Param('id') id: string,
+    ){
+        return this.userService.getPetRegCount(id);
+    }
+
+    @Get('/:id/getpetregdetail')
+    @UsePipes(ValidationPipe)
+    GetPetRegDetail(
+        @Param('id') id: string,
+    ){
+        return this.userService.getPetRegDetail(id);
+    }
+
+    @Get('/:id/getpetadoptcount')
+    GetPetAdoptCount(
+        @Param('id') id: string,
+    ){
+        return this.userService.getPetAdoptCount(id);
+    }
+
+    @Get('/:id/getpetadoptdetail')
+    GetPetAdoptDetail(
+        @Param('id') id: string,
+    ){
+        return this.userService.getPetAdoptDetail(id);
+    }
+
+    @Get('/:id/getpetdonatedcount')
+    GetPetDonatedCount(
+        @Param('id') id: string,
+    ){
+        return this.userService.getPetDonatedCount(id);
+    }
+
+    @Get('/:id/getpetdonateddetail')
+    GetPetDonatedDetail(
+        @Param('id') id: string,
+    ){
+        return this.userService.getPetDonatedDetail(id);
     }
 }

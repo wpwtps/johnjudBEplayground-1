@@ -76,24 +76,24 @@ export class UserService {
         return this.userRepository.save(user);
     }
 
-    async UpdateUserPhoneNO(UserName:string, PhoneNO: string): Promise<User>{
-        const userinfo = await this.findUserByUsername(UserName);
+    async UpdateUserPhoneNO(id:string, PhoneNO: string): Promise<User>{
+        const userinfo = await this.findUserId(id);
         userinfo.PhoneNo = PhoneNO;
         await this.userRepository.save(userinfo);
 
         return userinfo;
     }
 
-    async UpdateUserEmail(UserName: string,Email: string): Promise<User>{
-        const userinfo = await this.findUserByUsername(UserName);
+    async UpdateUserEmail(id: string,Email: string): Promise<User>{
+        const userinfo = await this.findUserId(id);
         userinfo.Email = Email;
         await this.userRepository.save(userinfo);
 
         return userinfo;
     }
 
-    async UpdateUserInfo(UserName: string,FirstName:string,LastName:string,Birthday:Date,Gender:string,Facebook: string,Address:string): Promise<User>{              
-        const userinfo = await this.findUserByUsername(UserName);
+    async UpdateUserInfo(id: string,FirstName:string,LastName:string,Birthday:Date,Gender:string,Facebook: string,Address:string): Promise<User>{              
+        const userinfo = await this.findUserId(id);
         userinfo.FirstName = FirstName;
         userinfo.LastName = LastName;
         userinfo.Birthday = Birthday;
@@ -104,8 +104,8 @@ export class UserService {
         return userinfo;
     }
 
-    async UpdateUserDescription(UserName: string,Description: string): Promise<User>{
-        const userinfo = await this.findUserByUsername(UserName);
+    async UpdateUserDescription(id: string,Description: string): Promise<User>{
+        const userinfo = await this.findUserId(id);
         userinfo.Description = Description;
         await this.userRepository.save(userinfo);
 
@@ -123,5 +123,56 @@ export class UserService {
 
         await this.userRepository.save(user);
         return {"success": true}
+    }
+
+    async getPetRegCount(
+        id: string,
+    ){
+        const all = await this.petInfoRepository.count({where: {UserId: id}});
+        const deleted = await this.petInfoRepository.count({where: {UserId: id, PetStatus: "null"}});
+        const res = all-deleted;
+
+        return {res};
+    }
+
+    async getPetRegDetail(
+        id: string,
+    ){
+        const ava = await this.petInfoRepository.find({where: {UserId: id, PetStatus: "ava"}});
+        const pend = await this.petInfoRepository.find({where: {UserId: id, PetStatus: "pend"}});
+        const done = await this.petInfoRepository.find({where: {UserId: id, PetStatus: "done"}});
+
+        return {ava, pend, done};
+    }
+
+    async getPetAdoptCount(
+        id: string,
+    ){
+        const all = await this.petInfoRepository.count({where: {AdopUserId: id}});
+        const deleted = await this.petInfoRepository.count({where: {AdopUserId: id, PetStatus: "null"}});
+        const res = all-deleted;
+
+        return {res};
+    }
+
+    async getPetAdoptDetail(
+        id: string,
+    ){
+        const pend = await this.petInfoRepository.find({where: {AdopUserId: id, PetStatus: "pend"}});
+        const done = await this.petInfoRepository.find({where: {AdopUserId: id, PetStatus: "done"}});
+
+        return {pend, done};
+    }
+
+    async getPetDonatedCount(
+        id: string,
+    ){
+        return await this.petInfoRepository.count({where: {UserId: id, PetStatus: "done"}});
+    }
+
+    async getPetDonatedDetail(
+        id: string,
+    ){
+        return await this.petInfoRepository.find({where: {UserId: id, PetStatus: "done"}});
     }
 }

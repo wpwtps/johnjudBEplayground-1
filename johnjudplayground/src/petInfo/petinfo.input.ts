@@ -9,18 +9,22 @@ export class petinfoinput{
     @Field()
     petid: string;
 
+    @IsNotEmpty()
     @Field()
     PetName: string;
 
     @Field()
     PetBreed: string;
 
+    @IsNotEmpty()
     @Field()
     PetGender: string;
 
+    @IsNotEmpty()
     @Field()
     Type: string;
 
+    @IsNotEmpty()
     @Field()
     PetPicURL: string;
 

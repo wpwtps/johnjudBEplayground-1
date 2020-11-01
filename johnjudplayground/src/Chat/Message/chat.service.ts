@@ -51,4 +51,8 @@ export class ChatService{
     async deletenoti(id:string): Promise<void>{
         await this.ChatNotiRepository.delete(id);
     }
+
+    async getAllnoti(UserId: string): Promise<Chatnoti[]>{
+        return this.ChatNotiRepository.find({where:{User:UserId}});
+    }
 }

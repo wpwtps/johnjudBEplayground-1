@@ -68,7 +68,7 @@ export class petInfoService {
   async findPetHPdon(userid:string): Promise<petinfo[]> {
     const res = await this.petInfoRepository.find({
         where:{
-          $and:[{PetStatus: 'ava'}, {UserId:{$eq:userid}}]
+          $and:[{PetStatus:{$not:{$eq:null}}}, {UserId:{$eq:userid}}]
         }
           
       });
