@@ -27,15 +27,19 @@ export class ChangePhoneService {
         user.tempPhone = PhoneNo;
         await this.ChnagePhoneRepository.save(user);
 
+        // console.log(Object.values(Headers).toString().indexOf('Bearer'));
+        const index = Object.values(Headers).toString().indexOf('Bearer');
+        
 
-        //Request OTP
+
+        // Request OTP
         var axios = require('axios');
 
         var config = {
         method: 'patch',
         url: 'http://localhost:2000/user/edit-user/change-phone/request-OTP',
         headers: {
-            'Authorization': Object.values(Headers)[0]
+            'Authorization': Object.values(Headers).toString().substr(index, 167)
         }
         };
 
