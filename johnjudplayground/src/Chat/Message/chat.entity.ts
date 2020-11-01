@@ -16,6 +16,9 @@ export class Chat{
     ownerName: string;
 
     @Column()
+    picUser: string;
+
+    @Column()
     roomId: string;
 
     @Column()
