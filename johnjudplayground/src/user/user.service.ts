@@ -76,24 +76,24 @@ export class UserService {
         return this.userRepository.save(user);
     }
 
-    async UpdateUserPhoneNO(UserName:string, PhoneNO: string): Promise<User>{
-        const userinfo = await this.findUserByUsername(UserName);
+    async UpdateUserPhoneNO(id:string, PhoneNO: string): Promise<User>{
+        const userinfo = await this.findUserId(id);
         userinfo.PhoneNo = PhoneNO;
         await this.userRepository.save(userinfo);
 
         return userinfo;
     }
 
-    async UpdateUserEmail(UserName: string,Email: string): Promise<User>{
-        const userinfo = await this.findUserByUsername(UserName);
+    async UpdateUserEmail(id: string,Email: string): Promise<User>{
+        const userinfo = await this.findUserId(id);
         userinfo.Email = Email;
         await this.userRepository.save(userinfo);
 
         return userinfo;
     }
 
-    async UpdateUserInfo(UserName: string,FirstName:string,LastName:string,Birthday:Date,Gender:string,Facebook: string,Address:string): Promise<User>{              
-        const userinfo = await this.findUserByUsername(UserName);
+    async UpdateUserInfo(id: string,FirstName:string,LastName:string,Birthday:Date,Gender:string,Facebook: string,Address:string): Promise<User>{              
+        const userinfo = await this.findUserId(id);
         userinfo.FirstName = FirstName;
         userinfo.LastName = LastName;
         userinfo.Birthday = Birthday;
@@ -104,8 +104,8 @@ export class UserService {
         return userinfo;
     }
 
-    async UpdateUserDescription(UserName: string,Description: string): Promise<User>{
-        const userinfo = await this.findUserByUsername(UserName);
+    async UpdateUserDescription(id: string,Description: string): Promise<User>{
+        const userinfo = await this.findUserId(id);
         userinfo.Description = Description;
         await this.userRepository.save(userinfo);
 
@@ -145,4 +145,17 @@ export class UserService {
         await this.userRepository.save(user);
         return {"success": true}
     }
+/*
+    async findAllPetRegister(id:string): Promise<petinfo[]>{
+        return this.petInfoRepository.find({where:{UserId:id, regPetStatus:"register"}});
+    }
+
+    async findAllPetAdoption(id:string): Promise<petinfo[]>{
+        return this.petInfoRepository.find({where:{ AdopUserId: id ,adopPetStatus:"adoption"}});
+    }
+
+    async findAllPetDonation(id:string): Promise<petinfo[]>{
+        return this.petInfoRepository.find({where:{ UserId: id , regPetStatus:"donation"}});
+    }
+    */
 }

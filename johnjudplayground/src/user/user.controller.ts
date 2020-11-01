@@ -15,43 +15,43 @@ export class UserController {
         return this.userService.findAll();
     }
 
-    @Get('/:UserName')
-    async findUserByUsername(
-        @Param('UserName') UserName: string,
+    @Get('/:id')
+    async findUserId(
+        @Param('id') id: string,
     ): Promise<User>{
-        return this.userService.findUserByUsername(UserName);
+        return this.userService.findUserId(id);
     }
     
-    @Patch(':UserName/setting/phone')
+    @Patch(':id/setting/phone')
     @UseGuards(AuthGuard())
-    async UpdateUserPhone(@Param('UserName') UserName: string,
+    async UpdateUserPhone(@Param('id') id: string,
                           @Body('PhoneNO') PhoneNO: string,
                           @GetUser() User: User
                           ): Promise<User>{
-        return this.userService.UpdateUserPhoneNO(UserName,PhoneNO);  
+        return this.userService.UpdateUserPhoneNO(id,PhoneNO);  
     }
 
-    @Patch(':UserName/setting/email')
+    @Patch(':id/setting/email')
     @UseGuards(AuthGuard())
-    async UpdateUserEmail(@Param('UserName') UserName: string,
+    async UpdateUserEmail(@Param('id') id: string,
                           @Body('Email') Email: string,
                           @GetUser() User: User
                           ): Promise<User>{
-        return this.userService.UpdateUserEmail(UserName,Email);
+        return this.userService.UpdateUserEmail(id,Email);
     }
 
-    @Patch(':UserName/setting/description')
+    @Patch(':id/setting/description')
     @UseGuards(AuthGuard())
-    async UpdateUserDes(@Param('UserName') UserName: string,
+    async UpdateUserDes(@Param('id') id: string,
                         @Body('Description') Description: string,
                         @GetUser() User: User
                         ): Promise<User>{
-        return this.userService.UpdateUserDescription(UserName,Description);
+        return this.userService.UpdateUserDescription(id,Description);
     }
 
-    @Patch(':UserName/setting/infosetting')
+    @Patch(':id/setting/infosetting')
     @UseGuards(AuthGuard())
-    async UpdateUserInfo(@Param('UserName') UserName: string,
+    async UpdateUserInfo(@Param('id') id: string,
                          @Body('FirstName') FirstName: string,
                          @Body('LastName') LastName: string,
                          @Body('Birthday') Birthday: Date,
@@ -65,7 +65,7 @@ export class UserController {
         && (Birthday!=null)
         && (Address!='')
         && (Gender!='')){
-            return this.userService.UpdateUserInfo(UserName,FirstName,LastName,Birthday,Gender,Facebook,Address);
+            return this.userService.UpdateUserInfo(id,FirstName,LastName,Birthday,Gender,Facebook,Address);
         }
         else{
             throw new HttpException('Bad request', HttpStatus.BAD_REQUEST)
@@ -80,4 +80,27 @@ export class UserController {
     ): Promise<object>{
         return this.userService.SaveImgURL(user, source);
     }
+    /*
+
+    @Get(':id/petregister')
+    async findAllPetRegister(
+        @Param('id') id: string,
+        ): Promise<petinfo[]>{
+        return this.userService.findAllPetRegister(id);
+    }
+
+    @Get(':id/petdonation')
+    async findAllPetDonation(
+        @Param('id') id: string,
+        ): Promise<petinfo[]>{
+        return this.userService.findAllPetDonation(id);
+    }
+
+    @Get(':id/petadoption')
+    async findAllPetAdoption(
+        @Param('id') id: string,
+        ): Promise<petinfo[]>{
+        return this.userService.findAllPetAdoption(id);
+    }
+    */
 }
