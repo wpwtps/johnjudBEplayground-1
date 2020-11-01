@@ -26,7 +26,7 @@ export class filterService{
     }
 
     async findPetOther(): Promise<petinfo[]>{
-        return this.petInfoRepository.find({where:{Type:"others"}})
+        return this.petInfoRepository.find({where:{$and:[{Type:{$not:{$eq:"dog"}}},{Type:{$not:{$eq:"cat"}}}]}});
     }
 
     async findByType(type:Filterinput): Promise<petinfo[]>{
