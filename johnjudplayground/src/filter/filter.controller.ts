@@ -2,6 +2,7 @@ import {Body, Controller ,Get, Param, Post} from '@nestjs/common';
 import { filterService } from './filter.service';
 import { ObjectID } from 'mongodb';
 import { petinfo } from 'src/petInfo/petInfo.entity';
+import { Filterinput } from './filter.input';
 
 @Controller('filter')
 export class filterController{
@@ -22,10 +23,18 @@ export class filterController{
         return this.filterService.findPetOther();
     }
 
-    @Get('/:Type')
+    @Get('/others/Type')
     async findByType(
-        @Param('Type') Type: string
+        @Body('type') type:Filterinput
     ): Promise<petinfo[]>{
-        return this.filterService.findByType(Type);
+        return this.filterService.findByType(type);
     }
+
+    @Get('/Height')
+    async findByHeight(
+        @Body('Height') Height:Filterinput
+    ): Promise<petinfo[]>{
+        return this.filterService.findByHeight(Height);
+    }
+
 }

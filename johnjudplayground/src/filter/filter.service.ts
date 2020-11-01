@@ -2,8 +2,12 @@ import { Injectable} from '@nestjs/common';
 import {Not, Repository} from 'typeorm';
 import {InjectRepository} from '@nestjs/typeorm';
 import {ObjectID, ObjectId} from 'mongodb';
-
+import {LessThan} from "typeorm";
+import {MoreThan} from "typeorm";
 import { petinfo } from 'src/petInfo/petInfo.entity';
+import {Equal} from "typeorm";
+
+import { Filterinput } from './filter.input';
 
 
 @Injectable()
@@ -25,7 +29,12 @@ export class filterService{
         return this.petInfoRepository.find({where:{Type:"others"}})
     }
 
-    async findByType(Type:string): Promise<petinfo[]>{
-        return this.petInfoRepository.find({where:{Type:Type}});
+    async findByType(type:Filterinput): Promise<petinfo[]>{
+        return this.petInfoRepository.find({where:{Type:type}});
     }
+
+    async findByHeight(Height:Filterinput): Promise<petinfo[]>{
+        return this.petInfoRepository.find({where:{PetHeight:Height}});
+    }
+
 }
