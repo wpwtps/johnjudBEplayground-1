@@ -1,5 +1,6 @@
 import { Field, InputType } from "@nestjs/graphql";
 import { IsDate, IsEmail, IsNotEmpty, IsNumber, IsUrl, Length, MaxLength, MinLength } from "class-validator";
+import { Double } from "mongodb";
 //import { Double } from "mongodb";
 //import {User} from 'src/user/user.entity';
 
@@ -34,9 +35,11 @@ export class petinfoinput{
     @Field()
     PetStatus: string;
 
+    //@IsNumber()
     @Field()
     PetLength: number;
 
+    //@IsNumber()
     @Field()
     PetHeight: number;
 
