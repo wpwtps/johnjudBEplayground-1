@@ -4,6 +4,7 @@ import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Query,
 import { petinfo } from './petInfo.entity';
 import { petInfoService } from './petInfo.service';
 import { petinfoinput } from './petinfo.input';
+import {deleteinput} from './delete.input';
 import { User } from 'src/user/user.entity';
 import { GetUser } from 'src/auth/get-user.decorator';
 import { AuthGuard } from '@nestjs/passport';
@@ -90,14 +91,15 @@ export class petInfoController {
   }
   
   //delete pet info 
-  @Patch('/delete')
+  @Patch(':UserId/:petid/delete')
   @UseGuards(AuthGuard())
   removePet(
-    //@Param('petid') petid: string
-    @Body() petinfoinput: petinfoinput,
-    @GetUser() User: User
-   ): Promise<object>  {
-    return this.petInfoService.removePet(petinfoinput,User);
+    @Param('petid') petid: string,
+    @Param('UserId') UserId: string,
+    @Body() deleteinput: deleteinput){
+      deleteinput.UserId = UserId;
+      deleteinput.petid = petid;  
+    return this.petInfoService.removePet(deleteinput);
   }
 
   @Patch('/editPetInfo')

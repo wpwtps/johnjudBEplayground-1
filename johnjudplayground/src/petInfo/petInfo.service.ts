@@ -9,6 +9,7 @@ import { notiinput } from 'src/notification/notification.input';
 import { v4 as uuid } from 'uuid';
 
 import { notiService } from 'src/notification/notification.service';
+import { deleteinput } from './delete.input';
 
 //import { noti } from 'src/notification/notification.entity';
 
@@ -191,9 +192,12 @@ export class petInfoService {
     return petinfo;
   }
 
-  async removePet(petinfoinput:petinfoinput, User:User): Promise<object> {
-    const { petid,PetName,PetBreed,PetGender,Type,PetPicURL,DelPicURL,PetStatus,PetLength,PetHeight, PetCerURL,TimeStampUpdate, UserId,AdopUserId, CheckCode,TimeUpdate,Describe,PetAddress} = petinfoinput;
+  async removePet(deleteinput:deleteinput): Promise<object> {
+    //const { petid,PetName,PetBreed,PetGender,Type,PetPicURL,DelPicURL,PetStatus,PetLength,PetHeight, PetCerURL,TimeStampUpdate, UserId,AdopUserId, CheckCode,TimeUpdate,Describe,PetAddress} = petinfoinput;
+    const {UserId,petid} = deleteinput;
     const pet = await this.petInfoRepository.findOne({where:{petid}});
+    const User = await this.UserRepository.findOne({where:{id:UserId}});
+    console.log(User);
     const userid = User.id;
     if (pet.UserId !== userid){
       console.log('error');
