@@ -18,29 +18,39 @@ export class petInfoController {
     return this.petInfoService.findPetHP();
   }
 
- @Get('/:userid/homepage/receiver')
- //@UseGuards(AuthGuard())
- async findPetHPrec(
-   @Param('userid') userid: string,
-   @GetUser() User:User
-   ): Promise<petinfo[]>{
-   return this.petInfoService.findPetHPrec(userid);
- }
+  @Get('/:userid/homepage/receiver')
+  //@UseGuards(AuthGuard())
+  async findPetHPrec(
+    @Param('userid') userid: string,
+    @GetUser() User:User
+    ): Promise<petinfo[]>{
+    return this.petInfoService.findPetHPrec(userid);
+  }
 
- @Get('/:userid/homepage/donator')
- //@UseGuards(AuthGuard())
- async findPetHPdon(
-   @Param('userid') userid: string,
-   @GetUser() User:User
-  ): Promise<petinfo[]>{
-   return this.petInfoService.findPetHPdon(userid);
- }
+  @Get('/:userid/homepage/donator')
+  //@UseGuards(AuthGuard())
+  async findPetHPdon(
+    @Param('userid') userid: string,
+    @GetUser() User:User
+    ): Promise<petinfo[]>{
+    return this.petInfoService.findPetHPdon(userid);
+  }
 
+  @Get('/filter/height')
+  //@UseGuards(AuthGuard())
+  async findPetlt(
+    @Param('userid') userid: string,
+    @GetUser() User:User
+    ): Promise<petinfo[]>{
+    return this.petInfoService.findPetlt();
+  }
+
+ 
   @Get('/:petid')
   getPetById(@Param('petid') petid: string): Promise<petinfo> {
     return this.petInfoService.getPetById(petid);
   }
-  
+
 
   @Get()
   async findAll(): Promise<petinfo[]>{
@@ -86,7 +96,7 @@ export class petInfoController {
     //@Param('petid') petid: string
     @Body() petinfoinput: petinfoinput,
     @GetUser() User: User
-   ): Promise<petinfoinput>  {
+   ): Promise<object>  {
     return this.petInfoService.removePet(petinfoinput,User);
   }
 
@@ -96,7 +106,7 @@ export class petInfoController {
     //@Param('petid') petid: string,
     @Body() petinfoinput: petinfoinput,
     @GetUser() User: User
-  ): Promise<petinfoinput> {
+  ): Promise<object> {
     return this.petInfoService.editPet(petinfoinput, User);
   }
 

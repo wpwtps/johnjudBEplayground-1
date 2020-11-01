@@ -47,6 +47,21 @@ export class petInfoService {
     return res;
   }
 
+  //test filter height
+  async findPetlt(): Promise<petinfo[]> {
+    //console.log('findPetWeb');
+    //const res = await this.petInfoRepository.find({where:{ PetStatus: Not("delete") }});
+    const petheight = "60.2";
+    const testint = parseFloat(petheight);
+    console.log(testint);
+    const res = await this.petInfoRepository.find({
+        where:{$and:[{$or:[{PetStatus: 'ava'},{PetStatus:'pend'},{PetStatus:'done'}]},{PetHeight:{$lt:{ testint }}}]}
+      });
+    console.log(res);
+    
+    return res;
+  }
+
   async findPetHP(): Promise<petinfo[]> {
     const res = await this.petInfoRepository.find({
         where:{PetStatus: 'ava'}
@@ -103,6 +118,8 @@ export class petInfoService {
     newPet.DelPicURL = DelPicURL;
     newPet.PetStatus = 'ava'
     newPet.PetLength = PetLength;
+    //const height = PetHeight;
+    //const pethh = parseFloat(height);
     newPet.PetHeight = PetHeight;
     newPet.PetCerURL = PetCerURL;
     newPet.TimeStampUpdate = TimePost;
@@ -174,21 +191,24 @@ export class petInfoService {
     return petinfo;
   }
 
-  async removePet(petinfoinput:petinfoinput, User:User): Promise<petinfo> {
+  async removePet(petinfoinput:petinfoinput, User:User): Promise<object> {
     const { petid,PetName,PetBreed,PetGender,Type,PetPicURL,DelPicURL,PetStatus,PetLength,PetHeight, PetCerURL,TimeStampUpdate, UserId,AdopUserId, CheckCode,TimeUpdate,Describe,PetAddress} = petinfoinput;
-    const petinfo = await this.petInfoRepository.findOne({where:{petid}});
+    const pet = await this.petInfoRepository.findOne({where:{petid}});
     const userid = User.id;
-    if (petinfo.UserId !== userid){
+    if (pet.UserId !== userid){
       console.log('error');
       return null;
     }
-    petinfo.PetStatus = null;
-    await this.petInfoRepository.save(petinfo);
-    return petinfo;
+    pet.PetStatus = null;
+    await this.petInfoRepository.save(pet);
+
+    const id = petid;
+    //return pet;
+    return {"success": true, id};
   }
 
     
-  async editPet(petinfoinput:petinfoinput, User:User): Promise<petinfo> {
+  async editPet(petinfoinput:petinfoinput, User:User): Promise<object> {
     console.log('edit start');
     const { petid,PetName,PetBreed,PetGender,Type,PetPicURL,DelPicURL,PetStatus,PetLength,PetHeight, PetCerURL,TimeStampUpdate, UserId,AdopUserId, CheckCode,TimeUpdate,Describe, PetAddress} = petinfoinput;
     const petinfo = await this.petInfoRepository.findOne({where:{petid}});
@@ -222,8 +242,12 @@ export class petInfoService {
 
     await this.petInfoRepository.save(petinfo);
     console.log(petinfo);
-    return petinfo;
+
+    const id = petid;
+    return {"success": true, id};
   }
+
+  
   
 
 
