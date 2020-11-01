@@ -28,17 +28,27 @@ export class ChatService{
         return this.ChatRepository.find({where:{roomId:roomid}})
     }
 
-    async getNotibyUserAndSender(User:string,Sender:string):Promise<Chatnoti>{
-        return this.ChatNotiRepository.findOne({where:{User:User,sender:Sender}})
+//============================================ChatNotification==============================================================//
+
+    async getNotibyRoomidAndUser(User:string,roomId:string):Promise<Chatnoti>{
+        return this.ChatNotiRepository.findOne({where:{User:User,roomid:roomId}})
     }
-    
-    async chatnoti(chatnotidto: chatnotiDto){
-        const exist = await this.getNotibyUserAndSender(chatnotidto.User,chatnotidto.sender)
+
+    async notichat(chatnotiDto: chatnotiDto): Promise<Chatnoti>{
+        const exist = await this.getNotibyRoomidAndUser(chatnotiDto.User,chatnotiDto.roomid)
         if(!exist){
-            return this.ChatNotiRepository.save(chatnotidto)
+            return this.ChatNotiRepository.save(chatnotiDto)
         }
         else{
             throw new HttpException('Bad request',HttpStatus.BAD_REQUEST)
         }
+    }
+
+    async getNoti(): Promise<Chatnoti[]>{
+        return this.ChatNotiRepository.find()
+    }
+
+    async deletenoti(id:string): Promise<void>{
+        await this.ChatNotiRepository.delete(id);
     }
 }
