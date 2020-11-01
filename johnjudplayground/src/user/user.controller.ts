@@ -80,27 +80,48 @@ export class UserController {
     ): Promise<object>{
         return this.userService.SaveImgURL(user, source);
     }
-    /*
-
-    @Get(':id/petregister')
-    async findAllPetRegister(
+    
+    @Get('/:id/getpetregcount')
+    @UsePipes(ValidationPipe)
+    GetPetRegCount(
         @Param('id') id: string,
-        ): Promise<petinfo[]>{
-        return this.userService.findAllPetRegister(id);
+    ){
+        return this.userService.getPetRegCount(id);
     }
 
-    @Get(':id/petdonation')
-    async findAllPetDonation(
+    @Get('/:id/getpetregdetail')
+    @UsePipes(ValidationPipe)
+    GetPetRegDetail(
         @Param('id') id: string,
-        ): Promise<petinfo[]>{
-        return this.userService.findAllPetDonation(id);
+    ){
+        return this.userService.getPetRegDetail(id);
     }
 
-    @Get(':id/petadoption')
-    async findAllPetAdoption(
+    @Get('/:id/getpetadoptcount')
+    GetPetAdoptCount(
         @Param('id') id: string,
-        ): Promise<petinfo[]>{
-        return this.userService.findAllPetAdoption(id);
+    ){
+        return this.userService.getPetAdoptCount(id);
     }
-    */
+
+    @Get('/:id/getpetadoptdetail')
+    GetPetAdoptDetail(
+        @Param('id') id: string,
+    ){
+        return this.userService.getPetAdoptDetail(id);
+    }
+
+    @Get('/:id/getpetdonatedcount')
+    GetPetDonatedCount(
+        @Param('id') id: string,
+    ){
+        return this.userService.getPetDonatedCount(id);
+    }
+
+    @Get('/:id/getpetdonateddetail')
+    GetPetDonatedDetail(
+        @Param('id') id: string,
+    ){
+        return this.userService.getPetDonatedDetail(id);
+    }
 }
