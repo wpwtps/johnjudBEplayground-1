@@ -1,4 +1,4 @@
-import { Injectable} from '@nestjs/common';
+import { ConflictException, Injectable} from '@nestjs/common';
 import {Repository} from 'typeorm';
 import {InjectRepository} from '@nestjs/typeorm';
 import {ObjectID, ObjectId} from 'mongodb';
@@ -37,6 +37,20 @@ export class BookmarkService{
         );
         const found = await this.petInfoRepository.findOne({where:{petid}});
         newBookmark.petid = petid;
+
+        let check: bookmarkinput | null = await this.BookmarkRepository.findOne({
+            where:{$and:[{petid:petid},{UserIdBookmark:UserId}]}
+        });
+
+        if (check != null){
+            console.log("here");
+            throw new ConflictException('already save in bookmark')
+            
+        }
+        // if (checkbm.UserIdBookmark === UserId){
+        //     console.log(checkbm);
+        //     throw new ConflictException('already save in bookmark')
+        // }
         
         console.log(found);
         newBookmark.petPicUrl = found.PetPicURL;
