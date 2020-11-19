@@ -20,6 +20,8 @@ import Chatnoti from './Chat/Chatnotification/chatnotification.entity';
 import {bookmark} from './Bookmark/Bookmark.entity';
 import { BookmarkModule } from './Bookmark/Bookmark.module';
 
+require('dotenv').config()
+
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -34,7 +36,7 @@ import { BookmarkModule } from './Bookmark/Bookmark.module';
       
       
       type: 'mongodb',
-      url: 'mongodb+srv://worker:LpHNPZwDA4a36EH@cluster0.4yw9h.azure.mongodb.net/play?retryWrites=true&w=majority',
+      url: `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_CLUSTER}`,
       useNewUrlParser: true,
       synchronize: true,
       logging: true,

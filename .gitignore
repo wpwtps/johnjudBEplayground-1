@@ -1,4 +1,4 @@
-#--------------chat backend------------------
+#-------------- backend ------------------
 # compiled output
 /johnjudplayground/dist
 /johnjudplayground/node_modules
@@ -33,3 +33,6 @@ lerna-debug.log*
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+# DOTENV
+/johnjudplayground/.env

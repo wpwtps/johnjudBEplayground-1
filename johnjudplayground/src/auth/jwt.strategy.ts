@@ -6,6 +6,8 @@ import { User } from "src/user/user.entity";
 import { Repository } from "typeorm";
 import { JwtPayload } from "./jwt-payload.interface";
 
+require('dotenv').config()
+
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy){
     constructor(
@@ -14,7 +16,7 @@ export class JwtStrategy extends PassportStrategy(Strategy){
     ){
         super({
             jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-            secretOrKey: 'topsecret',
+            secretOrKey: `${process.env.KEY}`,
         });
     }
 

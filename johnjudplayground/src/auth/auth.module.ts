@@ -7,13 +7,15 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from 'src/user/user.entity';
 import { JwtStrategy } from './jwt.strategy';
 
+require('dotenv').config()
+
 @Module({
   imports: [
     PassportModule.register({defaultStrategy: 'jwt'}),
     JwtModule.register({
-      secret: 'topsecret',
+      secret: `${process.env.KEY}`,
       signOptions:{
-        expiresIn: 3600,
+        expiresIn: process.env.TIME_LIMIT,
       },
     }),
     TypeOrmModule.forFeature([User]),
