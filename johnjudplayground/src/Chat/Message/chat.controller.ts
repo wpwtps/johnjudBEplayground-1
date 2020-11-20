@@ -48,9 +48,10 @@ export class ChatController{
     async chatnot(@Param('roomId') roomId: string,
                   @Param('UserId') UserId: string,
                   @Body() chatnotiDto: chatnotiDto){
-        chatnotiDto.NotiDate = new Date();
+        chatnotiDto.NotiDate = null;
         chatnotiDto.User = UserId;
         chatnotiDto.roomid = roomId;
+        chatnotiDto.readAt = null;
         return this.ChatService.notichat(chatnotiDto)
     }
 
@@ -67,5 +68,29 @@ export class ChatController{
     @Get(':UserId/getAllnoti')
     async getAllnoti(@Param('UserId') UserId: string):Promise<Chatnoti[]>{
         return this.ChatService.getAllnoti(UserId)
+    }
+
+    @Get(':user/:roomid/getmynoti')
+    async getMyNoti(@Param('user') user: string,
+                    @Param('roomid') roomid: string):Promise<Chatnoti>{
+        return this.ChatService.getMyNoti(user,roomid)
+    }
+
+    @Delete(':user/:roomid/deletemynoti')
+    deleteMyNoti(@Param('user') user: string,
+                 @Param('roomid') roomid: string): Promise<void>{
+        return this.ChatService.deletenotitest(user,roomid)
+    }
+
+    @Patch(':user/:roomid/updatereaddate')
+    async updateread(@Param('user') user: string,
+                     @Param('roomid') roomid: string):Promise<Chatnoti>{
+        return this.ChatService.updateDateNoti(user,roomid)
+    }
+
+    @Patch(':user/:roomid/updatenullnoti')
+    async updatenull(@Param('user') user: string,
+                     @Param('roomid') roomid: string): Promise<Chatnoti>{
+        return this.ChatService.updateNullNoti(user,roomid)
     }
 }
