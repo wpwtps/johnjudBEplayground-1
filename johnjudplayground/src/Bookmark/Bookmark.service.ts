@@ -55,6 +55,7 @@ export class BookmarkService{
         console.log(found);
         newBookmark.petPicUrl = found.PetPicURL;
         newBookmark.UserIdBookmark = UserId;
+        newBookmark.bmStatus = true;
         await this.BookmarkRepository.save(newBookmark);
         
         const id = newBookmark.bmid;
