@@ -5,4 +5,6 @@ export class chatnotiDto{
     roomid: string;
 
     NotiDate: Date;
+
+    readAt: Date;
 }
