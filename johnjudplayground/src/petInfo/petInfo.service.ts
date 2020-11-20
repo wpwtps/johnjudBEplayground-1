@@ -102,9 +102,20 @@ export class petInfoService {
     return found;
   }
 
+  //GENCODE################
+  makeid() {
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  
+    for (var i = 0; i < 6; i++)
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+  
+    return text;
+  }
+
   async createPetInfo(petinfoinput:petinfoinput, User:User): Promise<object>{
     //console.log(User);
-    const { petid,PetName,PetBreed,PetGender,Type,PetPicURL,DelPicURL,PetStatus,PetLength,PetHeight, PetCerURL,TimeStampUpdate, UserId,AdopUserId,CodePet, CheckCode,TimeUpdate,Describe,PetAddress} = petinfoinput;
+    const { petid,PetName,PetBreed,PetGender,Type,PetPicURL,DelPicURL,PetStatus,PetLength,PetHeight, PetCerURL,TimeStampUpdate, UserId,AdopUserId,CodePet, CheckCode,TimeUpdate,Describe,PetAddress,GenCode} = petinfoinput;
     const newPet = this.petInfoRepository.create({
       petid: uuid()
     });
@@ -131,7 +142,11 @@ export class petInfoService {
     //console.log(User.id);
 
     newPet.AdopUserId = '';
+
+    newPet.GenCode = this.makeid();
     newPet.CodePet = '';
+
+
     newPet.CheckCode = false;
     newPet.TimeUpdate = TimePost;
     newPet.Describe = Describe;
@@ -143,18 +158,24 @@ export class petInfoService {
  
 
   async checkCode(petinfoinput:petinfoinput, User:User): Promise<petinfo>{
-    const {petid,PetName,PetBreed,PetGender,Type,PetPicURL,DelPicURL,PetStatus,PetLength,PetHeight, PetCerURL,TimeStampUpdate, UserId,AdopUserId, CodePet, CheckCode,TimeUpdate,Describe,PetAddress} = petinfoinput;
+    const {petid,PetName,PetBreed,PetGender,Type,PetPicURL,DelPicURL,PetStatus,PetLength,PetHeight, PetCerURL,TimeStampUpdate, UserId,AdopUserId, CodePet, CheckCode,TimeUpdate,Describe,PetAddress,GenCode} = petinfoinput;
     const petinfo = await this.petInfoRepository.findOne({where:{petid}});
     
     if(User.id===petinfo.UserId){
       throw new ConflictException('Can not get your own pet')
     }
-    if (CodePet===petid){
+    if(petinfo.CheckCode==true){
+      throw new ConflictException('This pet was adopted')
+    }
+    if (CodePet===petinfo.GenCode){
       petinfo.CodePet = CodePet;
       petinfo.CheckCode = true;
       petinfo.AdopUserId = User.id;
       petinfo.PetStatus = 'pend';
       //await this.notiSer
+    } 
+    else if (CodePet!==petinfo.GenCode){
+      throw new ConflictException('Your code is not correct')
     }
     await this.petInfoRepository.save(petinfo);
     console.log(petinfo);
