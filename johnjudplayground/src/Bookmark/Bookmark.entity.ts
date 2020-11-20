@@ -18,4 +18,7 @@ export class bookmark{
 
     @Column()
     UserIdBookmark: string;
+
+    @Column()
+    bmStatus: Boolean;
 }
