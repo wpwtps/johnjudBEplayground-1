@@ -87,4 +87,10 @@ export class ChatController{
                      @Param('roomid') roomid: string):Promise<Chatnoti>{
         return this.ChatService.updateDateNoti(user,roomid)
     }
+
+    @Patch(':user/:roomid/updatenullnoti')
+    async updatenull(@Param('user') user: string,
+                     @Param('roomid') roomid: string): Promise<Chatnoti>{
+        return this.ChatService.updateNullNoti(user,roomid)
+    }
 }
