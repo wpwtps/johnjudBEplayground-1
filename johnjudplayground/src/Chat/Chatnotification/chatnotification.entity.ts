@@ -14,6 +14,9 @@ export class Chatnoti{
 
     @Column()
     NotiDate: Date;
+
+    @Column()
+    readAt: Date;
 }
 
 export default Chatnoti;

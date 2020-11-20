@@ -128,7 +128,8 @@ export class UserService {
     async getPetRegCount(
         id: string,
     ){
-        return await this.petInfoRepository.findAndCount({where: {UserId: id, PetStatus: "ava"}});
+        const data = await this.petInfoRepository.findAndCount({where: {UserId: id, PetStatus: "ava"}});
+        return data[1];
     }
 
     async getPetRegDetail(
@@ -144,7 +145,11 @@ export class UserService {
         // const deleted = await this.petInfoRepository.count({where: {AdopUserId: id, PetStatus: "null"}});
         // const res = all-deleted;
 
-        return await this.petInfoRepository.count({where: {AdopUserId: id, PetStatus: "done"}});
+        //count all adopted pets include some are deleted.
+        const data1 = await this.petInfoRepository.findAndCount({where: {AdopUserId: id, PetStatus: "done"}})
+        const data2 = await this.petInfoRepository.findAndCount({where: {AdopUserId: id, PetStatus: "null"}})
+        var res = data1[1]+data2[1];
+        return res;
     }
 
     async getPetAdoptDetail(
@@ -160,7 +165,8 @@ export class UserService {
     async getPetDonatedCount(
         id: string,
     ){
-        return await this.petInfoRepository.count({where: {UserId: id, PetStatus: "done"}});
+        const data = await this.petInfoRepository.findAndCount({where: {UserId: id, PetStatus: "done"}});
+        return data[1];
     }
 
     async getPetDonatedDetail(

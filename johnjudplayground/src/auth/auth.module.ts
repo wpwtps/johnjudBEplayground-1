@@ -15,7 +15,7 @@ require('dotenv').config()
     JwtModule.register({
       secret: `${process.env.KEY}`,
       signOptions:{
-        expiresIn: process.env.TIME_LIMIT,
+        expiresIn: parseInt(process.env.TIME_LIMIT,10),
       },
     }),
     TypeOrmModule.forFeature([User]),

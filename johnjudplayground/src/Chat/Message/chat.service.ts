@@ -44,6 +44,10 @@ export class ChatService{
         }
     }
 
+    async getMyNoti(user:string,roomid:string):Promise<Chatnoti>{
+        return this.ChatNotiRepository.findOne({where:{User:user,roomid:roomid}})
+    }
+
     async getNoti(): Promise<Chatnoti[]>{
         return this.ChatNotiRepository.find()
     }
@@ -54,5 +58,26 @@ export class ChatService{
 
     async getAllnoti(UserId: string): Promise<Chatnoti[]>{
         return this.ChatNotiRepository.find({where:{User:UserId}});
+    }
+
+    async deletenotitest(user:string,roomid:string): Promise<void>{
+        const mynoti = await this.getMyNoti(user,roomid)
+        let deletemynoti = mynoti.id
+        await this.ChatNotiRepository.delete(deletemynoti)
+    }
+
+    async updateDateNoti(user: string,roomid: string): Promise<Chatnoti>{
+        const mynoti = await this.getMyNoti(user,roomid)
+        mynoti.readAt = new Date();
+        await this.ChatNotiRepository.save(mynoti)
+        return mynoti;
+    }
+
+    async updateNullNoti(user: string,roomid: string): Promise<Chatnoti>{
+        const mynoti = await this.getMyNoti(user,roomid)
+        mynoti.readAt = null;
+        mynoti.NotiDate = new Date()
+        await this.ChatNotiRepository.save(mynoti)
+        return mynoti;
     }
 }
