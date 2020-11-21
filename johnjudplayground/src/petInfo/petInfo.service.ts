@@ -243,6 +243,10 @@ export class petInfoService {
       console.log('this accout is not pet owner')
       throw new ConflictException('You dont have permission to edit this pet')  
     }
+    if (petinfo.PetStatus !== 'ava'){
+      console.log('cannot edit')
+      throw new ConflictException('this pet cannnot edit')  
+    }
     const today = new Date();
     const postday = petinfo.TimeStampUpdate;
     let fromDate = new Date(Date.now() - 60 * 60 * 24 * 2 * 1000);
