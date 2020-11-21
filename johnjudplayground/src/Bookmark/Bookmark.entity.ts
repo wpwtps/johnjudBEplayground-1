@@ -21,4 +21,7 @@ export class bookmark{
 
     @Column()
     bmStatus: Boolean;
+
+    @Column()
+    PetName: string;
 }
