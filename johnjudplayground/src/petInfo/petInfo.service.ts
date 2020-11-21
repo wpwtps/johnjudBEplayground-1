@@ -256,11 +256,19 @@ export class petInfoService {
     petinfo.PetBreed = PetBreed;
     petinfo.PetGender = PetGender;
     petinfo.Type = Type;
-    petinfo.PetPicURL = PetPicURL;
+
+    if (PetPicURL != null){
+      petinfo.PetPicURL = PetPicURL;
+    }
+  
     petinfo.DelPicURL = DelPicURL;
     petinfo.PetLength = PetLength;
     petinfo.PetHeight = PetHeight;
-    petinfo.PetCerURL = PetCerURL;
+
+    if (PetCerURL != null){
+      petinfo.PetCerURL = PetCerURL;
+    }
+    // petinfo.PetCerURL = PetCerURL;
     petinfo.TimeUpdate = today;
     petinfo.Describe = Describe;
     petinfo.PetAddress = PetAddress;
