@@ -19,4 +19,7 @@ export class createBookmarkInput{
     @Field()
     bmStatus: Boolean;
 
+    @Field()
+    PetName: string;
+
 }
