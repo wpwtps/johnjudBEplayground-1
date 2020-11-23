@@ -11,7 +11,7 @@ export class UploadImgController {
     @Post()
     @UseInterceptors(FileInterceptor('img'))
     uploadImg(@UploadedFile() img){
-        // console.log(img);
+        // 
         return this.uploadImgService.uploadImg(img);
     }
 }

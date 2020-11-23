@@ -21,7 +21,7 @@ export class AuthController {
     @Post('/test')
     @UseGuards(AuthGuard())
     test(@Req() req){
-        console.log(req);
+        
     }
 
     @Get('/get-basic')
@@ -30,7 +30,7 @@ export class AuthController {
         @GetUser() user: User,
     ){
         const res = this.AuthService.getBasicInfo(user);
-        // console.log(res);
+        // 
         return res;
         
     }

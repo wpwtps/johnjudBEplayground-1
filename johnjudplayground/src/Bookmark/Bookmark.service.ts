@@ -43,16 +43,16 @@ export class BookmarkService{
         });
 
         if (check != null){
-            console.log("here");
+            
             throw new ConflictException('already save in bookmark')
             
         }
         // if (checkbm.UserIdBookmark === UserId){
-        //     console.log(checkbm);
+        //     
         //     throw new ConflictException('already save in bookmark')
         // }
         
-        console.log(found);
+        
         newBookmark.petPicUrl = found.PetPicURL;
         newBookmark.UserIdBookmark = UserId;
         newBookmark.bmStatus = true;
