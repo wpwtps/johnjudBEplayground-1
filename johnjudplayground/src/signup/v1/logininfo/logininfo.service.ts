@@ -40,9 +40,9 @@ export class LoginInfoService {
     }
 
     async updateUserLoginInfo(UpdateLoginInfoInput: UpdateLoginInfoInput): Promise<object>{
-        // console.log(Email);
-        // console.log(UserName);
-        // console.log(Password);
+        // 
+        // 
+        // 
         
         const {id, UserName, Password,} = UpdateLoginInfoInput;
 
@@ -54,7 +54,7 @@ export class LoginInfoService {
 
         // const user = await this.getUserByEmail(Email);
         const user = await this.getUserByID(id);
-        // console.log(user);
+        // 
         
         user.UserName = UserName;
         // user.Password = Password;
@@ -62,7 +62,7 @@ export class LoginInfoService {
         user.Password = await this.hashPassword(Password, user.salt);
 
                 
-        // console.log(user);
+        // 
 
         await this.LoginInfoRepository.save(user)
 

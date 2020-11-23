@@ -38,27 +38,27 @@ export class petInfoService {
 
   //find only pet show in webApp, del pet not in this case
   async findPetInWeb(): Promise<petinfo[]> {
-    //console.log('findPetWeb');
+    //
     //const res = await this.petInfoRepository.find({where:{ PetStatus: Not("delete") }});
     const res = await this.petInfoRepository.find({
         where:{$or:[{PetStatus: 'ava'},{PetStatus:'pend'},{PetStatus:'done'}]}
       });
-    console.log(res);
+    
     
     return res;
   }
 
   //test filter height
   async findPetlt(): Promise<petinfo[]> {
-    //console.log('findPetWeb');
+    //
     //const res = await this.petInfoRepository.find({where:{ PetStatus: Not("delete") }});
     const petheight = "60.2";
     const testint = parseFloat(petheight);
-    console.log(testint);
+    
     const res = await this.petInfoRepository.find({
         where:{$and:[{$or:[{PetStatus: 'ava'},{PetStatus:'pend'},{PetStatus:'done'}]},{PetHeight:{$lt:{ testint }}}]}
       });
-    console.log(res);
+    
     
     return res;
   }
@@ -114,14 +114,14 @@ export class petInfoService {
   }
 
   async createPetInfo(petinfoinput:petinfoinput, User:User): Promise<object>{
-    //console.log(User);
+    //
     const { petid,PetName,PetBreed,PetGender,Type,PetPicURL,DelPicURL,PetStatus,PetLength,PetHeight, PetCerURL,TimeStampUpdate, UserId,AdopUserId,CodePet, CheckCode,TimeUpdate,Describe,PetAddress,GenCode} = petinfoinput;
     const newPet = this.petInfoRepository.create({
       petid: uuid()
     });
     
     const TimePost = new Date();
-    //console.log(User.id);
+    //
     newPet.PetName = PetName;
     newPet.PetBreed = PetBreed;
     newPet.PetGender = PetGender;
@@ -139,7 +139,7 @@ export class petInfoService {
     //edit after as User Entity
     const Userid = User.id; 
     newPet.UserId = Userid;
-    //console.log(User.id);
+    //
 
     newPet.AdopUserId = '';
 
@@ -178,7 +178,7 @@ export class petInfoService {
       throw new ConflictException('Your code is not correct')
     }
     await this.petInfoRepository.save(petinfo);
-    console.log(petinfo);
+    
     return petinfo;
 
   }
@@ -218,10 +218,10 @@ export class petInfoService {
     const {UserId,petid} = deleteinput;
     const pet = await this.petInfoRepository.findOne({where:{petid}});
     const User = await this.UserRepository.findOne({where:{id:UserId}});
-    console.log(User);
+    
     const userid = User.id;
     if (pet.UserId !== userid){
-      console.log('error');
+      
       return null;
     }
     pet.PetStatus = null;
@@ -234,25 +234,25 @@ export class petInfoService {
 
     
   async editPet(petinfoinput:petinfoinput, User:User): Promise<object> {
-    console.log('edit start');
+    
     const { petid,PetName,PetBreed,PetGender,Type,PetPicURL,DelPicURL,PetStatus,PetLength,PetHeight, PetCerURL,TimeStampUpdate, UserId,AdopUserId, CheckCode,TimeUpdate,Describe, PetAddress} = petinfoinput;
     const petinfo = await this.petInfoRepository.findOne({where:{petid}});
-    console.log(petinfo);
+    
     const userid = User.id;
     if (petinfo.UserId !== userid){
-      console.log('this accout is not pet owner')
+      
       throw new ConflictException('You dont have permission to edit this pet')  
     }
     if (petinfo.PetStatus !== 'ava'){
-      console.log('cannot edit')
+      
       throw new ConflictException('this pet cannnot edit')  
     }
     const today = new Date();
     const postday = petinfo.TimeStampUpdate;
     let fromDate = new Date(Date.now() - 60 * 60 * 24 * 2 * 1000);
-    console.log(fromDate);
+    
     if (fromDate>postday){
-      console.log('can not edit')
+      
       throw new ConflictException('Editing time is up')
     }
 
@@ -278,7 +278,7 @@ export class petInfoService {
     petinfo.PetAddress = PetAddress;
 
     await this.petInfoRepository.save(petinfo);
-    console.log(petinfo);
+    
 
     const id = petid;
     return {"success": true, id};

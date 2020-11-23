@@ -37,7 +37,7 @@ export class notiService {
 
   async findAll(): Promise<noti[]> {
     const res = await this.notiRepository.find();
-    //console.log(res);
+    //
     
     return res;
   }
@@ -49,7 +49,7 @@ export class notiService {
       throw new NotFoundException(`Task with ID ${ notiid } not found`);
     }
     //test
-    console.log(found);
+    
     return found;
   }
 
@@ -63,9 +63,9 @@ export class notiService {
       notiid: uuid(),
     });
     const Userid = User.id; 
-    console.log(Userid);
+    
     if(petinfo.CheckCode===false){
-      console.log('code error');
+      
       throw new ConflictException('wrong code, please try again');
     }
     if(petinfo.AdopUserId==petinfo.UserId){
@@ -74,9 +74,9 @@ export class notiService {
     if(Userid!==petinfo.UserId){
       throw new ConflictException('wrong user')
     }
-    console.log(petinfo);
+    
     const TimeNoti = new Date();
-    console.log("create");
+    
     newNoti.DonUserID = petinfo.UserId; 
     newNoti.TimeStampUpdate = TimeNoti;
     //newNoti.RequestPet = '';
@@ -94,7 +94,7 @@ export class notiService {
   //   });
 
   //   const TimeUpdate = new Date();
-  //   console.log("create");
+  //   
   //   const Userid = User.id; 
   //   newNoti.DonUserID = Userid; 
   //   newNoti.TimeStampUpdate = TimeUpdate;

@@ -39,10 +39,10 @@ export class ChangePhoneService {
 
         axios(config)
         .then(function (response) {
-        console.log(JSON.stringify(response.data));
+        
         })
         .catch(function (error) {
-        console.log(error);
+        
         });
 
         return {"success": true};
@@ -50,7 +50,7 @@ export class ChangePhoneService {
 
     async generateOTP(): Promise<number>{
         const OTP = Math.floor(100000+Math.random()*900000);
-        // console.log(OTP);
+        // 
         
         return OTP;
     }

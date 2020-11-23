@@ -15,10 +15,10 @@ export class CheckEmailService {
         const {UserName, Password, FirstName, LastName, ProfilePicURL, Birthday, Gender, PhoneNo, Email, LocationLat, LocationLong, AvgPoint, Description, TimeUpdate} = CreateEmailUserInput;
 
         const found = await this.userRepository.findOne({where: {Email}});
-        // console.log(found);
+        // 
         
         // const isVerify = found.VerifyPhone;
-        // console.log(isVerify);
+        // 
         
         if(found && found.VerifyPhone){
             throw new ConflictException('Email already exists!!!');
